@@ -21,6 +21,7 @@ CWndConfigDlg::CWndConfigDlg(CWnd* pParent /*=NULL*/)
 	m_pCreateChild = NULL;
 	m_pCreateDock  = NULL;
 	m_pCreateFloat = NULL;
+	m_nSelectedItemIndex = -1;
 }
 
 CWndConfigDlg::~CWndConfigDlg()
@@ -54,6 +55,8 @@ void CWndConfigDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CWndConfigDlg, CDialogEx)
 	ON_WM_SIZE()
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CWndConfigDlg::OnTcnSelchangeTabFilter)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST2, OnDllItemChanged)
+	ON_NOTIFY(NM_CLICK, IDC_LIST2, OnMouseClicked)
 END_MESSAGE_MAP()
 
 
@@ -141,12 +144,12 @@ BOOL CWndConfigDlg::InitControls()
 		{
 			CString strNode;
 			strNode.Format(_T("Dll_%d\\DllName"), i);
-			std::wstring strValue = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
-			if (!IsDllAdded(CString(strValue.c_str())))
+			std::wstring strDllValue = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
+			if (!IsDllAdded(CString(strDllValue.c_str())))
 			{
 				UINT nCount = m_listctrlDllName.GetItemCount();
-				m_listctrlDllName.InsertItem(nCount, strValue.c_str());
-				m_mapDllName2Index.insert(make_pair(strValue.c_str(), nCount));
+				m_listctrlDllName.InsertItem(nCount, strDllValue.c_str());
+				m_mapDllName2Index.insert(make_pair(strDllValue.c_str(), nCount));
 			}
 		
 			//read class names.
@@ -162,15 +165,15 @@ BOOL CWndConfigDlg::InitControls()
 					CString strValue(strType.c_str());
 					if (strValue.CompareNoCase(_T("FLOAT")) == 0)
 					{
-						ProcessFloatType(i,j);
+						ProcessFloatType(i,j,CString(strDllValue.c_str()));
 					}
 					else if (strValue.CompareNoCase(_T("DOCK")) == 0)
 					{
-						ProcessDockType(i,j);
+						ProcessDockType(i,j,CString(strDllValue.c_str()));
 					}
 					else if (strValue.CompareNoCase(_T("CHILD")) == 0)
 					{
-						ProcessChildType(i,j);
+						ProcessChildType(i,j,CString(strDllValue.c_str()));
 					}
 
 				}
@@ -232,10 +235,20 @@ void CWndConfigDlg::OnTcnSelchangeTabFilter(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-BOOL CWndConfigDlg::IsClassNameAdded(CString& strClassname)
+BOOL CWndConfigDlg::IsClassNameAdded(CString & strDll, CString& strClassname)
 {
-	map<CString, UINT>::iterator itFind = m_mapClassName2Index.find(strClassname);
-	return itFind != m_mapClassName2Index.end();
+	MapDll2ClassNames::iterator itFind = m_mapAllDllClassNames.find(strDll);
+	if (itFind != m_mapAllDllClassNames.end())
+	{
+		MapName2Index& mapClasses = itFind->second;
+		MapName2Index::iterator it = mapClasses.find(strClassname);
+		if (it != mapClasses.end())
+		{
+			return TRUE;
+		}
+	}
+	
+	return FALSE;
 }
 BOOL CWndConfigDlg::IsDllAdded(CString& strDllName)
 {
@@ -243,7 +256,7 @@ BOOL CWndConfigDlg::IsDllAdded(CString& strDllName)
 	return itFind != m_mapDllName2Index.end();
 }
 
-void CWndConfigDlg::ProcessFloatType(UINT uDllIndex, UINT uGroupIndex)
+void CWndConfigDlg::ProcessFloatType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName)
 {
 	CString strFloatNode;
 	strFloatNode.Format(_T("Dll_%d\\Panels\\Group_%d\\PanelCount"), uDllIndex, uGroupIndex);
@@ -254,11 +267,12 @@ void CWndConfigDlg::ProcessFloatType(UINT uDllIndex, UINT uGroupIndex)
 		CString strParentNode;
 		strParentNode.Format(_T("Dll_%d\\Panels\\Group_%d\\Pane_%d\\ParentWnd\\ClassName"), uDllIndex, uGroupIndex, i);
 		std::wstring strParentName = AppXml()->GetAttributeText(strParentNode.GetString(), _T(""));
-		if (!IsClassNameAdded(CString(strParentName.c_str())))
+		if (!IsClassNameAdded(strDllName, CString(strParentName.c_str())))
 		{
 			int nCount = m_listctrlClassname.GetItemCount();
 			m_listctrlClassname.InsertItem(nCount, strParentName.c_str());
-			m_mapClassName2Index.insert(make_pair(strParentName.c_str(), nCount));
+			AddClassName(strDllName, CString(strParentName.c_str()), nCount);
+			//ma.insert(make_pair(strParentName.c_str(), nCount));
 		}
 
 
@@ -266,25 +280,105 @@ void CWndConfigDlg::ProcessFloatType(UINT uDllIndex, UINT uGroupIndex)
 		CString strClassNode;
 		strClassNode.Format(_T("Dll_%d\\Panels\\Group_%d\\Pane_%d\\ClassName"), uDllIndex, uGroupIndex, i);
 		std::wstring strName = AppXml()->GetAttributeText(strClassNode.GetString(), _T(""));
-		if (!IsClassNameAdded(CString(strName.c_str())))
+		if (!IsClassNameAdded(strDllName, CString(strName.c_str())))
 		{
 			int nExistCount = m_listctrlClassname.GetItemCount();
 			m_listctrlClassname.InsertItem(nExistCount, strName.c_str());
-			m_mapClassName2Index.insert(make_pair(strName.c_str(), nExistCount));	
+			AddClassName(strDllName, CString(strName.c_str()), nExistCount);
+			//m_mapClassName2Index.insert(make_pair(strName.c_str(), nExistCount));	
 		}
 	}
 }
 
-void CWndConfigDlg::ProcessDockType(UINT uDllIndex, UINT uGroupIndex)
+void CWndConfigDlg::ProcessDockType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName)
 {
-	ProcessFloatType(uDllIndex, uGroupIndex);
+	ProcessFloatType(uDllIndex, uGroupIndex, strDllName);
 }
 
 //may be iteration for many times.
-void CWndConfigDlg::ProcessChildType(UINT uDllIndex, UINT uGroupIndex)
+void CWndConfigDlg::ProcessChildType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName)
 {
-	ProcessFloatType(uDllIndex, uGroupIndex);
+	ProcessFloatType(uDllIndex, uGroupIndex, strDllName);
 
 	//process position info.
 
 }
+void CWndConfigDlg::AddClassName(CString& strDll, CString& strClassName, UINT nIndex)
+{
+	MapDll2ClassNames::iterator itFind = m_mapAllDllClassNames.find(strDll);
+	if (itFind != m_mapAllDllClassNames.end())
+	{
+		MapName2Index& mapClasses = itFind->second;
+		mapClasses.insert(make_pair(strClassName, nIndex));
+
+		return;
+	}
+
+	//dll have not added yet.
+	MapName2Index mapClasses;
+	mapClasses.insert(make_pair(strClassName, nIndex));
+	m_mapAllDllClassNames.insert(make_pair(strDll, mapClasses));
+}
+
+void CWndConfigDlg::OnDllItemChanged(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	POSITION pos = m_listctrlDllName.GetFirstSelectedItemPosition();
+	DWORD dwErr = GetLastError();
+	if ( !pos )
+		return;
+
+	int nItem = m_listctrlDllName.GetNextSelectedItem(pos);
+
+	if (nItem != m_nSelectedItemIndex)
+	{
+		UpdateClassnames(nItem);
+	}
+
+	*pResult = 0;
+}
+
+void CWndConfigDlg::OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	int nSelectedItem = -1;
+	POSITION pos = m_listctrlDllName.GetFirstSelectedItemPosition();
+	if (NULL == pos)
+	{
+		return;
+	}
+	else
+	{
+		nSelectedItem = m_listctrlDllName.GetNextSelectedItem(pos);
+		if(nSelectedItem != -1)
+		{
+			UpdateClassnames(nSelectedItem);
+		}
+	}
+
+	*pResult = 0;	
+}
+
+void CWndConfigDlg::UpdateClassnames(int nSelected)
+{
+	if (nSelected == m_nSelectedItemIndex)
+	{
+		return;
+	}
+
+	m_nSelectedItemIndex = nSelected;
+	m_listctrlClassname.DeleteAllItems();
+
+	CString strDllName;
+	strDllName = m_listctrlDllName.GetItemText(nSelected,0);
+	MapDll2ClassNames::iterator itFind = m_mapAllDllClassNames.find(strDllName);
+	if (itFind != m_mapAllDllClassNames.end())
+	{
+		int index=0;
+		MapName2Index& mapClasses = itFind->second;
+		for (MapName2Index::iterator it = mapClasses.begin();
+			it != mapClasses.end(); ++it)
+		{
+			m_listctrlClassname.InsertItem(index, it->first);
+		}
+	}
+}
+

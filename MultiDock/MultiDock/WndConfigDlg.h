@@ -27,9 +27,13 @@ protected:
 
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnTcnSelchangeTabFilter(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnDllItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult);
 
+	void UpdateClassnames(int nSelected);
 	DECLARE_MESSAGE_MAP()
 public:
+	int m_nSelectedItemIndex;
 	CListCtrl m_listctrlDllName;
 	CListCtrl m_listctrlClassname;
 	CTabCtrl m_tabctrlCreateWnd;
@@ -39,13 +43,17 @@ public:
 	CDlgCreateChildPane* m_pCreateChild;
 
 protected:
+	void AddClassName(CString& strDll, CString& strClassName, UINT nIndex);
 	BOOL IsDllAdded(CString& strDllName);
-	BOOL IsClassNameAdded(CString& strClassname);
-	void ProcessFloatType(UINT uDllIndex, UINT uGroupIndex);
-	void ProcessDockType(UINT uDllIndex, UINT uGroupIndex);
-	void ProcessChildType(UINT uDllIndex, UINT uGroupIndex);
+	BOOL IsClassNameAdded(CString& strDll, CString& strClassname);
+	void ProcessFloatType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
+	void ProcessDockType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
+	void ProcessChildType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
+	
+	typedef map<CString, UINT> MapName2Index;
+	typedef map<CString, MapName2Index> MapDll2ClassNames;
 
 	map<CString, UINT> m_mapDllName2Index;
-	map<CString, UINT> m_mapClassName2Index;
+	MapDll2ClassNames  m_mapAllDllClassNames;
 
 };
