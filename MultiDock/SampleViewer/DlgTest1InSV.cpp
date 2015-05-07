@@ -6,8 +6,7 @@
 #include "DlgTest1InSV.h"
 #include "afxdialogex.h"
 
-
-// CDlgTest1InSV dialog
+static CDlgTest1InSV::stRegister s_Register;
 
 IMPLEMENT_DYNAMIC(CDlgTest1InSV, CDialogEx)
 
@@ -31,4 +30,12 @@ BEGIN_MESSAGE_MAP(CDlgTest1InSV, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CDlgTest1InSV message handlers
+CWnd* CDlgTest1InSV::CreateDlgObj()
+{
+	return new CDlgTest1InSV;
+}
+
+BOOL CDlgTest1InSV::CreateWnd(CWnd* pParent)
+{
+	return __super::Create(IDD, pParent);
+}

@@ -2,6 +2,7 @@
 #include "Resource.h"
 #include "..\Common\Imc.h"
 #include "..\Common\Imc\ImcListener.h"
+#include "..\Common\WndManager.h"
 #include "afxwin.h"
 
 // CSamplePanelDialog dialog
@@ -9,7 +10,8 @@
 #define WM_RECVCOMBOSEL_FROM_PANE1 WM_USER+2019
 
 class CSamplePanelDialog2 : public CDialog,
-							public ImcListener
+							public ImcListener,
+							public CBaseObj
 {
 	DECLARE_DYNAMIC(CSamplePanelDialog2)
 
@@ -17,6 +19,24 @@ public:
 	CSamplePanelDialog2(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CSamplePanelDialog2();
 	virtual BOOL OnInitDialog();
+
+
+	struct stRegister
+	{
+		stRegister()
+		{
+			LPCTSTR lpszClassName = _T("CSamplePanelDialog2");
+			static bool bReged = false;
+			if (!bReged)
+			{
+				CWndManager::Instance()->Register(lpszClassName, CSamplePanelDialog2::CreateDlgObj);
+				bReged = true;
+			}
+		}
+	};
+
+	static CWnd* CreateDlgObj();
+	virtual BOOL CreateWnd(CWnd* pParent);
 
 	// Dialog Data
 	enum { IDD = IDD_SAMPLE_PANEDIALOG_2 };

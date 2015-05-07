@@ -97,10 +97,18 @@
     <ClInclude Include="stdafx.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="DlgTest1InSV.h" />
-    <ClInclude Include="DlgTest2InSV.h" />
-    <ClInclude Include="DlgTest3InSV.h" />
-    <ClInclude Include="DlgTest4InSV.h" />
+    <ClInclude Include="DlgTest4InSV.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTest1InSV.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTest2InSV.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgTest3InSV.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SampleViewer.rc">

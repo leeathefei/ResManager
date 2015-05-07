@@ -2,18 +2,36 @@
 #include "Resource.h"
 #include "..\Common\Imc.h"
 #include "..\Common\Imc\ImcListener.h"
+#include "..\Common\WndManager.h"
 // CSamplePanelDialog dialog
 
 
 #define WM_RECVALUE_VIEWER1_PANE2 WM_USER+2016
 
-class CSamplePanelDialog3 : public CDialog,public ImcListener
+class CSamplePanelDialog3 : public CDialog,public ImcListener, public CBaseObj
 {
 	DECLARE_DYNAMIC(CSamplePanelDialog3)
 
 public:
 	CSamplePanelDialog3(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CSamplePanelDialog3();
+
+	struct stRegister
+	{
+		stRegister()
+		{
+			LPCTSTR lpszClassName = _T("CSamplePanelDialog3");
+			static bool bReged = false;
+			if (!bReged)
+			{
+				CWndManager::Instance()->Register(lpszClassName, CSamplePanelDialog3::CreateDlgObj);
+				bReged = true;
+			}
+		}
+	};
+
+	static CWnd* CreateDlgObj();
+	virtual BOOL CreateWnd(CWnd* pParent);
 
 	// Dialog Data
 	enum { IDD = IDD_SAMPLE_PANEDIALOG_3 };

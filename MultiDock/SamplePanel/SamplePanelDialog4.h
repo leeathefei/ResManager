@@ -3,19 +3,38 @@
 #include "afxwin.h"
 #include "..\Common\Imc.h"
 #include "..\Common\Imc\ImcListener.h"
+#include "..\Common\WndManager.h"
 
 // CSamplePanelDialog dialog
 
 #define WM_RECV_POSITION WM_USER+2020
 
 class CSamplePanelDialog4 : public CDialog,
-							public ImcListener
+							public ImcListener,
+							public CBaseObj
 {
 	DECLARE_DYNAMIC(CSamplePanelDialog4)
 
 public:
 	CSamplePanelDialog4(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CSamplePanelDialog4();
+
+	struct stRegister
+	{
+		stRegister()
+		{
+			LPCTSTR lpszClassName = _T("CSamplePanelDialog4");
+			static bool bReged = false;
+			if (!bReged)
+			{
+				CWndManager::Instance()->Register(lpszClassName, CSamplePanelDialog4::CreateDlgObj);
+				bReged = true;
+			}
+		}
+	};
+
+	static CWnd* CreateDlgObj();
+	virtual BOOL CreateWnd(CWnd* pParent);
 
 	// Dialog Data
 	enum { IDD = IDD_SAMPLE_PANEDIALOG_4 };

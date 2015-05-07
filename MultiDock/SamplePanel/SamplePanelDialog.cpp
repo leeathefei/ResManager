@@ -5,7 +5,7 @@
 #include "SamplePanel.h"
 #include "SamplePanelDialog.h"
 
-
+static CSamplePanelDialog::stRegister s_Register;
 // CSamplePanelDialog dialog
 
 IMPLEMENT_DYNAMIC(CSamplePanelDialog, CDialog)
@@ -114,4 +114,13 @@ void CSamplePanelDialog::OnBnClickedButton1()
 	 UpdateData(FALSE);
 
 	 return 0;
+ }
+
+ CWnd* CSamplePanelDialog::CreateDlgObj()
+ {
+	 return new CSamplePanelDialog;
+ }
+ BOOL CSamplePanelDialog::CreateWnd(CWnd* pParent)
+ {
+	 return __super::Create(IDD, pParent);
  }

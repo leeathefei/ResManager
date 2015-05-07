@@ -3,18 +3,37 @@
 #include "afxwin.h"
 #include "..\Common\Imc.h"
 #include "..\Common\Imc\ImcListener.h"
+#include "..\Common\WndManager.h"
 
 // CSamplePanelDialog dialog
 #define WM_RECVALUE_FROM_VIEWER WM_USER+2015
 
 class __declspec(dllexport) CSamplePanelDialog : public CDialog,
-							public ImcListener
+							public ImcListener,
+							public CBaseObj
 {
 	DECLARE_DYNAMIC(CSamplePanelDialog)
 
 public:
 	CSamplePanelDialog(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CSamplePanelDialog();
+
+	struct stRegister
+	{
+		stRegister()
+		{
+			LPCTSTR lpszClassName = _T("CSamplePanelDialog");
+			static bool bReged = false;
+			if (!bReged)
+			{
+				CWndManager::Instance()->Register(lpszClassName, CSamplePanelDialog::CreateDlgObj);
+				bReged = true;
+			}
+		}
+	};
+
+	static CWnd* CreateDlgObj();
+	virtual BOOL CreateWnd(CWnd* pParent);
 
 // Dialog Data
 	enum { IDD = IDD_SAMPLE_PANEDIALOG_1 };

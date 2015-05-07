@@ -1,15 +1,32 @@
 #pragma once
 
+#include "..\Common\WndManager.h"
 
-// CDlgTest4InSV dialog
-
-class CDlgTest4InSV : public CDialogEx
+class CDlgTest4InSV : public CDialogEx,public CBaseObj
 {
 	DECLARE_DYNAMIC(CDlgTest4InSV)
 
 public:
 	CDlgTest4InSV(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDlgTest4InSV();
+
+
+	struct stRegister 
+	{
+		stRegister()
+		{
+			LPCTSTR lpszClassName = _T("CDlgTest4InSV");
+			static bool bReged = false;
+			if (!bReged)
+			{
+				CWndManager::Instance()->Register(lpszClassName, CDlgTest4InSV::CreateDlgObj);
+				bReged = true;
+			}
+		}
+	};
+
+	static CWnd* CreateDlgObj();
+	virtual BOOL CreateWnd(CWnd* pParent);
 
 // Dialog Data
 	enum { IDD = IDD_SAMPLEVIEW_TEST_4 };

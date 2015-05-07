@@ -5,6 +5,7 @@
 #include "SamplePanel.h"
 #include "SamplePanelDialog2.h"
 
+static CSamplePanelDialog2::stRegister s_Register;
 
 // CSamplePanelDialog2 dialog
 
@@ -118,4 +119,13 @@ LRESULT CSamplePanelDialog2::OnRecvSelection(WPARAM w, LPARAM l)
 
 	return 0;
 
+}
+
+CWnd* CSamplePanelDialog2::CreateDlgObj()
+{
+	return new CSamplePanelDialog2;
+}
+BOOL CSamplePanelDialog2::CreateWnd(CWnd* pParent)
+{
+	return __super::Create(IDD, pParent);
 }

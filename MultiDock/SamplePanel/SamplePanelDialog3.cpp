@@ -5,6 +5,7 @@
 #include "SamplePanel.h"
 #include "SamplePanelDialog3.h"
 
+static CSamplePanelDialog3::stRegister s_Register;
 
 // CSamplePanelDialog3 dialog
 
@@ -109,4 +110,13 @@ LRESULT CSamplePanelDialog3::OnRecvValueFromView(WPARAM W,LPARAM L)
 void CSamplePanelDialog3::OnBnClickedButton1()
 {
 	// TODO: Add your control notification handler code here
+}
+
+CWnd* CSamplePanelDialog3::CreateDlgObj()
+{
+	return new CSamplePanelDialog3;
+}
+BOOL CSamplePanelDialog3::CreateWnd(CWnd* pParent)
+{
+	return __super::Create(IDD, pParent);
 }
