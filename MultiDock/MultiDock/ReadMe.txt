@@ -19,3 +19,6 @@
 6.xml文件的root节点必须为<config>
 7.sampleviewer 和 samplepanel的函数名注册，发生在loadlibrary之后。在InitInstance--pMainFrm->LoadMainMenus函数中完成了dll的加载。从而静态函数注册完成。
 我们的策略是，对于写在配置文件中的dll，在解析完成后，就全部加载到内存中，从而完成函数名的注册。
+8.约定：对于Mainframe+viewer这些系统自带的窗口。我们默认就先创建好。其他的窗口和控件可以随时创建。
+9.提供外部接口，类似Init函数，主程序保存dllHInstance。以便随时得到函数process指针，从而调用，来创建相应的窗口。
+10.任何CreateWnd函数需要转换到当前的dll资源环境：USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));

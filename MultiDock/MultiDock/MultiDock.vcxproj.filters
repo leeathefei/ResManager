@@ -177,20 +177,20 @@
     <ClInclude Include="Workspace.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="DlgCreateFloatPane.h">
-      <Filter>Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="DlgCreateDockPane.h">
-      <Filter>Unused</Filter>
-    </ClInclude>
-    <ClInclude Include="DlgCreateChildPane.h">
-      <Filter>Unused</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceProcessor.h">
       <Filter>Source Files\configProcessor</Filter>
     </ClInclude>
     <ClInclude Include="WndConfigDlg.h">
       <Filter>Source Files\configProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgCreateFloatPane.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgCreateChildPane.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgCreateDockPane.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

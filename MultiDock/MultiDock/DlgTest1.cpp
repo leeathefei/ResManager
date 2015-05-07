@@ -63,7 +63,7 @@ CWnd* CDlgTest1::CreateDlgObj()
 	return new CDlgTest1;
 }
 
-BOOL CDlgTest1::CreateWnd(CWnd* pParent)
+BOOL CDlgTest1::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)
 {
 	return __super::Create(IDD, pParent);
 }

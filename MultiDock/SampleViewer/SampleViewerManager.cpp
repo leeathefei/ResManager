@@ -105,6 +105,28 @@ void CSampleViewerManager::ShowToolBar(BOOL bShow)
    m_pModuleManager->ShowToolBar(m_pToolbar, bShow);
 }
 
+BOOL CSampleViewerManager::RegisterDockPane(CWnd* pAttachWnd, 
+											LPCTSTR lpszWndName,
+											EPANE_ALIGNMENT eDockDir,
+											BOOL bAutoDelete)
+{	
+	USE_CUSTOM_RESOURCE(_T("SampleViewer.dll"));
+
+	HICON hIcon = (HICON)::LoadImage(::AfxGetResourceHandle(), 
+		MAKEINTRESOURCE(IDR_SAMPLEVIEWER_TYPE),
+		IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
+
+	m_pModuleManager->RegisterModulePane(
+		pAttachWnd, 
+		lpszWndName, 
+		hIcon, 
+		eDockDir, 
+		true, 
+		bAutoDelete);
+
+	return TRUE;
+}
+
 BOOL CSampleViewerManager::RegisterModulePane()
 {
    // ÇÐ»»µ½DLL×ÊÔ´

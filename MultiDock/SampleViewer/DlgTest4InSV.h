@@ -2,7 +2,7 @@
 
 #include "..\Common\WndManager.h"
 
-class CDlgTest4InSV : public CDialogEx,public CBaseObj
+class __declspec(dllexport) CDlgTest4InSV : public CDialogEx,public CBaseObj
 {
 	DECLARE_DYNAMIC(CDlgTest4InSV)
 
@@ -26,7 +26,7 @@ public:
 	};
 
 	static CWnd* CreateDlgObj();
-	virtual BOOL CreateWnd(CWnd* pParent);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType);
 
 // Dialog Data
 	enum { IDD = IDD_SAMPLEVIEW_TEST_4 };

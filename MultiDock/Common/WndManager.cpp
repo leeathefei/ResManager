@@ -75,17 +75,26 @@ void CWndManager::DestroyInstance()
 	}
 }
 
-void CWndManager::Register(LPCTSTR lpszClassName, PFUNC_CREATEOBJ pFun) 
+void CWndManager::Register(CString lpszClassName, PFUNC_CREATEOBJ pFun) 
 {
-	m_mapClassName2Func.insert(map<LPCTSTR, PFUNC_CREATEOBJ>::value_type(lpszClassName, pFun));
+	m_mapClassName2Func.insert(map<CString, PFUNC_CREATEOBJ>::value_type(lpszClassName, pFun));
 }
 
-CWnd* CWndManager::Create(LPCTSTR lpszClassName) 
+CWnd* CWndManager::Create(CString lpszClassName) 
 {
-	map<LPCTSTR, PFUNC_CREATEOBJ>::iterator iter;
+	/*map<CString, PFUNC_CREATEOBJ>::iterator iter;
 	if((iter = m_mapClassName2Func.find(lpszClassName)) != m_mapClassName2Func.end())
 	{
 		return ((*iter).second)();
+	}*/
+	for (map<CString, PFUNC_CREATEOBJ>::iterator it = m_mapClassName2Func.begin();
+		it != m_mapClassName2Func.end(); ++it)
+	{
+		CString strName =it->first;
+		if (strName.CompareNoCase(lpszClassName) == 0)
+		{
+			return ((*it).second)();
+		}
 	}
 	return NULL;
 } 

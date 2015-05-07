@@ -28,7 +28,7 @@ public:
 	};
 
 	static CWnd* CreateDlgObj();
-	virtual BOOL CreateWnd(CWnd* pParent);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType);
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

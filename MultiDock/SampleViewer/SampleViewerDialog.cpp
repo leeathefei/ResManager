@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "SampleViewer.h"
 #include "SampleViewerDialog.h"
+#include "SampleViewerManager.h"
 #include "..\Common\Imc.h"
 
 static CSampleViewerDialog::DerivedRegister Derived_for_registering; // 没有其它机制能够保证在全局空间调用注册函数
@@ -175,7 +176,9 @@ CWnd* CSampleViewerDialog::CreateDlgObj()
 	return new CSampleViewerDialog;
 }
 
-BOOL CSampleViewerDialog::CreateWnd(CWnd* pParent)
+BOOL CSampleViewerDialog::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)
 {
-	return __super::Create(IDD, pParent);
+	USE_CUSTOM_RESOURCE(_T("SampleViewer.dll"));
+	__super::Create(IDD, pParent);
+	return CSampleViewerManager::Instance()->RegisterDockPane(this, _T("SampleViewerDialog"),eDockType, TRUE);
 }

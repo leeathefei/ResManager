@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GeneralMacroDefine.h"
+#include "ModuleDefs.h"
 #include <map>
 
 using namespace std;
@@ -25,7 +26,7 @@ typedef CWnd* (*PFUNC_CREATEOBJ)();
 class COMMON_DLLEXPORT CBaseObj
 {
 public:
-	virtual BOOL CreateWnd(CWnd* pParent)
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)
 	{
 		return TRUE;
 	}
@@ -39,12 +40,12 @@ public:
 	~CWndManager();
 
 public:
-	void Register(LPCTSTR lpszClassName, PFUNC_CREATEOBJ pFun);
-	CWnd* Create(LPCTSTR lpszClassName);
+	void Register(CString lpszClassName, PFUNC_CREATEOBJ pFun);
+	CWnd* Create(CString lpszClassName);
 
 protected:
 	CWndManager();
 
 	static CWndManager* m_pInstance;
-	map<LPCTSTR, PFUNC_CREATEOBJ> m_mapClassName2Func;
+	map<CString, PFUNC_CREATEOBJ> m_mapClassName2Func;
 };

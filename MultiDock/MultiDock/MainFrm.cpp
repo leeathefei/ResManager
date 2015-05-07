@@ -2241,3 +2241,16 @@ void CMainFrame::OnShowWndConfigDlg()
 		m_pDlgConfigWnd->ShowWindow(SW_SHOW);
 	}
 }
+
+
+void CMainFrame::CreateDockWnd(LPCTSTR lpDllName, LPCTSTR lpClassName, EPANE_ALIGNMENT etype)
+{
+	CDialog* pDlg = (CDialog*)CWndManager::Instance()->Create(lpClassName);
+	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
+	if (NULL != pBase)
+	{
+		pBase->CreateWnd(this, etype);
+		pDlg->ShowWindow(SW_SHOW);
+	}
+
+}

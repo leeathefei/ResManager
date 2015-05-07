@@ -5,7 +5,7 @@
 #include "SampleViewer.h"
 #include "DlgTest2InSV.h"
 #include "afxdialogex.h"
-
+#include "SampleViewerManager.h"
 
 static CDlgTest2InSV::stRegister s_Register;
 
@@ -37,7 +37,9 @@ CWnd* CDlgTest2InSV::CreateDlgObj()
 {
 	return new CDlgTest2InSV;
 }
-BOOL CDlgTest2InSV::CreateWnd(CWnd* pParent)
+BOOL CDlgTest2InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)
 {
-	return __super::Create(IDD, pParent);
+	USE_CUSTOM_RESOURCE(_T("SampleViewer.dll"));
+	__super::Create(IDD, pParent);
+	return CSampleViewerManager::Instance()->RegisterDockPane(this, _T("DlgTest2InSV"),eDockType, TRUE);
 }

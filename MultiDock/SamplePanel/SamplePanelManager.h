@@ -24,6 +24,12 @@ public:
 	void ShowToolBar(BOOL bShow=TRUE);
 	void ActivatePane(CString strWindowName);
 	BOOL RegisterModulePane();
+
+	BOOL RegisterDockPane(CWnd* pAttachWnd, 
+							LPCTSTR lpszWndName,
+							EPANE_ALIGNMENT eDockDir,
+							BOOL bAutoDelete);
+
 	BOOL UnregisterModulePane(LPCTSTR);
 	BOOL CanClose(CString& strMessage);
 	void Terminate();

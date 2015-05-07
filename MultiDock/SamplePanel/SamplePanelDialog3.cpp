@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "SamplePanel.h"
 #include "SamplePanelDialog3.h"
+#include "SamplePanelManager.h"
 
 static CSamplePanelDialog3::stRegister s_Register;
 
@@ -116,7 +117,9 @@ CWnd* CSamplePanelDialog3::CreateDlgObj()
 {
 	return new CSamplePanelDialog3;
 }
-BOOL CSamplePanelDialog3::CreateWnd(CWnd* pParent)
+BOOL CSamplePanelDialog3::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)
 {
-	return __super::Create(IDD, pParent);
+	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
+	__super::Create(IDD, pParent);
+	 return CSamplePanelManager::Instance()->RegisterDockPane(this, _T("SamplePanelDialog3"),eDockType, TRUE);
 }

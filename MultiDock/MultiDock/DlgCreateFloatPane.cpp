@@ -5,6 +5,8 @@
 #include "MultiDock.h"
 #include "DlgCreateFloatPane.h"
 #include "afxdialogex.h"
+#include "MainFrm.h"
+#include "..\Common\WndManager.h"
 
 
 // CDlgCreateFloatPane dialog
@@ -29,7 +31,22 @@ void CDlgCreateFloatPane::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgCreateFloatPane, CDialogEx)
+	ON_BN_CLICKED(IDC_BTN_CREATE_FLOATPANE, &CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane)
 END_MESSAGE_MAP()
 
 
 // CDlgCreateFloatPane message handlers
+
+
+void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
+{
+	//test interface.
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	pFrame->CreateDockWnd(_T("SampleViewer"), _T("CDlgTest4InSV"), ALIGN_NON);
+	pFrame->CreateDockWnd(_T("SampleViewer"), _T("CDlgTest1InSV"), ALIGN_HORIZONTAL);
+
+	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog"), ALIGN_HORIZONTAL);
+	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog4"), ALIGN_VERTICAL);
+
+	
+}

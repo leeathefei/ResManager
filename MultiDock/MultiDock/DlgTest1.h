@@ -32,7 +32,7 @@ public:
 	};
 
 	static CWnd* CreateDlgObj( );
-	virtual BOOL CreateWnd(CWnd* pParent);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType);
 
 protected:
 	virtual BOOL OnInitDialog();

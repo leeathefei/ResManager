@@ -31,7 +31,7 @@ public:
 	};
 
 	static CWnd* CreateDlgObj();
-	virtual BOOL CreateWnd(CWnd* pParent);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType);
 
 	// Dialog Data
 	enum { IDD = IDD_SAMPLE_PANEDIALOG_3 };

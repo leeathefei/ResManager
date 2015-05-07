@@ -69,6 +69,9 @@ public:
 	void OpenLastUsedModules();
 	BOOL StartupAsWorkspace();
 	void RecalcLayoutEx();
+
+	//test
+	void CreateDockWnd(LPCTSTR lpDllName, LPCTSTR lpClassName, EPANE_ALIGNMENT etype);
 	
 protected:
 	void CacheMenus();

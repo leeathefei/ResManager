@@ -35,7 +35,7 @@ public:
 	};
 
 	static CWnd* CreateDlgObj( );
-	virtual BOOL CreateWnd(CWnd* pParent);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType);
 
    bool m_bPaneClosed;
 
