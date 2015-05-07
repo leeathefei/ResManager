@@ -17,3 +17,5 @@
 4.xml文件暂时还不支持多次的嵌套。
 5.xml文件，如果用户在创建一个类，而这个类的父亲窗口还没有创建，那么就需要创建父窗口！！！需要提示用户先创建父窗口？！runtimeclass？！
 6.xml文件的root节点必须为<config>
+7.sampleviewer 和 samplepanel的函数名注册，发生在loadlibrary之后。在InitInstance--pMainFrm->LoadMainMenus函数中完成了dll的加载。从而静态函数注册完成。
+我们的策略是，对于写在配置文件中的dll，在解析完成后，就全部加载到内存中，从而完成函数名的注册。

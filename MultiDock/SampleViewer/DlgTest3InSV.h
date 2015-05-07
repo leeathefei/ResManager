@@ -2,7 +2,7 @@
 
 #include "..\Common\WndManager.h"
 
-class CDlgTest3InSV : public CDialogEx
+class CDlgTest3InSV : public CDialogEx,public CBaseObj
 {
 	DECLARE_DYNAMIC(CDlgTest3InSV)
 
