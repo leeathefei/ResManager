@@ -127,14 +127,13 @@ BOOL CWndConfigDlg::OnInitDialog()
 
 	//4.Init values for controls
 	InitControls();
+	m_listctrlDllName.SetItemState(0, LVIS_SELECTED|LVIS_FOCUSED, LVIS_SELECTED|LVIS_FOCUSED);
 
 	return TRUE;
 }
 
 BOOL CWndConfigDlg::InitControls()
 {
-	//CString strModulesXml = CFileHelper::GetModuleDir()+_T("\\Config\\dllResources.xml");
-	//CXmlConfig::Instance(strModulesXml);
 
 	UINT nDllCount = AppXml()->GetAttributeInt(_T("DllCount"), 0);
 	if (nDllCount > 0)
@@ -147,7 +146,7 @@ BOOL CWndConfigDlg::InitControls()
 			std::wstring strDllValue = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
 			if (!IsDllAdded(CString(strDllValue.c_str())))
 			{
-				UINT nCount = m_listctrlDllName.GetItemCount();
+				UINT nCount = m_mapDllName2Index.size();
 				m_listctrlDllName.InsertItem(nCount, strDllValue.c_str());
 				m_mapDllName2Index.insert(make_pair(strDllValue.c_str(), nCount));
 			}

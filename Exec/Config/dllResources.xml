@@ -1,5 +1,5 @@
 <config>
-	<DllCount>1</DllCount>
+	<DllCount>2</DllCount>
 	<Dll_0>
 		<DllName>SampleViewer</DllName>
 		<bLoad>FALSE</bLoad>
@@ -79,6 +79,85 @@
 			</Group_2>
 		</Panels>
 	</Dll_0>
+	<Dll_1>
+		<DllName>SamplePanel</DllName>
+		<bLoad>FALSE</bLoad>
+		<Panels>
+			<GroupCount>3</GroupCount>
+			<Group_0>
+				<PanelType>FLOAT</PanelType>
+				<PanelCount>1</PanelCount>
+				<Pane_0>
+					<ParentWnd>
+						<ClassName>NULL</ClassName>
+					</ParentWnd>
+					<ClassName>CSamplePanelDialog</ClassName>
+				</Pane_0>
+			</Group_0>
+			<Group_1>
+				<PanelType>DOCK</PanelType>
+				<PanelCount>2</PanelCount>
+				<Pane_0>
+					<ParentWnd>
+						<ClassName>CMainFrame</ClassName>
+					</ParentWnd>
+					<ClassName>CSamplePanelDialog</ClassName>
+				</Pane_0>
+				<Pane_1>
+					<ClassName>CSamplePanelDialog2</ClassName>
+					<ParentWnd>
+						<ClassName>CMainFrame</ClassName>
+					</ParentWnd>
+				</Pane_1>
+			</Group_1>
+			<Group_2>
+				<PanelType>CHILD</PanelType>
+				<PanelCount>3</PanelCount>
+				<Pane_0>
+					<ParentWnd>
+						<ClassName>CSampleViewerView</ClassName>
+						<left/>
+						<top/>
+						<right/>
+						<bottom/>
+					</ParentWnd>
+					<ClassName>CSamplePanelDialog2</ClassName>
+					<left/>
+					<top/>
+					<right/>
+					<bottom/>
+				</Pane_0>
+				<Pane_1>
+					<ParentWnd>
+						<ClassName>CSampleViewerView</ClassName>
+						<left/>
+						<top/>
+						<right/>
+						<bottom/>
+					</ParentWnd>
+					<ClassName>CSamplePanelDialog3</ClassName>
+					<left/>
+					<top/>
+					<right/>
+					<bottom/>
+				</Pane_1>
+				<Pane_2>
+					<ParentWnd>
+						<ClassName>CSampleViewerView</ClassName>
+						<left/>
+						<top/>
+						<right/>
+						<bottom/>
+					</ParentWnd>
+					<ClassName>CSamplePanelDialog4</ClassName>
+					<left/>
+					<top/>
+					<right/>
+					<bottom/>
+				</Pane_2>
+			</Group_2>
+		</Panels>
+	</Dll_1>
 	<Workspace>
 		<TabbedView>
 			<Alignment>0</Alignment>
