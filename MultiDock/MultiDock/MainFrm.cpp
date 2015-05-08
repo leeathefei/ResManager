@@ -2247,7 +2247,7 @@ void CMainFrame::OnShowWndConfigDlg()
 
 void CMainFrame::CreateDockWnd(LPCTSTR lpDllName, LPCTSTR lpClassName, EPANE_ALIGNMENT etype)
 {
-	CDialog* pDlg = (CDialog*)CWndManager::Instance()->Create(lpClassName);
+	CWnd* pDlg = (CWnd*)CWndManager::Instance()->CreateObj(lpClassName);
 	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
 	if (NULL != pBase)
 	{

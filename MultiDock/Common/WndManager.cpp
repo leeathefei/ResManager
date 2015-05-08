@@ -37,7 +37,7 @@ void CWndManager::Register(CString lpszClassName, PFUNC_CREATEOBJ pFun)
 	m_mapClassName2Func.insert(map<CString, PFUNC_CREATEOBJ>::value_type(lpszClassName, pFun));
 }
 
-CWnd* CWndManager::Create(CString lpszClassName) 
+CWnd* CWndManager::CreateObj(CString lpszClassName) 
 {
 	for (map<CString, PFUNC_CREATEOBJ>::iterator it = m_mapClassName2Func.begin();
 		it != m_mapClassName2Func.end(); ++it)

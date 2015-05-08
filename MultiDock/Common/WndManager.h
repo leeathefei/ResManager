@@ -34,7 +34,7 @@ public:
 
 public:
 	void Register(CString lpszClassName, PFUNC_CREATEOBJ pFun);
-	CWnd* Create(CString lpszClassName);
+	CWnd* CreateObj(CString lpszClassName);
 
 protected:
 	CWndManager();

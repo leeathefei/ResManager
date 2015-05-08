@@ -45,11 +45,13 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 {
 	//test interface.
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
-	pFrame->CreateDockWnd(_T("SampleViewer"), _T("CDlgTest4InSV"), ALIGN_NON);
+	pFrame->CreateDockWnd(_T("SampleViewer"), m_strEditClassname.GetString(), ALIGN_VERTICAL);
+
+	/*pFrame->CreateDockWnd(_T("SampleViewer"), _T("CDlgTest4InSV"), ALIGN_NON);
 	pFrame->CreateDockWnd(_T("SampleViewer"), _T("CDlgTest1InSV"), ALIGN_HORIZONTAL);
 
 	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog"), ALIGN_HORIZONTAL);
-	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog4"), ALIGN_VERTICAL);
+	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog4"), ALIGN_VERTICAL);*/
 }
 
 void CDlgCreateFloatPane::UpdateClassName(CString& strClass)
