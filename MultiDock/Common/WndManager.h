@@ -7,22 +7,6 @@
 using namespace std;
 
 typedef CWnd* (*PFUNC_CREATEOBJ)();
-///*typedef PFUNC_CREATEOBJ LPFUNC_CREATEOBJ;*/
-//
-//class CWndManager
-//{
-//public:
-//	CWndManager();
-//	~CWndManager();
-//
-//	static void Register(LPCTSTR lpszClassName, PFUNC_CREATEOBJ);
-//	static CWnd* CreateObj(LPCTSTR lpszClassName);
-//	BOOL CheckIfParentCreated();
-//protected:
-//
-//	static map<LPCTSTR, PFUNC_CREATEOBJ> m_mapRegisters;
-//};
-
 class COMMON_DLLEXPORT CBaseObj
 {
 public:

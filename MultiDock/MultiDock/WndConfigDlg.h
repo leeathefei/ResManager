@@ -29,11 +29,13 @@ protected:
 	afx_msg void OnTcnSelchangeTabFilter(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnDllItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnClassnameItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
 
 	void UpdateClassnames(int nSelected);
 	DECLARE_MESSAGE_MAP()
 public:
-	int m_nSelectedItemIndex;
+	int m_nDllHitIndex;
+	int m_nClassnameHitindex;
 	CListCtrl m_listctrlDllName;
 	CListCtrl m_listctrlClassname;
 	CTabCtrl m_tabctrlCreateWnd;

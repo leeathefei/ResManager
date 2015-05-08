@@ -15,6 +15,7 @@ IMPLEMENT_DYNAMIC(CDlgCreateFloatPane, CDialogEx)
 
 CDlgCreateFloatPane::CDlgCreateFloatPane(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgCreateFloatPane::IDD, pParent)
+	, m_strEditClassname(_T(""))
 {
 
 }
@@ -27,6 +28,8 @@ void CDlgCreateFloatPane::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_COMBO1, m_comboParentWnd);
+	DDX_Control(pDX, IDC_EDIT1, m_editBeCreatedClassname);
+	DDX_Text(pDX, IDC_EDIT1, m_strEditClassname);
 }
 
 
@@ -49,4 +52,11 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog4"), ALIGN_VERTICAL);
 
 	
+}
+
+void CDlgCreateFloatPane::UpdateClassName(CString& strClass)
+{
+	m_strEditClassname = strClass;
+
+	UpdateData(FALSE);
 }

@@ -235,10 +235,16 @@ BOOL CSampleViewerManager::UnregisterModulePane(LPCTSTR lpszWndName)
 // 
 extern "C"
 {
+	//new api for register toolbar.
+	void __declspec(dllexport) AddToolbar()
+	{
+		CSampleViewerManager::Instance()->RegisterToolBar();
+	}
+
    void __declspec(dllexport) Init(WORD w)
    {
       CSampleViewerManager::Instance()->RegisterDocTemplate();
-      CSampleViewerManager::Instance()->RegisterToolBar();
+      //CSampleViewerManager::Instance()->RegisterToolBar();
    }
 
    BOOL __declspec(dllexport) GetIconResourceID(UINT& nResID)
@@ -260,7 +266,7 @@ extern "C"
 
    void __declspec(dllexport) LoadModulePane(WORD w)
    {
-      CSampleViewerManager::Instance()->RegisterModulePane();
+     // CSampleViewerManager::Instance()->RegisterModulePane();
    }
 
 };

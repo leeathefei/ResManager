@@ -200,6 +200,9 @@ protected:
 	void SetDockingWindowIcons(BOOL bHiColorIcons);
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnTestCreateSampleviewer();
+	afx_msg void OnTestCreate4childwndFrompanelproj();
 };
 
 

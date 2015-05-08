@@ -21,7 +21,8 @@ CWndConfigDlg::CWndConfigDlg(CWnd* pParent /*=NULL*/)
 	m_pCreateChild = NULL;
 	m_pCreateDock  = NULL;
 	m_pCreateFloat = NULL;
-	m_nSelectedItemIndex = -1;
+	m_nDllHitIndex = -1;
+	m_nClassnameHitindex = -1;
 }
 
 CWndConfigDlg::~CWndConfigDlg()
@@ -57,6 +58,7 @@ BEGIN_MESSAGE_MAP(CWndConfigDlg, CDialogEx)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CWndConfigDlg::OnTcnSelchangeTabFilter)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST2, OnDllItemChanged)
 	ON_NOTIFY(NM_CLICK, IDC_LIST2, OnMouseClicked)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST1, OnClassnameItemChanged)
 END_MESSAGE_MAP()
 
 
@@ -328,7 +330,7 @@ void CWndConfigDlg::OnDllItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
 
 	int nItem = m_listctrlDllName.GetNextSelectedItem(pos);
 
-	if (nItem != m_nSelectedItemIndex)
+	if (nItem != m_nDllHitIndex)
 	{
 		UpdateClassnames(nItem);
 	}
@@ -358,12 +360,12 @@ void CWndConfigDlg::OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CWndConfigDlg::UpdateClassnames(int nSelected)
 {
-	if (nSelected == m_nSelectedItemIndex)
+	if (nSelected == m_nDllHitIndex)
 	{
 		return;
 	}
 
-	m_nSelectedItemIndex = nSelected;
+	m_nDllHitIndex = nSelected;
 	m_listctrlClassname.DeleteAllItems();
 
 	CString strDllName;
@@ -381,3 +383,26 @@ void CWndConfigDlg::UpdateClassnames(int nSelected)
 	}
 }
 
+
+void CWndConfigDlg::OnClassnameItemChanged(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	POSITION pos = m_listctrlClassname.GetFirstSelectedItemPosition();
+	DWORD dwErr = GetLastError();
+	if ( !pos )
+		return;
+
+	int nItem = m_listctrlClassname.GetNextSelectedItem(pos);
+
+	if (nItem != m_nClassnameHitindex)
+	{
+		m_nClassnameHitindex = nItem;
+
+		CString strClassname = m_listctrlClassname.GetItemText(nItem, 0);
+		if (NULL != m_pCreateFloat)
+		{
+			m_pCreateFloat->UpdateClassName(strClassname);
+		}
+	}
+
+	*pResult = 0;
+}

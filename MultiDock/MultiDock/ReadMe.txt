@@ -22,3 +22,11 @@
 8.约定：对于Mainframe+viewer这些系统自带的窗口。我们默认就先创建好。其他的窗口和控件可以随时创建。
 9.提供外部接口，类似Init函数，主程序保存dllHInstance。以便随时得到函数process指针，从而调用，来创建相应的窗口。
 10.任何CreateWnd函数需要转换到当前的dll资源环境：USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
+
+11.策略：因为dll的Viewer和ChildFrame类的特殊性，考虑到和相应的Doc类的绑定，所以在Dll加载的时候，就默认将模板注册起来。
+但相应的toolbar和菜单？！不会立即注册。CMainFrame在程序一开始就创建好的。
+
+12.在创建之前，在勾选父窗口的时候，如果父窗口还没创建（常见在dll模块的View和ChildFrame和doc还没注册），
+	就提醒用户是否创建父窗口，否则创建基于CMainFrame的窗口。
+
+13.????但有个问题：对于多View界面的窗口，在勾选父窗口的时候，不能通过类名类区分谁可以作为父窗口，应该是实例才对！！
