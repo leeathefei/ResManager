@@ -44,12 +44,14 @@ public:
 	void AddEventHandler(IObjCreatedEvent* pEvent);
 	void Register(CString lpszClassName, PFUNC_CREATEOBJ pFun);
 	CWnd* CreateObj(CString lpszClassName);
+	UINT GetNextViewIndex();
 
 protected:
 	CWndManager();
 	void ProcessEvent(CWnd*& pWnd, CString& strClass);
 
 protected:
+	UINT m_nViewIndex;	
 	static CWndManager* m_pInstance;
 	map<CString, PFUNC_CREATEOBJ> m_mapClassName2Func;
 	list<IObjCreatedEvent*> m_listHandlers;

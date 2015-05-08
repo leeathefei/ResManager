@@ -12,6 +12,7 @@
 #include "MultiDockDoc.h"
 #include "MultiDockView.h"
 
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -139,7 +140,6 @@ int CMultiDockView::OnCreate(LPCREATESTRUCT lpcs)
 	{
 		return -1;
 	}
-
 
 	m_pListCtrl = new CListCtrl();
 	m_pListCtrl->Create(WS_CHILD|WS_VISIBLE	|WS_BORDER|LVS_SINGLESEL|LVS_SHOWSELALWAYS|LVS_NOSORTHEADER|LVS_REPORT, 

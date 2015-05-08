@@ -40,3 +40,4 @@ tips:mainframe提供两种接口
 	2.LoadDllByName是创建frame+view（直接调用注册文档模板对象创建框架）
 
 tips:对于创建的窗口，可以监听并受到IObjCreatedEvent回调，但是，对于Frame+View却没有通知机制。需要注意哦！应该在LoadDllByname中完成消息的发布。
+tips:每个View类需要在OnCreate函数中将自己的内存地址写入到xml文件共其他控件分享数据。

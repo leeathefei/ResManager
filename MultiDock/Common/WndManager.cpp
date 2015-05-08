@@ -7,6 +7,7 @@ CWndManager* CWndManager::m_pInstance = NULL;
 
 CWndManager::CWndManager()
 {
+	m_nViewIndex = 0;
 }
 
 CWndManager::~CWndManager()
@@ -75,4 +76,9 @@ void CWndManager::ProcessEvent(CWnd*& pWnd, CString& strClass)
 			pEvent->OnObjectCreated(pWnd, strClass);
 		}
 	}
+}
+
+UINT CWndManager::GetNextViewIndex()
+{
+	return m_nViewIndex++;
 }

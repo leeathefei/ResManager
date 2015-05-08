@@ -5,6 +5,8 @@
 #include "SampleViewer.h"
 #include "SampleViewerView.h"
 #include "SampleViewerManager.h"
+#include "..\Common\XmlConfig.h"
+#include "..\Common\WndManager.h"
 
 
 IMPLEMENT_DYNCREATE(CSampleViewerView, CScrollView)
@@ -27,14 +29,35 @@ BEGIN_MESSAGE_MAP(CSampleViewerView, CScrollView)
    ON_WM_RBUTTONUP()
    ON_WM_SIZE()
    ON_WM_DESTROY()
+   ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 
 // CSampleViewerView drawing
+int CSampleViewerView::OnCreate(LPCREATESTRUCT lpcs)
+{
+	UINT nIndex = CWndManager::Instance()->GetNextViewIndex();
+	CString strAddr;
+	strAddr.Format(_T("0x%08x"), this);
+	CString strNode;
+	strNode.Format(_T("MainFrame\\View_%d\\Address"), nIndex);
+	AppXml()->SetAttribute(strNode, strAddr);
+	strNode.Format(_T("MainFrame\\View_%d\\ClassName"), nIndex);
+	AppXml()->SetAttribute(strNode, _T("CSampleViewerView"));
+	AppXml()->FlushData();
+
+	if (CView::OnCreate(lpcs) == -1)
+	{
+		return -1;
+	}
+
+	return 0;
+}
 
 void CSampleViewerView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
+
 
 	CSize sizeTotal;
 	// TODO: calculate the total size of this view

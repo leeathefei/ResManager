@@ -162,9 +162,20 @@
 			</Group_2>
 		</Panels>
 	</Dll_1>
+	<MainFrame>
+		<Address>0x02331ff0</Address>
+		<ClassName>CMainFrame</ClassName>
+		<View_0>
+			<Address>0x023768c8</Address>
+			<ClassName>CSampleViewerView</ClassName>
+		</View_0>
+	</MainFrame>
 	<Workspace>
 		<TabbedView>
 			<Alignment>0</Alignment>
+			<Group0>
+				<Tab0 Name="SampleViewer">false</Tab0>
+			</Group0>
 		</TabbedView>
 		<DockablePane>false</DockablePane>
 	</Workspace>

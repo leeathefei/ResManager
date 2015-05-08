@@ -21,6 +21,8 @@
 
 #include "SamplePanelDoc.h"
 #include "SamplePanelView.h"
+#include "..\Common\WndManager.h"
+#include "..\Common\XmlConfig.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,6 +35,7 @@ IMPLEMENT_DYNCREATE(CSamplePanelView, CScrollView)
 
 BEGIN_MESSAGE_MAP(CSamplePanelView, CScrollView)
 	ON_WM_RBUTTONUP()
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 CSamplePanelView::CSamplePanelView()
@@ -66,6 +69,26 @@ void CSamplePanelView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 	OnContextMenu(this, point);
 }
 
+int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
+{
+	if (CScrollView::OnCreate(lpcs) == -1)
+	{
+		return -1;
+	}
+
+	UINT nIndex = CWndManager::Instance()->GetNextViewIndex();
+	CString strAddr;
+	strAddr.Format(_T("0x%08x"), this);
+	CString strNode;
+	strNode.Format(_T("MainFrame\\View_%d\\Address"), nIndex);
+	AppXml()->SetAttribute(strNode, strAddr);
+	strNode.Format(_T("MainFrame\\View_%d\\ClassName"), nIndex);
+	AppXml()->SetAttribute(strNode, _T("CSamplePanelView"));
+	AppXml()->FlushData();
+
+
+	return 0;
+}
 
 
 

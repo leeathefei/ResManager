@@ -148,6 +148,7 @@ public:
 	CToolBarList      m_ToolbarList;
 
 	CWndConfigDlg*    m_pDlgConfigWnd;
+	static UINT s_ViewerIndex;
 
 protected:
 	afx_msg LRESULT OnInitModulePanes(WPARAM W, LPARAM L);
