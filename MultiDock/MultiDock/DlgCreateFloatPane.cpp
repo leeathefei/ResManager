@@ -50,8 +50,6 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 
 	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog"), ALIGN_HORIZONTAL);
 	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog4"), ALIGN_VERTICAL);
-
-	
 }
 
 void CDlgCreateFloatPane::UpdateClassName(CString& strClass)

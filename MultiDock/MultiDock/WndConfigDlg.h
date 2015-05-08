@@ -1,9 +1,7 @@
 #pragma once
 #include "afxwin.h"
 #include "afxcmn.h"
-#include <map>
 
-using namespace std;
 
 class CDlgCreateFloatPane;
 class CDlgCreateDockPane;
@@ -44,18 +42,6 @@ public:
 	CDlgCreateDockPane*  m_pCreateDock;
 	CDlgCreateChildPane* m_pCreateChild;
 
-protected:
-	void AddClassName(CString& strDll, CString& strClassName, UINT nIndex);
-	BOOL IsDllAdded(CString& strDllName);
-	BOOL IsClassNameAdded(CString& strDll, CString& strClassname);
-	void ProcessFloatType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
-	void ProcessDockType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
-	void ProcessChildType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
-	
-	typedef map<CString, UINT> MapName2Index;
-	typedef map<CString, MapName2Index> MapDll2ClassNames;
 
-	map<CString, UINT> m_mapDllName2Index;
-	MapDll2ClassNames  m_mapAllDllClassNames;
 
 };

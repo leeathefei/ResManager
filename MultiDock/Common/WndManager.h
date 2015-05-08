@@ -1,3 +1,12 @@
+
+
+/********************************************************************
+	Created:	2015/05/7   10:02
+	Filename:	WndManager.h
+	Author:		Chris Lee
+	Functions:	Manage to dynamic create window
+*********************************************************************/
+
 #pragma once
 
 #include "GeneralMacroDefine.h"

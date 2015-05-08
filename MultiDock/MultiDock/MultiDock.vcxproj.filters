@@ -177,9 +177,6 @@
     <ClInclude Include="Workspace.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceProcessor.h">
-      <Filter>Source Files\configProcessor</Filter>
-    </ClInclude>
     <ClInclude Include="WndConfigDlg.h">
       <Filter>Source Files\configProcessor</Filter>
     </ClInclude>
@@ -191,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="DlgCreateDockPane.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlDataProc.h">
+      <Filter>Source Files\configProcessor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -263,10 +263,10 @@
     <ClCompile Include="DlgCreateChildPane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceProcessor.cpp">
+    <ClCompile Include="WndConfigDlg.cpp">
       <Filter>Source Files\configProcessor</Filter>
     </ClCompile>
-    <ClCompile Include="WndConfigDlg.cpp">
+    <ClCompile Include="XmlDataProc.cpp">
       <Filter>Source Files\configProcessor</Filter>
     </ClCompile>
   </ItemGroup>
