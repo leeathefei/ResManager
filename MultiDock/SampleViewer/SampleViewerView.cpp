@@ -36,7 +36,7 @@ END_MESSAGE_MAP()
 // CSampleViewerView drawing
 int CSampleViewerView::OnCreate(LPCREATESTRUCT lpcs)
 {
-	UINT nIndex = CWndManager::Instance()->GetNextViewIndex();
+	/*UINT nIndex = CWndManager::Instance()->GetNextViewIndex();
 	CString strAddr;
 	strAddr.Format(_T("0x%08x"), this);
 	CString strNode;
@@ -44,12 +44,14 @@ int CSampleViewerView::OnCreate(LPCREATESTRUCT lpcs)
 	AppXml()->SetAttribute(strNode, strAddr);
 	strNode.Format(_T("MainFrame\\View_%d\\ClassName"), nIndex);
 	AppXml()->SetAttribute(strNode, _T("CSampleViewerView"));
-	AppXml()->FlushData();
+	AppXml()->FlushData();*/
 
 	if (CView::OnCreate(lpcs) == -1)
 	{
 		return -1;
 	}
+
+	CWndManager::Instance()->AddCreatedWnd(this, _T("CSampleViewerView"));
 
 	return 0;
 }

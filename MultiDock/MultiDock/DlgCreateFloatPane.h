@@ -15,9 +15,8 @@ public:
 	CDlgCreateFloatPane(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDlgCreateFloatPane();
 
-	virtual void OnObjectCreated(CWnd* pWnd, CString& strClass);
-
 	void UpdateClassName(CString& strClass, CString& strDllName);
+	void InitCreatedLisctrl();
 
 // Dialog Data
 	enum { IDD = IDD_CREATE_FLOAT_PANE };
@@ -25,6 +24,7 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    
 	virtual BOOL OnInitDialog();
+	virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName);
 
 	DECLARE_MESSAGE_MAP()
 public:

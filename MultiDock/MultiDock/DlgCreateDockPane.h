@@ -11,8 +11,11 @@ public:
 	CDlgCreateDockPane(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDlgCreateDockPane();
 
-	virtual void OnObjectCreated(CWnd* pWnd, CString& strClass);
+	virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName);
+
+
 	void UpdateClassName(CString&strDll, CString&strClass);
+	void InitCreatedWnd();
 
 // Dialog Data
 	enum { IDD = IDD_CREATE_DOCK_PANE };

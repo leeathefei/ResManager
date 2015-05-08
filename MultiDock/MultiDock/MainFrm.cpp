@@ -217,11 +217,13 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CString strModulesXml = CFileHelper::GetModuleDir()+_T("\\Config\\dllResources.xml");
 	CXmlConfig::Instance(strModulesXml);
 
-	CString strFrameAdd;
-	strFrameAdd.Format(_T("0x%08x"), this);
-	AppXml()->SetAttribute(_T("MainFrame\\Address"), strFrameAdd);
-	AppXml()->SetAttribute(_T("MainFrame\\ClassName"), _T("CMainFrame"));
-	AppXml()->FlushData();
+// 	CString strFrameAdd;
+// 	strFrameAdd.Format(_T("0x%08x"), this);
+// 	AppXml()->SetAttribute(_T("MainFrame\\Address"), strFrameAdd);
+// 	AppXml()->SetAttribute(_T("MainFrame\\ClassName"), _T("CMainFrame"));
+// 	AppXml()->FlushData();
+
+	CWndManager::Instance()->AddCreatedWnd(this, _T("CMainFrame"));
 
 	if (!m_wndMenuBar.Create(this))
 	{
@@ -2250,42 +2252,38 @@ void CMainFrame::OnShowWndConfigDlg()
 
 //////////////////////////////////////////////////////////////////////////
 //
-void CMainFrame::CreateFloatWnd(CString& strClass)
-{
-	//create panes.
-	CWnd* pDlg = (CWnd*)CWndManager::Instance()->CreateObj(strClass);
-	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
-	if (NULL != pBase)
-	{
-		pBase->CreateWnd(this/*NULL*/, ALIGN_NON);//默认float的parent是mainframe！
-		pDlg->ShowWindow(SW_SHOW);
-	}
-
-	//write inherit to xml file.
-	CString strNode;
-	//strNode.Format(_T(""))
-}
-
-void CMainFrame::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype)
-{
-	CWnd* pDlg = (CWnd*)CWndManager::Instance()->CreateObj(strClass);
-	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
-	if (NULL != pBase)
-	{
-		pBase->CreateWnd(/*pParent*/this, etype);//默认dock的parent是mainframe！
-		pDlg->ShowWindow(SW_SHOW);
-	}
-}
-
-void CMainFrame::CreateChildWnd(CWnd* pParent, CString& strClass)
-{
-	CWnd* pChildWnd = (CWnd*)CWndManager::Instance()->CreateObj(strClass);
-	CBaseObj* pBase = dynamic_cast<CBaseObj*>(pChildWnd);
-	if (NULL != pBase)
-	{
-		pBase->CreateWnd(pParent, ALIGN_NON);
-	}
-}
+//void CMainFrame::CreateFloatWnd(CString& strClass)
+//{
+//	//create panes.
+//	CWnd* pDlg = (CWnd*)CWndManager::Instance()->CreateObj(strClass);
+//	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
+//	if (NULL != pBase)
+//	{
+//		pBase->CreateWnd(this/*NULL*/, ALIGN_NON);//默认float的parent是mainframe！
+//		pDlg->ShowWindow(SW_SHOW);
+//	}
+//}
+//
+//void CMainFrame::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype)
+//{
+//	CWnd* pDlg = (CWnd*)CWndManager::Instance()->CreateObj(strClass);
+//	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
+//	if (NULL != pBase)
+//	{
+//		pBase->CreateWnd(/*pParent*/this, etype);//默认dock的parent是mainframe！
+//		pDlg->ShowWindow(SW_SHOW);
+//	}
+//}
+//
+//void CMainFrame::CreateChildWnd(CWnd* pParent, CString& strClass)
+//{
+//	CWnd* pChildWnd = (CWnd*)CWndManager::Instance()->CreateObj(strClass);
+//	CBaseObj* pBase = dynamic_cast<CBaseObj*>(pChildWnd);
+//	if (NULL != pBase)
+//	{
+//		pBase->CreateWnd(pParent, ALIGN_NON);
+//	}
+//}
 
 void CMainFrame::LoadDllByName(CString& strDllname)
 {

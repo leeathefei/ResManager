@@ -76,7 +76,7 @@ int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
 		return -1;
 	}
 
-	UINT nIndex = CWndManager::Instance()->GetNextViewIndex();
+	/*UINT nIndex = CWndManager::Instance()->GetNextViewIndex();
 	CString strAddr;
 	strAddr.Format(_T("0x%08x"), this);
 	CString strNode;
@@ -84,7 +84,9 @@ int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
 	AppXml()->SetAttribute(strNode, strAddr);
 	strNode.Format(_T("MainFrame\\View_%d\\ClassName"), nIndex);
 	AppXml()->SetAttribute(strNode, _T("CSamplePanelView"));
-	AppXml()->FlushData();
+	AppXml()->FlushData();*/
+
+	CWndManager::Instance()->AddCreatedWnd(this, _T("CSamplePanelView"));
 
 
 	return 0;

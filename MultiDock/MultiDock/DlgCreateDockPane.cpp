@@ -6,6 +6,7 @@
 #include "DlgCreateDockPane.h"
 #include "afxdialogex.h"
 #include "MainFrm.h"
+#include "XmlDataProc.h"
 
 
 // CDlgCreateDockPane dialog
@@ -45,18 +46,14 @@ BOOL CDlgCreateDockPane::OnInitDialog()
 	m_listParentsInDock.InsertColumn(0, _T("ClassName"), LVCFMT_LEFT, 180);
 	m_listParentsInDock.InsertColumn(1, _T("hInstance"), LVCFMT_LEFT, 100);
 
+	InitCreatedWnd();
+
 	return TRUE;
 
 }
 BEGIN_MESSAGE_MAP(CDlgCreateDockPane, CDialogEx)
 	ON_BN_CLICKED(IDC_CREATEWND_INDOCKPAGE, &CDlgCreateDockPane::OnBnClickedCreatewndIndockpage)
 END_MESSAGE_MAP()
-
-
-void CDlgCreateDockPane::OnObjectCreated(CWnd* pWnd, CString& strClass)
-{
-
-}
 
 void CDlgCreateDockPane::UpdateClassName(CString&strDll, CString&strClass)
 {
@@ -70,24 +67,67 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 {
 	UpdateData(TRUE);
 
-	//CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
-	//if (!m_strEditClassname.IsEmpty())
-	//{
-	//	if (CXmlDataProc::Instance()->IsFrameViewClass(m_strEditClassname))
-	//	{
-	//		if (CXmlDataProc::Instance()->IsFrameViewLoaded(m_strEditClassname))
-	//		{
-	//			//目前只支持单文档？！
-	//		}
-	//		else//load first 
-	//		{
-	//			pFrame->LoadDllByName(m_strDllname);
-	//		}
-	//	}
-	//	else
-	//	{
-	//		pFrame->CreateFloatWnd(m_strEditClassname);
-	//	}
+	EPANE_ALIGNMENT eType;
+	switch(m_nRadioDirection)
+	{
+	case 0:
+		eType = ALIGN_LEFT;
+		break;
+	case 1:
+		eType = ALIGN_RIGHT;
+		break;
+	case 2:
+		eType = ALIGN_TOP;
+		break;
+	case 3:
+		eType = ALIGN_BOTTON;
+		break;
 
-	//}
+	default:
+		break;
+	}
+
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	if (!m_strClassname.IsEmpty())
+	{
+		if (CXmlDataProc::Instance()->IsFrameViewClass(m_strClassname))
+		{
+			if (CXmlDataProc::Instance()->IsFrameViewLoaded(m_strClassname))
+			{
+				//目前只支持单文档？！
+			}
+			else//load first 
+			{
+				pFrame->LoadDllByName(m_strDllname);
+			}
+		}
+		else
+		{
+			CWndManager::Instance()->CreateDockWnd((CWnd*)pFrame, m_strClassname, eType);
+		}
+
+	}
+}
+void CDlgCreateDockPane::OnObjectCreated(CWnd* pWnd, CString& strClassName)
+{
+	InitCreatedWnd();
+}
+
+void CDlgCreateDockPane::InitCreatedWnd()
+{
+	m_listParentsInDock.DeleteAllItems();
+
+	map<CString, CString> mapAllCreatedWnd;
+	if(CWndManager::Instance()->GetCreatedWnd(mapAllCreatedWnd))
+	{
+		int index = 0;
+		for (map<CString,CString>::iterator it = mapAllCreatedWnd.begin();
+			it != mapAllCreatedWnd.end(); ++it)
+		{
+			m_listParentsInDock.InsertItem(index, it->first);
+			m_listParentsInDock.SetItemText(index, 1, it->second);
+
+			index++;
+		}
+	}
 }

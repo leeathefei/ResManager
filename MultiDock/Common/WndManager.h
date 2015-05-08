@@ -16,11 +16,11 @@
 
 using namespace std;
 
-class IObjCreatedEvent
-{
-public:
-	virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName) = 0;
-};
+ class IObjCreatedEvent
+ {
+ public:
+ 	virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName) = 0;
+ };
 
 
 typedef CWnd* (*PFUNC_CREATEOBJ)();
@@ -45,6 +45,15 @@ public:
 	void Register(CString lpszClassName, PFUNC_CREATEOBJ pFun);
 	CWnd* CreateObj(CString lpszClassName);
 	UINT GetNextViewIndex();
+
+	//for different createing window page wndcofigdlg.h
+	//Create pane+dialogs.
+	void CreateFloatWnd(CWnd* pParent, CString& strClass);
+	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype);
+	void CreateChildWnd(CWnd* pParent, CString& strClass);
+
+	void AddCreatedWnd(CWnd* pWnd, CString strClass);
+	BOOL GetCreatedWnd(map<CString, CString>& mapAllCreated);
 
 protected:
 	CWndManager();

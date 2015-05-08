@@ -43,6 +43,8 @@ BOOL CDlgCreateFloatPane::OnInitDialog()
 	m_listParentInFloat.InsertColumn(0, _T("ClassName"), LVCFMT_LEFT, 180);
 	m_listParentInFloat.InsertColumn(1, _T("hInstance"), LVCFMT_LEFT, 100);
 
+	InitCreatedLisctrl();
+
 	return TRUE;
 	
 }
@@ -76,9 +78,8 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 		}
 		else
 		{
-			pFrame->CreateFloatWnd(m_strEditClassname);
+			CWndManager::Instance()->CreateFloatWnd((CWnd*)pFrame, m_strEditClassname);
 		}
-		
 	}
 	
 }
@@ -90,8 +91,27 @@ void CDlgCreateFloatPane::UpdateClassName(CString& strClass, CString& strDllName
 
 	UpdateData(FALSE);
 }
-
-void CDlgCreateFloatPane::OnObjectCreated(CWnd* pWnd, CString& strClass)
+void CDlgCreateFloatPane::OnObjectCreated(CWnd* pWnd, CString& strClassName)
 {
+	InitCreatedLisctrl();
+}
+
+void CDlgCreateFloatPane::InitCreatedLisctrl()
+{
+	m_listParentInFloat.DeleteAllItems();
+
+	map<CString, CString> mapAllCreatedWnd;
+	if(CWndManager::Instance()->GetCreatedWnd(mapAllCreatedWnd))
+	{
+		int index = 0;
+		for (map<CString,CString>::iterator it = mapAllCreatedWnd.begin();
+			it != mapAllCreatedWnd.end(); ++it)
+		{
+			m_listParentInFloat.InsertItem(index, it->first);
+			m_listParentInFloat.SetItemText(index, 1, it->second);
+
+			index++;
+		}
+	}
 
 }

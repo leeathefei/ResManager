@@ -70,11 +70,11 @@ public:
 	BOOL StartupAsWorkspace();
 	void RecalcLayoutEx();
 
-	//for different createing window page wndcofigdlg.h
-	//Create pane+dialogs.
-	void CreateFloatWnd(CString& strClass);
-	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype);
-	void CreateChildWnd(CWnd* pParent, CString& strClass);
+	////for different createing window page wndcofigdlg.h
+	////Create pane+dialogs.
+	//void CreateFloatWnd(CString& strClass);
+	//void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype);
+	//void CreateChildWnd(CWnd* pParent, CString& strClass);
 	//Create Frame+view.
 	void LoadDllByName(CString& strDllname);
 	

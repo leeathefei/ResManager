@@ -10,7 +10,9 @@ public:
 	CDlgCreateChildPane(CWnd* pParent = NULL);  
 	virtual ~CDlgCreateChildPane();
 
-	virtual void OnObjectCreated(CWnd* pWnd, CString& strClass);
+	virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName);
+	void InitCreatedWnd();
+
 // Dialog Data
 	enum { IDD = IDD_CREATE_CHILD_PANE };
 

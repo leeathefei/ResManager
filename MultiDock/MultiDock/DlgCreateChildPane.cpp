@@ -30,7 +30,12 @@ void CDlgCreateChildPane::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgCreateChildPane, CDialogEx)
 END_MESSAGE_MAP()
 
-void CDlgCreateChildPane::OnObjectCreated(CWnd* pWnd, CString& strClass)
+void CDlgCreateChildPane::OnObjectCreated(CWnd* pWnd, CString& strClassName)
+{
+
+}
+
+void CDlgCreateChildPane::InitCreatedWnd()
 {
 
 }

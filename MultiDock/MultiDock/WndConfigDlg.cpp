@@ -289,6 +289,7 @@ void CWndConfigDlg::OnClassnameItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
 		if (NULL != m_pCreateFloat)
 		{
 			m_pCreateFloat->UpdateClassName(strClassname, strDllname);
+			m_pCreateDock->UpdateClassName(strDllname, strClassname);
 		}
 	}
 
