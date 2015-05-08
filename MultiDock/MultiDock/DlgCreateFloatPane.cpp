@@ -6,7 +6,6 @@
 #include "DlgCreateFloatPane.h"
 #include "afxdialogex.h"
 #include "MainFrm.h"
-#include "..\Common\WndManager.h"
 #include "XmlDataProc.h"
 
 // CDlgCreateFloatPane dialog
@@ -17,7 +16,7 @@ CDlgCreateFloatPane::CDlgCreateFloatPane(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgCreateFloatPane::IDD, pParent)
 	, m_strEditClassname(_T(""))
 {
-
+	CWndManager::Instance()->AddEventHandler(this);
 }
 
 CDlgCreateFloatPane::~CDlgCreateFloatPane()
@@ -74,4 +73,9 @@ void CDlgCreateFloatPane::UpdateClassName(CString& strClass, CString& strDllName
 	m_strDllname	   = strDllName;
 
 	UpdateData(FALSE);
+}
+
+void CDlgCreateFloatPane::OnObjectCreated(CWnd* pWnd, CString& strClass)
+{
+
 }

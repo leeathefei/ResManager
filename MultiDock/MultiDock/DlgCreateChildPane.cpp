@@ -14,7 +14,7 @@ IMPLEMENT_DYNAMIC(CDlgCreateChildPane, CDialogEx)
 CDlgCreateChildPane::CDlgCreateChildPane(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgCreateChildPane::IDD, pParent)
 {
-
+	CWndManager::Instance()->AddEventHandler(this);
 }
 
 CDlgCreateChildPane::~CDlgCreateChildPane()
@@ -30,5 +30,7 @@ void CDlgCreateChildPane::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgCreateChildPane, CDialogEx)
 END_MESSAGE_MAP()
 
+void CDlgCreateChildPane::OnObjectCreated(CWnd* pWnd, CString& strClass)
+{
 
-// CDlgCreateChildPane message handlers
+}

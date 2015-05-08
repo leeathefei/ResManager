@@ -15,7 +15,7 @@ CDlgCreateDockPane::CDlgCreateDockPane(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgCreateDockPane::IDD, pParent)
 	, m_strClassname(_T(""))
 {
-
+	CWndManager::Instance()->AddEventHandler(this);
 }
 
 CDlgCreateDockPane::~CDlgCreateDockPane()
@@ -35,4 +35,7 @@ BEGIN_MESSAGE_MAP(CDlgCreateDockPane, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CDlgCreateDockPane message handlers
+void CDlgCreateDockPane::OnObjectCreated(CWnd* pWnd, CString& strClass)
+{
+
+}

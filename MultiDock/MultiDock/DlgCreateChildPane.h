@@ -1,16 +1,16 @@
 #pragma once
 
+#include "..\Common\WndManager.h"
 
-// CDlgCreateChildPane dialog
-
-class CDlgCreateChildPane : public CDialogEx
+class CDlgCreateChildPane : public CDialogEx, public IObjCreatedEvent
 {
 	DECLARE_DYNAMIC(CDlgCreateChildPane)
 
 public:
-	CDlgCreateChildPane(CWnd* pParent = NULL);   // standard constructor
+	CDlgCreateChildPane(CWnd* pParent = NULL);  
 	virtual ~CDlgCreateChildPane();
 
+	virtual void OnObjectCreated(CWnd* pWnd, CString& strClass);
 // Dialog Data
 	enum { IDD = IDD_CREATE_CHILD_PANE };
 

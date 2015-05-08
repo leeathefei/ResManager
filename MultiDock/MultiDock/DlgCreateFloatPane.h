@@ -1,17 +1,21 @@
 #pragma once
 #include "afxwin.h"
 #include "afxcmn.h"
+#include "..\Common\WndManager.h"
+
 
 class CMainFrame;
 // CDlgCreateFloatPane dialog
 
-class CDlgCreateFloatPane : public CDialogEx
+class CDlgCreateFloatPane : public CDialogEx, public IObjCreatedEvent
 {
 	DECLARE_DYNAMIC(CDlgCreateFloatPane)
 
 public:
 	CDlgCreateFloatPane(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDlgCreateFloatPane();
+
+	virtual void OnObjectCreated(CWnd* pWnd, CString& strClass);
 
 	void UpdateClassName(CString& strClass, CString& strDllName);
 

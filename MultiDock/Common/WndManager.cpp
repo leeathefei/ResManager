@@ -72,7 +72,7 @@ void CWndManager::ProcessEvent(CWnd*& pWnd, CString& strClass)
 		IObjCreatedEvent* pEvent = (*it);
 		if (NULL != pEvent)
 		{
-			pEvent->OnCreateObject(pWnd, strClass);
+			pEvent->OnObjectCreated(pWnd, strClass);
 		}
 	}
 }

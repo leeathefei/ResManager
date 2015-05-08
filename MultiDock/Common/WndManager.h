@@ -19,7 +19,7 @@ using namespace std;
 class IObjCreatedEvent
 {
 public:
-	virtual void OnCreateObject(CWnd* pWnd, CString& strClassName) = 0;
+	virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName) = 0;
 };
 
 
