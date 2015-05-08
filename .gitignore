@@ -63,3 +63,6 @@ Temporary Items
 *.suo
 *.suo
 *.aps
+*.lib
+*.exe
+*.dll

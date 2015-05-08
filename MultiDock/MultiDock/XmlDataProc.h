@@ -12,6 +12,12 @@
 
 using namespace std;
 
+struct stDllFrameView 
+{
+	CString strFrameClassName;
+	CString strViewClassName;
+};
+
 class CXmlDataProc
 {
 public:
@@ -31,6 +37,7 @@ protected:
 
 protected:
 	UINT GetClassesCount(CString& strDll);
+	void AddFrameViewClassName(LPCTSTR strDll, LPCTSTR strFrame, LPCTSTR strView);
 	void AddClassName(CString& strDll, CString& strClassName, UINT nIndex);
 	BOOL IsDllAdded(CString& strDllName);
 	BOOL IsClassNameAdded(CString& strDll, CString& strClassname);
@@ -40,9 +47,11 @@ protected:
 
 	typedef map<CString, UINT> MapName2Index;
 	typedef map<CString, MapName2Index> MapDll2ClassNames;
+	typedef map<CString, stDllFrameView> MapDllFrameView;
 
 	map<CString, UINT> m_mapDllName2Index;
 	MapDll2ClassNames  m_mapAllDllClassNames;
+	MapDllFrameView	   m_mapDll2FrameView;
 
 
 protected:

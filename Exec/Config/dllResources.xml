@@ -2,6 +2,8 @@
 	<DllCount>2</DllCount>
 	<Dll_0>
 		<DllName>SampleViewer.dll</DllName>
+		<FrameWndClassName>CSamplePanelFrame</FrameWndClassName>
+		<ViewClassName>CSampleViewerView</ViewClassName>
 		<bLoad>FALSE</bLoad>
 		<Panels>
 			<GroupCount>3</GroupCount>
@@ -81,6 +83,8 @@
 	</Dll_0>
 	<Dll_1>
 		<DllName>SamplePanel.dll</DllName>
+		<FrameWndClassName>CSamplePanelFrame</FrameWndClassName>
+		<ViewClassName>CSamplePanelView</ViewClassName>
 		<bLoad>FALSE</bLoad>
 		<Panels>
 			<GroupCount>3</GroupCount>

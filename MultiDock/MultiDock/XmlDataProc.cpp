@@ -46,10 +46,20 @@ BOOL CXmlDataProc::Init()
 			CString strNode;
 			strNode.Format(_T("Dll_%d\\DllName"), i);
 			std::wstring strDllValue = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
-			if (!IsDllAdded(CString(strDllValue.c_str())))
+			if (!strDllValue.empty() && !IsDllAdded(CString(strDllValue.c_str())))
 			{
 				UINT nCount = m_mapDllName2Index.size();
 				m_mapDllName2Index.insert(make_pair(strDllValue.c_str(), nCount));
+			}
+			
+			//read child frame+view class name
+			strNode.Format(_T("Dll_%d\\FrameWndClassName"), i);
+			std::wstring strFramename = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
+			strNode.Format(_T("Dll_%d\\ViewClassName"), i);
+			std::wstring strViewname  = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
+			if (!strFramename.empty() && !strViewname.empty())
+			{
+				AddFrameViewClassName(strDllValue.c_str(),strFramename.c_str(), strViewname.c_str());
 			}
 
 			//read class names.
@@ -148,7 +158,7 @@ void CXmlDataProc::ProcessFloatType(UINT uDllIndex, UINT uGroupIndex, CString& s
 		CString strParentNode;
 		strParentNode.Format(_T("Dll_%d\\Panels\\Group_%d\\Pane_%d\\ParentWnd\\ClassName"), uDllIndex, uGroupIndex, i);
 		std::wstring strParentName = AppXml()->GetAttributeText(strParentNode.GetString(), _T(""));
-		if (!IsClassNameAdded(strDllName, CString(strParentName.c_str())))
+		if (!strParentName.empty() && !IsClassNameAdded(strDllName, CString(strParentName.c_str())))
 		{
 			int nCount = GetClassesCount(strDllName);
 			AddClassName(strDllName, CString(strParentName.c_str()), nCount);
@@ -158,7 +168,7 @@ void CXmlDataProc::ProcessFloatType(UINT uDllIndex, UINT uGroupIndex, CString& s
 		CString strClassNode;
 		strClassNode.Format(_T("Dll_%d\\Panels\\Group_%d\\Pane_%d\\ClassName"), uDllIndex, uGroupIndex, i);
 		std::wstring strName = AppXml()->GetAttributeText(strClassNode.GetString(), _T(""));
-		if (!IsClassNameAdded(strDllName, CString(strName.c_str())))
+		if (strName.empty() && !IsClassNameAdded(strDllName, CString(strName.c_str())))
 		{
 			int nExistCount = GetClassesCount(strDllName);
 			AddClassName(strDllName, CString(strName.c_str()), nExistCount);
@@ -205,4 +215,19 @@ UINT CXmlDataProc::GetClassesCount(CString& strDll)
 	}
 
 	return 0;
+}
+
+void CXmlDataProc::AddFrameViewClassName(LPCTSTR strDll, LPCTSTR strFrame, LPCTSTR strView)
+{
+	MapDllFrameView::iterator itFind = m_mapDll2FrameView.find(strDll);
+	if (itFind != m_mapDll2FrameView.end())
+	{
+		return;
+	}
+
+	stDllFrameView oneItem;
+	oneItem.strFrameClassName = strFrame;
+	oneItem.strViewClassName  = strView;
+
+	m_mapDll2FrameView.insert(make_pair(strDll, oneItem));
 }
