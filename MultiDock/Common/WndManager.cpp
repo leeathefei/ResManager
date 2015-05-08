@@ -1,7 +1,7 @@
 
 #include "stdafx.h"
 #include "WndManager.h"
-
+#include "XmlConfig.h"
 
 CWndManager* CWndManager::m_pInstance = NULL;
 
@@ -60,6 +60,9 @@ CWnd* CWndManager::CreateObj(CString strClass)
 		}
 	}
 
+	//write to xml
+	
+	//notify to read xml and update parent window tree.
 	ProcessEvent(pWnd, strClass);
 
 	return pWnd;

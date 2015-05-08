@@ -55,4 +55,7 @@ protected:
 	static CWndManager* m_pInstance;
 	map<CString, PFUNC_CREATEOBJ> m_mapClassName2Func;
 	list<IObjCreatedEvent*> m_listHandlers;
+	
+	//缓存所有的窗口对象--类名称
+	map<CString, CString> m_mapInstan2Classname;
 };

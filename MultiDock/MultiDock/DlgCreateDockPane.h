@@ -12,16 +12,21 @@ public:
 	virtual ~CDlgCreateDockPane();
 
 	virtual void OnObjectCreated(CWnd* pWnd, CString& strClass);
+	void UpdateClassName(CString&strDll, CString&strClass);
 
 // Dialog Data
 	enum { IDD = IDD_CREATE_DOCK_PANE };
 
 protected:
+	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
 public:
 	CButton m_dockDirection;
 	CString m_strClassname;
-	CTreeCtrl m_treeInDock;
+	CString m_strDllname;
+	int m_nRadioDirection;
+	afx_msg void OnBnClickedCreatewndIndockpage();
+	CListCtrl m_listParentsInDock;
 };

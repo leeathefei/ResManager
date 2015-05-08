@@ -28,7 +28,23 @@ void CDlgCreateFloatPane::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_editBeCreatedClassname);
 	DDX_Text(pDX, IDC_EDIT1, m_strEditClassname);
-	DDX_Control(pDX, IDC_TREE_WNDOBJS_INFLOAT, m_treePrarents);
+	DDX_Control(pDX, IDC_LIST_PARENT_INFLOATPANE, m_listParentInFloat);
+}
+
+BOOL CDlgCreateFloatPane::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	//1.Init dll name listctrl
+	DWORD dwStyle = m_listParentInFloat.GetExtendedStyle();
+	dwStyle |= LVS_EX_FULLROWSELECT;       
+	dwStyle |= LVS_EX_GRIDLINES;    
+	m_listParentInFloat.SetExtendedStyle(dwStyle);
+	m_listParentInFloat.InsertColumn(0, _T("ClassName"), LVCFMT_LEFT, 180);
+	m_listParentInFloat.InsertColumn(1, _T("hInstance"), LVCFMT_LEFT, 100);
+
+	return TRUE;
+	
 }
 
 
@@ -60,7 +76,7 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 		}
 		else
 		{
-			pFrame->CreateDockWnd(m_strDllname.GetString(), m_strEditClassname.GetString(), ALIGN_VERTICAL);
+			pFrame->CreateFloatWnd(m_strEditClassname);
 		}
 		
 	}

@@ -39,6 +39,7 @@ tips:mainframe提供两种接口
 	1.CreateDockWnd用于创建非frame/view的窗口。每个实现了CBaseObj接口的窗口类都需要在重载函数里面调用CXXXmanager::RegisterDockPane对象里面的接口创建自己。
 	2.LoadDllByName是创建frame+view（直接调用注册文档模板对象创建框架）
 
-tips:对于创建的窗口，可以监听并受到IObjCreatedEvent回调，但是，对于Frame+View却没有通知机制。需要注意哦！应该在LoadDllByname中完成消息的发布。
+tips:对于创建的窗口，可以监听并受到IObjCreatedEvent回调用于更新父亲窗口列表，但是，对于Frame+View却没有通知机制。需要注意哦！应该在LoadDllByname中完成消息的发布。
 tips:每个View类需要在OnCreate函数中将自己的内存地址写入到xml文件共其他控件分享数据。
-tips:xml的读取中，设计到递归的地方主要是嵌套。可以对增加节点：<bHasChild>来达到递归的更好的读取。to be continued.
+tips:xml的读取中，设计到递归的地方主要是嵌套。可以对增加节点：<bHasChild>来达到递归的更好的读取。to be continued.===>由于树形结构遍历很复杂，现在简化工作，采用
+		listctrl来显示，两列显示：className+hInstance。

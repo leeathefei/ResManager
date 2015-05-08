@@ -23,7 +23,8 @@ public:
 	enum { IDD = IDD_CREATE_FLOAT_PANE };
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void DoDataExchange(CDataExchange* pDX);    
+	virtual BOOL OnInitDialog();
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -31,5 +32,5 @@ public:
 	CEdit m_editBeCreatedClassname;
 	CString m_strEditClassname;
 	CString m_strDllname;
-	CTreeCtrl m_treePrarents;
+	CListCtrl m_listParentInFloat;
 };
