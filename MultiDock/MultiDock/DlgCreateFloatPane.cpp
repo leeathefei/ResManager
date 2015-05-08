@@ -27,9 +27,9 @@ CDlgCreateFloatPane::~CDlgCreateFloatPane()
 void CDlgCreateFloatPane::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_COMBO1, m_comboParentWnd);
 	DDX_Control(pDX, IDC_EDIT1, m_editBeCreatedClassname);
 	DDX_Text(pDX, IDC_EDIT1, m_strEditClassname);
+	DDX_Control(pDX, IDC_TREE_WNDOBJS_INFLOAT, m_treePrarents);
 }
 
 

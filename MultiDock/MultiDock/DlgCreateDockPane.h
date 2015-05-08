@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include "afxcmn.h"
 
 
 // CDlgCreateDockPane dialog
@@ -21,5 +22,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CButton m_dockDirection;
-	CComboBox m_comboParentWnd;
+	CString m_strClassname;
+	CTreeCtrl m_treeInDock;
 };

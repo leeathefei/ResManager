@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include "afxcmn.h"
 
 class CMainFrame;
 // CDlgCreateFloatPane dialog
@@ -22,9 +23,9 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CComboBox m_comboParentWnd;
 	afx_msg void OnBnClickedBtnCreateFloatpane();
 	CEdit m_editBeCreatedClassname;
 	CString m_strEditClassname;
 	CString m_strDllname;
+	CTreeCtrl m_treePrarents;
 };
