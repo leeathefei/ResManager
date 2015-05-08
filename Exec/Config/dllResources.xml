@@ -2,7 +2,7 @@
 	<DllCount>2</DllCount>
 	<Dll_0>
 		<DllName>SampleViewer.dll</DllName>
-		<FrameWndClassName>CSamplePanelFrame</FrameWndClassName>
+		<FrameWndClassName>CSampleViewerFrame</FrameWndClassName>
 		<ViewClassName>CSampleViewerView</ViewClassName>
 		<bLoad>FALSE</bLoad>
 		<Panels>

@@ -14,8 +14,15 @@ using namespace std;
 
 struct stDllFrameView 
 {
+	BOOL	bLoaded;
 	CString strFrameClassName;
 	CString strViewClassName;
+	stDllFrameView()
+	{
+		bLoaded = FALSE;
+		strFrameClassName = _T("");
+		strViewClassName  = _T("");
+	}
 };
 
 class CXmlDataProc
@@ -29,6 +36,10 @@ public:
 	BOOL Init();
 	BOOL GetDllNames(vector<CString>&);
 	BOOL GetClassNames(CString& strDll, vector<CString>&);
+
+	BOOL IsFrameViewClass(CString& strClassName);
+	BOOL IsFrameViewLoaded(CString& strDll);
+	BOOL SetFrameViewLoadFlag(CString& strDll);
 
 protected:
 	CXmlDataProc();

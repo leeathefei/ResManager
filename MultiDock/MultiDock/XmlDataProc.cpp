@@ -231,3 +231,42 @@ void CXmlDataProc::AddFrameViewClassName(LPCTSTR strDll, LPCTSTR strFrame, LPCTS
 
 	m_mapDll2FrameView.insert(make_pair(strDll, oneItem));
 }
+
+BOOL CXmlDataProc::IsFrameViewClass(CString& strClassName)
+{
+	for (MapDllFrameView::iterator it = m_mapDll2FrameView.begin();
+		it != m_mapDll2FrameView.end(); ++it)
+	{
+		stDllFrameView& oneItem = it->second;
+		if (strClassName.CompareNoCase(oneItem.strFrameClassName) == 0||
+			strClassName.CompareNoCase(oneItem.strViewClassName) == 0)
+		{
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+BOOL CXmlDataProc::IsFrameViewLoaded(CString& strDll)
+{
+	MapDllFrameView::iterator itFind = m_mapDll2FrameView.find(strDll);
+	if (itFind != m_mapDll2FrameView.end())
+	{
+		return itFind->second.bLoaded;
+	}
+
+	return FALSE;
+}
+
+BOOL CXmlDataProc::SetFrameViewLoadFlag(CString& strDll)
+{
+	MapDllFrameView::iterator itFind = m_mapDll2FrameView.find(strDll);
+	if (itFind != m_mapDll2FrameView.end())
+	{
+		itFind->second.bLoaded = TRUE;
+		return TRUE;
+	}
+
+	return FALSE;
+}
