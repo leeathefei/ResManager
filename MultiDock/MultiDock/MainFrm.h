@@ -70,8 +70,9 @@ public:
 	BOOL StartupAsWorkspace();
 	void RecalcLayoutEx();
 
-	//test
+	//Create pane+dialogs.
 	void CreateDockWnd(LPCTSTR lpDllName, LPCTSTR lpClassName, EPANE_ALIGNMENT etype);
+	//Create Frame+view.
 	void LoadDllByName(CString& strDllname);
 	
 protected:
@@ -201,9 +202,6 @@ protected:
 	void SetDockingWindowIcons(BOOL bHiColorIcons);
 
 	DECLARE_MESSAGE_MAP()
-public:
-	afx_msg void OnTestCreateSampleviewer();
-	afx_msg void OnTestCreate4childwndFrompanelproj();
 };
 
 

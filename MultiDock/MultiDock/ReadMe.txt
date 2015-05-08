@@ -35,3 +35,6 @@
     树形结构的实例在指定tab的各个page中。创建好一个实例后，需要实时更新这个tree。对于实例的命名，加上引用计数，格式为：memoryaddres(Cclassname)_Index
 
 tips:命名注册了文档模板，却没有显示view呢？先查看下你的csv文件中的参数是否正确。
+tips:mainframe提供两种接口
+	1.CreateDockWnd用于创建非frame/view的窗口。每个实现了CBaseObj接口的窗口类都需要在重载函数里面调用CXXXmanager::RegisterDockPane对象里面的接口创建自己。
+	2.LoadDllByName是创建frame+view（直接调用注册文档模板对象创建框架）

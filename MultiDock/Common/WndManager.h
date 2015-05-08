@@ -12,8 +12,16 @@
 #include "GeneralMacroDefine.h"
 #include "ModuleDefs.h"
 #include <map>
+#include <list>
 
 using namespace std;
+
+class IObjCreatedEvent
+{
+public:
+	virtual void OnCreateObject(CWnd* pWnd, CString& strClassName) = 0;
+};
+
 
 typedef CWnd* (*PFUNC_CREATEOBJ)();
 class COMMON_DLLEXPORT CBaseObj
@@ -33,12 +41,16 @@ public:
 	~CWndManager();
 
 public:
+	void AddEventHandler(IObjCreatedEvent* pEvent);
 	void Register(CString lpszClassName, PFUNC_CREATEOBJ pFun);
 	CWnd* CreateObj(CString lpszClassName);
 
 protected:
 	CWndManager();
+	void ProcessEvent(CWnd*& pWnd, CString& strClass);
 
+protected:
 	static CWndManager* m_pInstance;
 	map<CString, PFUNC_CREATEOBJ> m_mapClassName2Func;
+	list<IObjCreatedEvent*> m_listHandlers;
 };

@@ -76,8 +76,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_MESSAGE(WM_OPEN_VIEWER, OnOpenViewer)
 
 	ON_COMMAND(ID_SHOW_WND_CONFIG_DLG, &CMainFrame::OnShowWndConfigDlg)
-	ON_COMMAND(ID_TEST_CREATE_SAMPLEVIEWER, &CMainFrame::OnTestCreateSampleviewer)
-	ON_COMMAND(ID_TEST_CREATE_4CHILDWND_FROMPANELPROJ, &CMainFrame::OnTestCreate4childwndFrompanelproj)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -2267,17 +2265,3 @@ void CMainFrame::LoadDllByName(CString& strDllname)
 	//MDITabNewGroup();
 }
 		
-	
-
-///////////////////////////////////////////////////////////////////////////
-//test
-void CMainFrame::OnTestCreateSampleviewer()
-{
-
-}
-
-
-void CMainFrame::OnTestCreate4childwndFrompanelproj()
-{
-	// TODO: Add your command handler code here
-}

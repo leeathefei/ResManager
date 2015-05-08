@@ -32,21 +32,47 @@ void CWndManager::DestroyInstance()
 	}
 }
 
+void CWndManager::AddEventHandler(IObjCreatedEvent* pEvent)
+{
+	if (NULL != pEvent)
+	{
+		m_listHandlers.push_back(pEvent);
+	}
+}
+
 void CWndManager::Register(CString lpszClassName, PFUNC_CREATEOBJ pFun) 
 {
 	m_mapClassName2Func.insert(map<CString, PFUNC_CREATEOBJ>::value_type(lpszClassName, pFun));
 }
 
-CWnd* CWndManager::CreateObj(CString lpszClassName) 
+CWnd* CWndManager::CreateObj(CString strClass) 
 {
+	CWnd* pWnd = NULL;
+
 	for (map<CString, PFUNC_CREATEOBJ>::iterator it = m_mapClassName2Func.begin();
 		it != m_mapClassName2Func.end(); ++it)
 	{
 		CString strName =it->first;
-		if (strName.CompareNoCase(lpszClassName) == 0)
+		if (strName.CompareNoCase(strClass) == 0)
 		{
-			return ((*it).second)();
+			pWnd = ((*it).second)();
 		}
 	}
-	return NULL;
+
+	ProcessEvent(pWnd, strClass);
+
+	return pWnd;
 } 
+
+void CWndManager::ProcessEvent(CWnd*& pWnd, CString& strClass)
+{
+	for (list<IObjCreatedEvent*>::iterator it = m_listHandlers.begin();
+		it != m_listHandlers.end(); ++it)
+	{
+		IObjCreatedEvent* pEvent = (*it);
+		if (NULL != pEvent)
+		{
+			pEvent->OnCreateObject(pWnd, strClass);
+		}
+	}
+}
