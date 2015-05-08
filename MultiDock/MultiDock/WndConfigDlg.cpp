@@ -290,6 +290,7 @@ void CWndConfigDlg::OnClassnameItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
 		{
 			m_pCreateFloat->UpdateClassName(strClassname, strDllname);
 			m_pCreateDock->UpdateClassName(strDllname, strClassname);
+			m_pCreateChild->UpdateClassName(strDllname, strClassname);
 		}
 	}
 
