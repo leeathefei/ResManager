@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 #include "MainFrm.h"
 #include "..\Common\WndManager.h"
-
+#include "XmlDataProc.h"
 
 // CDlgCreateFloatPane dialog
 
@@ -43,20 +43,35 @@ END_MESSAGE_MAP()
 
 void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 {
-	//test interface.
+	UpdateData(TRUE);
+
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
-	pFrame->CreateDockWnd(_T("SampleViewer"), m_strEditClassname.GetString(), ALIGN_VERTICAL);
-
-	/*pFrame->CreateDockWnd(_T("SampleViewer"), _T("CDlgTest4InSV"), ALIGN_NON);
-	pFrame->CreateDockWnd(_T("SampleViewer"), _T("CDlgTest1InSV"), ALIGN_HORIZONTAL);
-
-	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog"), ALIGN_HORIZONTAL);
-	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog4"), ALIGN_VERTICAL);*/
+	if (!m_strEditClassname.IsEmpty())
+	{
+		if (CXmlDataProc::Instance()->IsFrameViewClass(m_strEditClassname))
+		{
+			if (CXmlDataProc::Instance()->IsFrameViewLoaded(m_strEditClassname))
+			{
+				//目前只支持单文档？！
+			}
+			else//load first 
+			{
+				pFrame->LoadDllByName(m_strDllname);
+			}
+		}
+		else
+		{
+			pFrame->CreateDockWnd(m_strDllname.GetString(), m_strEditClassname.GetString(), ALIGN_VERTICAL);
+		}
+		
+	}
+	
 }
 
-void CDlgCreateFloatPane::UpdateClassName(CString& strClass)
+void CDlgCreateFloatPane::UpdateClassName(CString& strClass, CString& strDllName)
 {
 	m_strEditClassname = strClass;
+	m_strDllname	   = strDllName;
 
 	UpdateData(FALSE);
 }

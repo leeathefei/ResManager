@@ -72,6 +72,7 @@ public:
 
 	//test
 	void CreateDockWnd(LPCTSTR lpDllName, LPCTSTR lpClassName, EPANE_ALIGNMENT etype);
+	void LoadDllByName(CString& strDllname);
 	
 protected:
 	void CacheMenus();

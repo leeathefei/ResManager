@@ -168,7 +168,7 @@ void CXmlDataProc::ProcessFloatType(UINT uDllIndex, UINT uGroupIndex, CString& s
 		CString strClassNode;
 		strClassNode.Format(_T("Dll_%d\\Panels\\Group_%d\\Pane_%d\\ClassName"), uDllIndex, uGroupIndex, i);
 		std::wstring strName = AppXml()->GetAttributeText(strClassNode.GetString(), _T(""));
-		if (strName.empty() && !IsClassNameAdded(strDllName, CString(strName.c_str())))
+		if (!strName.empty() && !IsClassNameAdded(strDllName, CString(strName.c_str())))
 		{
 			int nExistCount = GetClassesCount(strDllName);
 			AddClassName(strDllName, CString(strName.c_str()), nExistCount);
@@ -248,24 +248,34 @@ BOOL CXmlDataProc::IsFrameViewClass(CString& strClassName)
 	return FALSE;
 }
 
-BOOL CXmlDataProc::IsFrameViewLoaded(CString& strDll)
+//We assumpt that frame+view class names are different in each dll project.
+BOOL CXmlDataProc::IsFrameViewLoaded(CString& strClassName)
 {
-	MapDllFrameView::iterator itFind = m_mapDll2FrameView.find(strDll);
-	if (itFind != m_mapDll2FrameView.end())
+	for (MapDllFrameView::iterator it = m_mapDll2FrameView.begin();
+			it != m_mapDll2FrameView.end(); ++it)
 	{
-		return itFind->second.bLoaded;
+		stDllFrameView& oneItem = it->second;
+		if (strClassName.CompareNoCase(oneItem.strFrameClassName) == 0||
+			strClassName.CompareNoCase(oneItem.strViewClassName) == 0)
+		{
+			return oneItem.bLoaded;
+		}
 	}
 
 	return FALSE;
 }
 
-BOOL CXmlDataProc::SetFrameViewLoadFlag(CString& strDll)
+BOOL CXmlDataProc::SetFrameViewLoadFlag(CString& strClassName)
 {
-	MapDllFrameView::iterator itFind = m_mapDll2FrameView.find(strDll);
-	if (itFind != m_mapDll2FrameView.end())
+	for (MapDllFrameView::iterator it = m_mapDll2FrameView.begin();
+			it != m_mapDll2FrameView.end(); ++it)
 	{
-		itFind->second.bLoaded = TRUE;
-		return TRUE;
+		stDllFrameView& oneItem = it->second;
+		if (strClassName.CompareNoCase(oneItem.strFrameClassName) == 0||
+			strClassName.CompareNoCase(oneItem.strViewClassName) == 0)
+		{
+			oneItem.bLoaded = TRUE;
+		}
 	}
 
 	return FALSE;

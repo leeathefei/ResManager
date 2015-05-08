@@ -34,7 +34,7 @@ END_MESSAGE_MAP()
 
 CSamplePanelFrame::CSamplePanelFrame()
 {
-	//CSamplePanelManager::Instance()->AddFrameWnd(this);
+	CSamplePanelManager::Instance()->AddFrameWnd(this);
 }
 
 CSamplePanelFrame::~CSamplePanelFrame()
@@ -63,7 +63,7 @@ void CSamplePanelFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* 
 void CSamplePanelFrame::OnClose()
 {
 	//Control the toolbar's refer_counter
-	//CSamplePanelManager::Instance()->RemoveFrameWnd(this);
+	CSamplePanelManager::Instance()->RemoveFrameWnd(this);
 
 	
 	CMDIChildWndEx::OnClose();

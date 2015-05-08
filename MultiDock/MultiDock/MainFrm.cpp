@@ -2257,6 +2257,18 @@ void CMainFrame::CreateDockWnd(LPCTSTR lpDllName, LPCTSTR lpClassName, EPANE_ALI
 
 }
 
+void CMainFrame::LoadDllByName(CString& strDllname)
+{
+	int index = strDllname.Find(_T(".dll"));
+	CString strModule = strDllname.Left(index);
+	
+	OpenModuleByName(strModule);
+	
+	//MDITabNewGroup();
+}
+		
+	
+
 ///////////////////////////////////////////////////////////////////////////
 //test
 void CMainFrame::OnTestCreateSampleviewer()

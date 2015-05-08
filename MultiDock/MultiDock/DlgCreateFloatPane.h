@@ -12,7 +12,7 @@ public:
 	CDlgCreateFloatPane(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDlgCreateFloatPane();
 
-	void UpdateClassName(CString& strClass);
+	void UpdateClassName(CString& strClass, CString& strDllName);
 
 // Dialog Data
 	enum { IDD = IDD_CREATE_FLOAT_PANE };
@@ -26,4 +26,5 @@ public:
 	afx_msg void OnBnClickedBtnCreateFloatpane();
 	CEdit m_editBeCreatedClassname;
 	CString m_strEditClassname;
+	CString m_strDllname;
 };

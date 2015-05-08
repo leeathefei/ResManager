@@ -29,9 +29,9 @@
 
 // CSamplePanelView
 
-IMPLEMENT_DYNCREATE(CSamplePanelView, CView)
+IMPLEMENT_DYNCREATE(CSamplePanelView, CScrollView)
 
-BEGIN_MESSAGE_MAP(CSamplePanelView, CView)
+BEGIN_MESSAGE_MAP(CSamplePanelView, CScrollView)
 	ON_WM_RBUTTONUP()
 END_MESSAGE_MAP()
 
@@ -74,12 +74,12 @@ void CSamplePanelView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 #ifdef _DEBUG
 void CSamplePanelView::AssertValid() const
 {
-	CView::AssertValid();
+	CScrollView::AssertValid();
 }
 
 void CSamplePanelView::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+	CScrollView::Dump(dc);
 }
 
 CSamplePanelDoc* CSamplePanelView::GetDocument() const // non-debug version is inline

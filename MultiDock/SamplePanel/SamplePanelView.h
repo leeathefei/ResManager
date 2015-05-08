@@ -15,7 +15,7 @@
 #pragma once
 
 
-class CSamplePanelView : public CView
+class CSamplePanelView : public CScrollView
 {
 	DECLARE_DYNCREATE(CSamplePanelView)
 

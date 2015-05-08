@@ -38,8 +38,8 @@ public:
 	BOOL GetClassNames(CString& strDll, vector<CString>&);
 
 	BOOL IsFrameViewClass(CString& strClassName);
-	BOOL IsFrameViewLoaded(CString& strDll);
-	BOOL SetFrameViewLoadFlag(CString& strDll);
+	BOOL IsFrameViewLoaded(CString& strClassname);
+	BOOL SetFrameViewLoadFlag(CString& strClassname);
 
 protected:
 	CXmlDataProc();

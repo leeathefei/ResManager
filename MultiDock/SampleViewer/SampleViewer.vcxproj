@@ -124,7 +124,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Common\MTDocTemplate.cpp" />
     <ClCompile Include="DlgTest1InSV.cpp" />
     <ClCompile Include="DlgTest2InSV.cpp" />
     <ClCompile Include="DlgTest3InSV.cpp" />

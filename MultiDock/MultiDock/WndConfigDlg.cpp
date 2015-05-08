@@ -285,9 +285,10 @@ void CWndConfigDlg::OnClassnameItemChanged(NMHDR* pNMHDR, LRESULT* pResult)
 		m_nClassnameHitindex = nItem;
 
 		CString strClassname = m_listctrlClassname.GetItemText(nItem, 0);
+		CString strDllname   = m_listctrlDllName.GetItemText(m_nDllHitIndex, 0);
 		if (NULL != m_pCreateFloat)
 		{
-			m_pCreateFloat->UpdateClassName(strClassname);
+			m_pCreateFloat->UpdateClassName(strClassname, strDllname);
 		}
 	}
 
