@@ -41,3 +41,4 @@ tips:mainframe提供两种接口
 
 tips:对于创建的窗口，可以监听并受到IObjCreatedEvent回调，但是，对于Frame+View却没有通知机制。需要注意哦！应该在LoadDllByname中完成消息的发布。
 tips:每个View类需要在OnCreate函数中将自己的内存地址写入到xml文件共其他控件分享数据。
+tips:xml的读取中，设计到递归的地方主要是嵌套。可以对增加节点：<bHasChild>来达到递归的更好的读取。to be continued.
