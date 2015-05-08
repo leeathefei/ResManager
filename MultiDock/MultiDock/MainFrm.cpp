@@ -1396,31 +1396,52 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	//////////////////////////////////////////////////////////////////////////
 	// Create Pane
 	EPANE_ALIGNMENT Align = pDef->nEnabledAlign;
-	UINT nDockID = (Align==ALIGN_HORIZONTAL)? AFX_IDW_DOCKBAR_BOTTOM:(Align==ALIGN_VERTICAL?AFX_IDW_DOCKBAR_RIGHT:AFX_IDW_DOCKBAR_FLOAT);
+	UINT nDockID;//= (Align==ALIGN_HORIZONTAL)? AFX_IDW_DOCKBAR_BOTTOM:(Align==ALIGN_VERTICAL?AFX_IDW_DOCKBAR_RIGHT:AFX_IDW_DOCKBAR_FLOAT);
+	if (Align == ALIGN_LEFT)
+	{
+		nDockID = AFX_IDW_DOCKBAR_LEFT;
+	}
+	else if (Align == ALIGN_RIGHT)
+	{
+		nDockID = AFX_IDW_DOCKBAR_RIGHT;
+	}
+	else if (Align == ALIGN_TOP)
+	{
+		nDockID = AFX_IDW_DOCKBAR_TOP;
+	}
+	else if (Align == ALIGN_BOTTON)
+	{
+		nDockID = AFX_IDW_DOCKBAR_BOTTOM;
+	}
+	else if (Align == ALIGN_NON)
+	{
+		nDockID = AFX_IDW_DOCKBAR_FLOAT;
+	}
 
 	BOOL bVertical=FALSE;
 	CModulePane* pModulePane;
-	if( FindModulePane(pDef->strWindowName, pModulePane, bVertical) )
-	{
-		CBaseTabbedPane* pTabbedBar = pModulePane->GetParentTabbedPane();
+	//lee:ignore
+	//if( FindModulePane(pDef->strWindowName, pModulePane, bVertical) )
+	//{
+	//	CBaseTabbedPane* pTabbedBar = pModulePane->GetParentTabbedPane();
 
-		if(pModulePane->IsAutoHideMode())
-		{
-			//pModulePane->SetAutoHideMode(FALSE, pModulePane->GetCurrentAlignment());
-			//pModulePane->SetAutoHideMode(TRUE, pModulePane->GetCurrentAlignment());
-		}
-		else
-		{
-			pModulePane->ShowPane(SW_SHOW, FALSE, TRUE);
-		}
+	//	if(pModulePane->IsAutoHideMode())
+	//	{
+	//		//pModulePane->SetAutoHideMode(FALSE, pModulePane->GetCurrentAlignment());
+	//		//pModulePane->SetAutoHideMode(TRUE, pModulePane->GetCurrentAlignment());
+	//	}
+	//	else
+	//	{
+	//		pModulePane->ShowPane(SW_SHOW, FALSE, TRUE);
+	//	}
 
-		return 0;
-	}
+	//	return 0;
+	//}
 
 	int nNewID = BASE_MODULES_MENU_ID+MAX_NUM_VIEW_TYPES+counter++;
 	pModulePane = new CModulePane;
 	UINT style = WS_CHILD | CBRS_RIGHT |CBRS_FLOAT_MULTI|CBRS_HIDE_INPLACE;
-	DWORD tabbedStyle = pDef->nEnabledAlign==ALIGN_VERTICAL? AFX_CBRS_OUTLOOK_TABS: AFX_CBRS_REGULAR_TABS;
+	DWORD tabbedStyle = (pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT)/*ALIGN_VERTICAL*/? AFX_CBRS_OUTLOOK_TABS: AFX_CBRS_REGULAR_TABS;
 	if (!pModulePane->Create(pDef->strWindowName, this, CRect(0, 0, 280, 220), TRUE,
 		nNewID, style, tabbedStyle))
 	{
@@ -1443,7 +1464,7 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	//////////////////////////////////////////////////////////////////////////
 	// Attach to existing Pane
 	CDockablePane* pTabbedBar = NULL;
-	if( !AttachPane(pModulePane, pDef->nEnabledAlign, TRUE, &pTabbedBar) )
+	//if( !AttachPane(pModulePane, pDef->nEnabledAlign, TRUE, &pTabbedBar) )
 	{
 		DockPane((CBasePane*)pModulePane, nDockID);  
 		pModulePane->ShowPane(TRUE,FALSE,TRUE);
@@ -1470,11 +1491,11 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 
 	//////////////////////////////////////////////////////////////////////////
 	//AddToMap
-	if(pDef->nEnabledAlign==ALIGN_VERTICAL )
+	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT/*ALIGN_VERTICAL*/ )
 	{
 		m_VertPaneMap.SetAt(pDef->strWindowName, pModulePane);
 	}
-	if(pDef->nEnabledAlign==ALIGN_HORIZONTAL )
+	if(pDef->nEnabledAlign== ALIGN_TOP||pDef->nEnabledAlign == ALIGN_BOTTON/*ALIGN_HORIZONTAL */)
 	{
 		m_HoriPaneMap.SetAt(pDef->strWindowName, pModulePane);
 	}
@@ -1605,7 +1626,7 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 	CString strWindowName;
 	CModulePane* pPrevPane= NULL;
 
-	if( dwAlignment==ALIGN_VERTICAL )
+	if( dwAlignment==ALIGN_LEFT || dwAlignment == ALIGN_RIGHT/*ALIGN_VERTICAL*/ )
 	{
 		POSITION pos = m_VertPaneMap.GetStartPosition();
 		while( pos )
@@ -1614,7 +1635,7 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 		}
 	}
 
-	if(pPrevPane==NULL && dwAlignment==ALIGN_HORIZONTAL )
+	if(pPrevPane==NULL && (dwAlignment==ALIGN_TOP || dwAlignment == ALIGN_BOTTON)/*ALIGN_HORIZONTAL*/ )
 	{
 		POSITION pos = m_HoriPaneMap.GetStartPosition();
 		while( pos )

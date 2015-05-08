@@ -14,6 +14,10 @@ public:
 	virtual ~CModulePane();
    enum PANE_ALIGNMENT{
       ALIGN_NONE,
+	  ALIGN_LEFT,
+	  ALIGN_RIGHT,
+	  ALIGN_TOP,
+	  ALIGN_BOTTON,
       ALIGN_HORIZONTAL,
       ALIGN_VERTICAL
    };
