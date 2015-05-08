@@ -6,8 +6,7 @@
 #include "DlgCreateFloatPane.h"
 #include "afxdialogex.h"
 #include "MainFrm.h"
-#include "..\Common\WndManager.h"
-
+#include "XmlDataProc.h"
 
 // CDlgCreateFloatPane dialog
 
@@ -15,8 +14,9 @@ IMPLEMENT_DYNAMIC(CDlgCreateFloatPane, CDialogEx)
 
 CDlgCreateFloatPane::CDlgCreateFloatPane(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgCreateFloatPane::IDD, pParent)
+	, m_strEditClassname(_T(""))
 {
-
+	CWndManager::Instance()->AddEventHandler(this);
 }
 
 CDlgCreateFloatPane::~CDlgCreateFloatPane()
@@ -26,7 +26,9 @@ CDlgCreateFloatPane::~CDlgCreateFloatPane()
 void CDlgCreateFloatPane::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_COMBO1, m_comboParentWnd);
+	DDX_Control(pDX, IDC_EDIT1, m_editBeCreatedClassname);
+	DDX_Text(pDX, IDC_EDIT1, m_strEditClassname);
+	DDX_Control(pDX, IDC_TREE_WNDOBJS_INFLOAT, m_treePrarents);
 }
 
 
@@ -40,13 +42,40 @@ END_MESSAGE_MAP()
 
 void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 {
-	//test interface.
+	UpdateData(TRUE);
+
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
-	pFrame->CreateDockWnd(_T("SampleViewer"), _T("CDlgTest4InSV"), ALIGN_NON);
-	pFrame->CreateDockWnd(_T("SampleViewer"), _T("CDlgTest1InSV"), ALIGN_HORIZONTAL);
-
-	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog"), ALIGN_HORIZONTAL);
-	pFrame->CreateDockWnd(_T("SamplePanel"), _T("CSamplePanelDialog4"), ALIGN_VERTICAL);
-
+	if (!m_strEditClassname.IsEmpty())
+	{
+		if (CXmlDataProc::Instance()->IsFrameViewClass(m_strEditClassname))
+		{
+			if (CXmlDataProc::Instance()->IsFrameViewLoaded(m_strEditClassname))
+			{
+				//目前只支持单文档？！
+			}
+			else//load first 
+			{
+				pFrame->LoadDllByName(m_strDllname);
+			}
+		}
+		else
+		{
+			pFrame->CreateDockWnd(m_strDllname.GetString(), m_strEditClassname.GetString(), ALIGN_VERTICAL);
+		}
+		
+	}
 	
+}
+
+void CDlgCreateFloatPane::UpdateClassName(CString& strClass, CString& strDllName)
+{
+	m_strEditClassname = strClass;
+	m_strDllname	   = strDllName;
+
+	UpdateData(FALSE);
+}
+
+void CDlgCreateFloatPane::OnObjectCreated(CWnd* pWnd, CString& strClass)
+{
+
 }

@@ -15,7 +15,7 @@
 #pragma once
 
 
-class CSamplePanelView : public CView
+class CSamplePanelView : public CScrollView
 {
 	DECLARE_DYNCREATE(CSamplePanelView)
 
@@ -31,6 +31,7 @@ public:
 
 public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+
 	
 
 public:
@@ -45,7 +46,7 @@ protected:
 // Generated message map functions
 protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
-	
+	afx_msg int  OnCreate(LPCREATESTRUCT lpcs);
 	DECLARE_MESSAGE_MAP()
 };
 

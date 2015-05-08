@@ -54,6 +54,7 @@ BOOL CSamplePanelDoc::OnNewDocument()
 
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
+	m_strTitle = _T("Sample Panel");
 
 	return TRUE;
 }

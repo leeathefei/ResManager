@@ -1,16 +1,17 @@
 #pragma once
 #include "afxwin.h"
+#include "afxcmn.h"
+#include "..\Common\WndManager.h"
 
-
-// CDlgCreateDockPane dialog
-
-class CDlgCreateDockPane : public CDialogEx
+class CDlgCreateDockPane : public CDialogEx, public IObjCreatedEvent
 {
 	DECLARE_DYNAMIC(CDlgCreateDockPane)
 
 public:
 	CDlgCreateDockPane(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDlgCreateDockPane();
+
+	virtual void OnObjectCreated(CWnd* pWnd, CString& strClass);
 
 // Dialog Data
 	enum { IDD = IDD_CREATE_DOCK_PANE };
@@ -21,5 +22,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CButton m_dockDirection;
-	CComboBox m_comboParentWnd;
+	CString m_strClassname;
+	CTreeCtrl m_treeInDock;
 };

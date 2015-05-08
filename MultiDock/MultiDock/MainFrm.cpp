@@ -28,7 +28,6 @@ const UINT uiFirstUserToolBarId = AFX_IDW_CONTROLBAR_FIRST + 40;
 const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
 CString CMainFrame::m_strModuleMenuItems[2] = {_T("&Modules"), _T("&Utilities")};
 
-
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_SET_PANE1_CMD1, &CMainFrame::OnRibbonPane1Cmd1)
 	ON_COMMAND(ID_SET_PANE1_CMD2, &CMainFrame::OnRibbonPane1Cmd2)
@@ -217,6 +216,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//Lee:initialize config reader.
 	CString strModulesXml = CFileHelper::GetModuleDir()+_T("\\Config\\dllResources.xml");
 	CXmlConfig::Instance(strModulesXml);
+
+	CString strFrameAdd;
+	strFrameAdd.Format(_T("0x%08x"), this);
+	AppXml()->SetAttribute(_T("MainFrame\\Address"), strFrameAdd);
+	AppXml()->SetAttribute(_T("MainFrame\\ClassName"), _T("CMainFrame"));
+	AppXml()->FlushData();
 
 	if (!m_wndMenuBar.Create(this))
 	{
@@ -2245,7 +2250,7 @@ void CMainFrame::OnShowWndConfigDlg()
 
 void CMainFrame::CreateDockWnd(LPCTSTR lpDllName, LPCTSTR lpClassName, EPANE_ALIGNMENT etype)
 {
-	CDialog* pDlg = (CDialog*)CWndManager::Instance()->Create(lpClassName);
+	CWnd* pDlg = (CWnd*)CWndManager::Instance()->CreateObj(lpClassName);
 	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
 	if (NULL != pBase)
 	{
@@ -2254,3 +2259,14 @@ void CMainFrame::CreateDockWnd(LPCTSTR lpDllName, LPCTSTR lpClassName, EPANE_ALI
 	}
 
 }
+
+void CMainFrame::LoadDllByName(CString& strDllname)
+{
+	int index = strDllname.Find(_T(".dll"));
+	CString strModule = strDllname.Left(index);
+	
+	OpenModuleByName(strModule);
+	
+	//MDITabNewGroup();
+}
+		

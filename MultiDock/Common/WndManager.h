@@ -1,28 +1,29 @@
+
+
+/********************************************************************
+	Created:	2015/05/7   10:02
+	Filename:	WndManager.h
+	Author:		Chris Lee
+	Functions:	Manage to dynamic create window
+*********************************************************************/
+
 #pragma once
 
 #include "GeneralMacroDefine.h"
 #include "ModuleDefs.h"
 #include <map>
+#include <list>
 
 using namespace std;
 
-typedef CWnd* (*PFUNC_CREATEOBJ)();
-///*typedef PFUNC_CREATEOBJ LPFUNC_CREATEOBJ;*/
-//
-//class CWndManager
-//{
-//public:
-//	CWndManager();
-//	~CWndManager();
-//
-//	static void Register(LPCTSTR lpszClassName, PFUNC_CREATEOBJ);
-//	static CWnd* CreateObj(LPCTSTR lpszClassName);
-//	BOOL CheckIfParentCreated();
-//protected:
-//
-//	static map<LPCTSTR, PFUNC_CREATEOBJ> m_mapRegisters;
-//};
+class IObjCreatedEvent
+{
+public:
+	virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName) = 0;
+};
 
+
+typedef CWnd* (*PFUNC_CREATEOBJ)();
 class COMMON_DLLEXPORT CBaseObj
 {
 public:
@@ -40,12 +41,18 @@ public:
 	~CWndManager();
 
 public:
+	void AddEventHandler(IObjCreatedEvent* pEvent);
 	void Register(CString lpszClassName, PFUNC_CREATEOBJ pFun);
-	CWnd* Create(CString lpszClassName);
+	CWnd* CreateObj(CString lpszClassName);
+	UINT GetNextViewIndex();
 
 protected:
 	CWndManager();
+	void ProcessEvent(CWnd*& pWnd, CString& strClass);
 
+protected:
+	UINT m_nViewIndex;	
 	static CWndManager* m_pInstance;
 	map<CString, PFUNC_CREATEOBJ> m_mapClassName2Func;
+	list<IObjCreatedEvent*> m_listHandlers;
 };

@@ -70,13 +70,21 @@ CSamplePanelManager::~CSamplePanelManager(void)
 
 BOOL CSamplePanelManager::RegisterDocTemplate()
 {
-	return TRUE;
+	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
+
+	CMTDocTemplate* pDocTemplate = new CMTDocTemplate(IDR_SAMPLEPANEL_TYPE,
+		RUNTIME_CLASS(CSamplePanelDoc),
+		RUNTIME_CLASS(CSamplePanelFrame),
+		RUNTIME_CLASS(CSamplePanelView),
+		_T("SamplePanel.dll"), _T("SamplePanel"));
+
+	return m_pModuleManager->RegisterDocTemplate(pDocTemplate);
 }
 
 BOOL CSamplePanelManager::RegisterToolBar()
 {
 	// ÇÐ»»µ½DLL×ÊÔ´
-	/*USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
+	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 
 	CMFCToolBar* pToolbar=NULL;
 	if( m_pModuleManager->RegisterToolBar(IDR_SAMPLEPANEL_TOOLBAR, pToolbar) )
@@ -85,20 +93,17 @@ BOOL CSamplePanelManager::RegisterToolBar()
 	return TRUE;
 	}
 	else
-	return FALSE;*/
-
-	return TRUE;
-
+	return FALSE;
 }
 
 void CSamplePanelManager::RemoveToolBar()
 {
-	//m_pModuleManager->RemoveToolBar(m_pToolbar);
+	m_pModuleManager->RemoveToolBar(m_pToolbar);
 }
 
 void CSamplePanelManager::ShowToolBar(BOOL bShow)
 {
-	//m_pModuleManager->ShowToolBar(m_pToolbar, bShow);
+	m_pModuleManager->ShowToolBar(m_pToolbar, bShow);
 }
 
 BOOL CSamplePanelManager::RegisterDockPane(CWnd* pAttachWnd, 
@@ -229,17 +234,17 @@ void CSamplePanelManager::Terminate()
 
 	m_pModuleManager->Terminate();
 	
-	m_pModuleDlg1->PostMessage(WM_CLOSE);
-	m_pModuleDlg1->DestroyWindow();
-	delete m_pModuleDlg1;
+// 	m_pModuleDlg1->PostMessage(WM_CLOSE);
+// 	m_pModuleDlg1->DestroyWindow();
+// 	delete m_pModuleDlg1;
 
 	/*m_pModuleDlg2->PostMessage(WM_CLOSE);
 	m_pModuleDlg2->DestroyWindow();
 	delete m_pModuleDlg2;*/
 
-	m_pModuleDlg3->PostMessage(WM_CLOSE);
-	m_pModuleDlg2->DestroyWindow();
-	delete m_pModuleDlg3;
+// 	m_pModuleDlg3->PostMessage(WM_CLOSE);
+// 	m_pModuleDlg2->DestroyWindow();
+// 	delete m_pModuleDlg3;
 
 	/*m_pModuleDlg4->PostMessage(WM_CLOSE);
 	m_pModuleDlg3->DestroyWindow();
@@ -298,10 +303,15 @@ BOOL CSamplePanelManager::UnregisterModulePane(LPCTSTR lpszWndName)
 // 
 extern "C"
 {
+	void __declspec(dllexport) AddToolbar()
+	{
+		CSamplePanelManager::Instance()->RegisterToolBar();
+	}
+
 	void __declspec(dllexport) Init(WORD w)
 	{
-		CSamplePanelManager::Instance()->RegisterDocTemplate();
-		CSamplePanelManager::Instance()->RegisterToolBar();
+		//CSamplePanelManager::Instance()->RegisterDocTemplate();
+		//CSamplePanelManager::Instance()->RegisterToolBar();
 	}
 
 	BOOL __declspec(dllexport) GetIconResourceID(UINT& nResID)
@@ -322,7 +332,7 @@ extern "C"
 
 	void __declspec(dllexport) LoadModulePane(WORD w)
 	{
-		CSamplePanelManager::Instance()->RegisterModulePane();
+		//CSamplePanelManager::Instance()->RegisterModulePane();
 	}
 
 };

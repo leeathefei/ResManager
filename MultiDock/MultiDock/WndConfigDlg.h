@@ -1,9 +1,7 @@
 #pragma once
 #include "afxwin.h"
 #include "afxcmn.h"
-#include <map>
 
-using namespace std;
 
 class CDlgCreateFloatPane;
 class CDlgCreateDockPane;
@@ -29,11 +27,13 @@ protected:
 	afx_msg void OnTcnSelchangeTabFilter(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnDllItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnClassnameItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
 
 	void UpdateClassnames(int nSelected);
 	DECLARE_MESSAGE_MAP()
 public:
-	int m_nSelectedItemIndex;
+	int m_nDllHitIndex;
+	int m_nClassnameHitindex;
 	CListCtrl m_listctrlDllName;
 	CListCtrl m_listctrlClassname;
 	CTabCtrl m_tabctrlCreateWnd;
@@ -42,18 +42,6 @@ public:
 	CDlgCreateDockPane*  m_pCreateDock;
 	CDlgCreateChildPane* m_pCreateChild;
 
-protected:
-	void AddClassName(CString& strDll, CString& strClassName, UINT nIndex);
-	BOOL IsDllAdded(CString& strDllName);
-	BOOL IsClassNameAdded(CString& strDll, CString& strClassname);
-	void ProcessFloatType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
-	void ProcessDockType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
-	void ProcessChildType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
-	
-	typedef map<CString, UINT> MapName2Index;
-	typedef map<CString, MapName2Index> MapDll2ClassNames;
 
-	map<CString, UINT> m_mapDllName2Index;
-	MapDll2ClassNames  m_mapAllDllClassNames;
 
 };

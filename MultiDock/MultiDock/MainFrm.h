@@ -70,8 +70,10 @@ public:
 	BOOL StartupAsWorkspace();
 	void RecalcLayoutEx();
 
-	//test
+	//Create pane+dialogs.
 	void CreateDockWnd(LPCTSTR lpDllName, LPCTSTR lpClassName, EPANE_ALIGNMENT etype);
+	//Create Frame+view.
+	void LoadDllByName(CString& strDllname);
 	
 protected:
 	void CacheMenus();
@@ -146,6 +148,7 @@ public:
 	CToolBarList      m_ToolbarList;
 
 	CWndConfigDlg*    m_pDlgConfigWnd;
+	static UINT s_ViewerIndex;
 
 protected:
 	afx_msg LRESULT OnInitModulePanes(WPARAM W, LPARAM L);

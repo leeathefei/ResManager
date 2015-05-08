@@ -1,7 +1,9 @@
 <config>
 	<DllCount>2</DllCount>
 	<Dll_0>
-		<DllName>SampleViewer</DllName>
+		<DllName>SampleViewer.dll</DllName>
+		<FrameWndClassName>CSampleViewerFrame</FrameWndClassName>
+		<ViewClassName>CSampleViewerView</ViewClassName>
 		<bLoad>FALSE</bLoad>
 		<Panels>
 			<GroupCount>3</GroupCount>
@@ -80,7 +82,9 @@
 		</Panels>
 	</Dll_0>
 	<Dll_1>
-		<DllName>SamplePanel</DllName>
+		<DllName>SamplePanel.dll</DllName>
+		<FrameWndClassName>CSamplePanelFrame</FrameWndClassName>
+		<ViewClassName>CSamplePanelView</ViewClassName>
 		<bLoad>FALSE</bLoad>
 		<Panels>
 			<GroupCount>3</GroupCount>
@@ -115,7 +119,7 @@
 				<PanelCount>3</PanelCount>
 				<Pane_0>
 					<ParentWnd>
-						<ClassName>CSampleViewerView</ClassName>
+						<ClassName>CMainFrame</ClassName>
 						<left/>
 						<top/>
 						<right/>
@@ -129,7 +133,7 @@
 				</Pane_0>
 				<Pane_1>
 					<ParentWnd>
-						<ClassName>CSampleViewerView</ClassName>
+						<ClassName>CMainFrame</ClassName>
 						<left/>
 						<top/>
 						<right/>
@@ -143,7 +147,7 @@
 				</Pane_1>
 				<Pane_2>
 					<ParentWnd>
-						<ClassName>CSampleViewerView</ClassName>
+						<ClassName>CMainFrame</ClassName>
 						<left/>
 						<top/>
 						<right/>
@@ -158,9 +162,20 @@
 			</Group_2>
 		</Panels>
 	</Dll_1>
+	<MainFrame>
+		<Address>0x02331ff0</Address>
+		<ClassName>CMainFrame</ClassName>
+		<View_0>
+			<Address>0x023768c8</Address>
+			<ClassName>CSampleViewerView</ClassName>
+		</View_0>
+	</MainFrame>
 	<Workspace>
 		<TabbedView>
 			<Alignment>0</Alignment>
+			<Group0>
+				<Tab0 Name="SampleViewer">false</Tab0>
+			</Group0>
 		</TabbedView>
 		<DockablePane>false</DockablePane>
 	</Workspace>

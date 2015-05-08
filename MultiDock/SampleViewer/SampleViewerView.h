@@ -1,7 +1,7 @@
 #pragma once
 
 // CSampleViewerView view
-
+class CMainFrame;
 class CSampleViewerView : public CScrollView
 {
 	DECLARE_DYNCREATE(CSampleViewerView)
@@ -36,6 +36,7 @@ public:
    afx_msg void OnSize(UINT nType, int cx, int cy);
    afx_msg void OnTimer(UINT_PTR nIDEvent);
    afx_msg void OnDestroy();
+   afx_msg int  OnCreate(LPCREATESTRUCT lpcs);
 };
 
 
