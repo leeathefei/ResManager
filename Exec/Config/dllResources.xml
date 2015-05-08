@@ -1,7 +1,7 @@
 <config>
 	<DllCount>2</DllCount>
 	<Dll_0>
-		<DllName>SampleViewer</DllName>
+		<DllName>SampleViewer.dll</DllName>
 		<bLoad>FALSE</bLoad>
 		<Panels>
 			<GroupCount>3</GroupCount>
@@ -80,7 +80,7 @@
 		</Panels>
 	</Dll_0>
 	<Dll_1>
-		<DllName>SamplePanel</DllName>
+		<DllName>SamplePanel.dll</DllName>
 		<bLoad>FALSE</bLoad>
 		<Panels>
 			<GroupCount>3</GroupCount>
