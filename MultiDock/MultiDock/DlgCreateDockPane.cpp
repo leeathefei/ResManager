@@ -117,15 +117,17 @@ void CDlgCreateDockPane::InitCreatedWnd()
 {
 	m_listParentsInDock.DeleteAllItems();
 
-	map<CString, CString> mapAllCreatedWnd;
+	MapWnd2Classname mapAllCreatedWnd;
 	if(CWndManager::Instance()->GetCreatedWnd(mapAllCreatedWnd))
 	{
 		int index = 0;
-		for (map<CString,CString>::iterator it = mapAllCreatedWnd.begin();
+		for (MapWnd2Classname::iterator it = mapAllCreatedWnd.begin();
 			it != mapAllCreatedWnd.end(); ++it)
 		{
-			m_listParentsInDock.InsertItem(index, it->first);
-			m_listParentsInDock.SetItemText(index, 1, it->second);
+			stWndInfoItem& oneItem = it->second;
+			m_listParentsInDock.InsertItem(index, oneItem.strClassName);
+			m_listParentsInDock.SetItemText(index, 1, oneItem.strHinstance);
+			m_listParentsInDock.SetItemData(index, (DWORD_PTR)oneItem.pWnd);
 
 			index++;
 		}

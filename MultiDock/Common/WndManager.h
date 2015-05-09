@@ -15,13 +15,13 @@
 #include <list>
 
 using namespace std;
+			
 
- class IObjCreatedEvent
- {
- public:
- 	virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName) = 0;
- };
-
+class IObjCreatedEvent
+{
+	public:
+ 		virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName) = 0;
+};
 
 typedef CWnd* (*PFUNC_CREATEOBJ)();
 class COMMON_DLLEXPORT CBaseObj
@@ -32,6 +32,19 @@ public:
 		return TRUE;
 	}
 };
+
+struct stWndInfoItem
+{
+	CString strHinstance;	
+	CString strClassName;
+	CWnd*   pWnd;
+	stWndInfoItem()
+	{
+		pWnd = NULL;
+	}
+};
+typedef map<CString, stWndInfoItem> MapWnd2Classname;
+
 
 class COMMON_DLLEXPORT CWndManager
 {
@@ -53,7 +66,7 @@ public:
 	void CreateChildWnd(CWnd* pParent, CString& strClass);
 
 	void AddCreatedWnd(CWnd* pWnd, CString strClass);
-	BOOL GetCreatedWnd(map<CString, CString>& mapAllCreated);
+	BOOL GetCreatedWnd(MapWnd2Classname& mapAllCreated);
 
 protected:
 	CWndManager();
@@ -65,6 +78,5 @@ protected:
 	map<CString, PFUNC_CREATEOBJ> m_mapClassName2Func;
 	list<IObjCreatedEvent*> m_listHandlers;
 	
-	//缓存所有的窗口对象--类名称
-	map<CString, CString> m_mapInstan2Classname;
+	MapWnd2Classname m_mapHins2Classname;
 };

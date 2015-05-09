@@ -102,15 +102,17 @@ void CDlgCreateChildPane::InitCreatedWnd()
 {
 	m_listPrentInCreateChild.DeleteAllItems();
 
-	map<CString, CString> mapAllCreatedWnd;
+	MapWnd2Classname mapAllCreatedWnd;
 	if(CWndManager::Instance()->GetCreatedWnd(mapAllCreatedWnd))
 	{
 		int index = 0;
-		for (map<CString,CString>::iterator it = mapAllCreatedWnd.begin();
+		for (MapWnd2Classname::iterator it = mapAllCreatedWnd.begin();
 			it != mapAllCreatedWnd.end(); ++it)
 		{
-			m_listPrentInCreateChild.InsertItem(index, it->first);
-			m_listPrentInCreateChild.SetItemText(index, 1, it->second);
+			stWndInfoItem& oneItem = it->second;
+			m_listPrentInCreateChild.InsertItem(index, oneItem.strClassName);
+			m_listPrentInCreateChild.SetItemText(index, 1, oneItem.strHinstance);
+			m_listPrentInCreateChild.SetItemData(index, (DWORD_PTR)oneItem.pWnd);
 
 			index++;
 		}

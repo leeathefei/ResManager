@@ -124,19 +124,24 @@ void CWndManager::AddCreatedWnd(CWnd* pWnd, CString strClass)
 	//cache
 	CString strHinst;
 	strHinst.Format(_T("0x%08x"), pWnd);
-	map<CString, CString>::iterator itFind = m_mapInstan2Classname.find(strHinst);
-	if (itFind == m_mapInstan2Classname.end())
+	MapWnd2Classname::iterator itFind = m_mapHins2Classname.find(strHinst);
+	if (itFind == m_mapHins2Classname.end())
 	{
-		m_mapInstan2Classname.insert(make_pair(strClass, strHinst));
+		stWndInfoItem oneItem;
+		oneItem.strClassName = strClass;
+		oneItem.strHinstance = strHinst;
+		oneItem.pWnd		 = pWnd;
+
+		m_mapHins2Classname.insert(make_pair(strHinst, oneItem));
 	}
 
 	//notify to update parent window listctrl.
 	ProcessEvent(pWnd, strClass);
 }
 
-BOOL CWndManager::GetCreatedWnd(map<CString, CString>& mapAllCreated)
+BOOL CWndManager::GetCreatedWnd(MapWnd2Classname& mapAllCreated)
 {
-	mapAllCreated = m_mapInstan2Classname;
+	mapAllCreated = m_mapHins2Classname;
 
 	return mapAllCreated.size() > 0;
 }
