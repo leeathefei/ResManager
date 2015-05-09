@@ -52,3 +52,11 @@ TIPS:如果该窗口类想要成为container容器窗口类，需要写自己的AdjustLayout函数：从wn
 TODOS
 TIPS:如果子窗口点了ok按钮，销毁了，那么wndManager和listctrl里面的都要更新哦,否则选择的父窗口是无效的===to be continued
 TIPS:对于每个类，需要增加AdjustLayout函数。读取wndmanager里面的数据，并调整。
+
+
+2015年5月9日15:39:52
+todo：通过主界面菜单加载toolbar。
+todo：xml文件的保存，和workspace的保存。
+todo：adjustlayout在一个dialog里面的添加并完成测试是否可以作为parent添加子对话框。
+todo：child窗口是否可以设置为resize style。
+todo：是否可以过滤将CMainFrame给过滤掉。不让其作为parent！！！
