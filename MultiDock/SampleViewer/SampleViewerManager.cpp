@@ -181,12 +181,12 @@ void CSampleViewerManager::Terminate()
    //TODO: 添加代码替换下面一行，或者保留下面一行
    m_pModuleManager->Terminate();
    
-   for(int i=0; i<4; ++i)
+   /*for(int i=0; i<4; ++i)
    {
 	   m_pModuleDlg[i]->PostMessage(WM_CLOSE);
 	   m_pModuleDlg[i]->DestroyWindow();
 	   delete m_pModuleDlg[i];
-   }
+   }*/
 
 
    CSampleViewerManager::DestroyInstance();
