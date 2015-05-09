@@ -41,6 +41,13 @@ BOOL CDlgTest4InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)
 	USE_CUSTOM_RESOURCE(_T("SampleViewer.dll"));
 	__super::Create(IDD, pParent);
 
-	return CSampleViewerManager::Instance()->RegisterDockPane(this, _T("DlgTest4InSV"),eDockType, TRUE);
+	if (eDockType == ALIGN_CHILD)
+	{
+		return TRUE;
+	}
+	else
+	{
+		return CSampleViewerManager::Instance()->RegisterDockPane(this, _T("DlgTest4InSV"),eDockType, TRUE);
+	}
 }
 // CDlgTest4InSV message handlers

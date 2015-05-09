@@ -43,3 +43,6 @@ tips:¶ÔÓÚ´´½¨µÄ´°¿Ú£¬¿ÉÒÔ¼àÌı²¢ÊÜµ½IObjCreatedEvent»Øµ÷ÓÃÓÚ¸üĞÂ¸¸Ç×´°¿ÚÁĞ±í£¬µ«Ê
 tips:Ã¿¸öViewÀàĞèÒªÔÚOnCreateº¯ÊıÖĞ½«×Ô¼ºµÄÄÚ´æµØÖ·Ğ´Èëµ½xmlÎÄ¼ş¹²ÆäËû¿Ø¼ş·ÖÏíÊı¾İ¡£
 tips:xmlµÄ¶ÁÈ¡ÖĞ£¬Éè¼Æµ½µİ¹éµÄµØ·½Ö÷ÒªÊÇÇ¶Ì×¡£¿ÉÒÔ¶ÔÔö¼Ó½Úµã£º<bHasChild>À´´ïµ½µİ¹éµÄ¸üºÃµÄ¶ÁÈ¡¡£to be continued.===>ÓÉÓÚÊ÷ĞÎ½á¹¹±éÀúºÜ¸´ÔÓ£¬ÏÖÔÚ¼ò»¯¹¤×÷£¬²ÉÓÃ
 		listctrlÀ´ÏÔÊ¾£¬Á½ÁĞÏÔÊ¾£ºclassName+hInstance¡£
+TIPS£º¶ÔÓÚ´´½¨µÄ×Ó´°¿ÚºÍfloat´°¿Ú£¬²»Òªµ÷ÓÃÄ¬ÈÏµÄCSampleViewerManager::Instance()->RegisterDockPane(this, _T("DlgTest4InSV"),eDockType, TRUE);
+	¸ÄÎªµ÷ÓÃÄ¬ÈÏµÄretrun __super::Create(IDD, pParent);Ö±½Ó·µ»Ø¡£·ñÔò£¬»á³öÏÖÆæ¹ÖµÄÏÖÏó¡£
+TIPS:ÆÚ¼ä³öÏÖÒ»´Îdynamic cast µ½cbaseObjµÄÊ±ºòÊ§°ÜÁË£¬ÒÔÎªÊÇÃ»ÓĞ½«¶Ô»°¿òÀàµ¼³ö£¬ÆäÊµ²»ĞèÒªµ¼³ö¶Ô»°¿òÀà¡£²»ÊÇÕâ¸öÔ­Òò¡£

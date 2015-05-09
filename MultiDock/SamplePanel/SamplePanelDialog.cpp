@@ -126,5 +126,12 @@ void CSamplePanelDialog::OnBnClickedButton1()
 	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 	 __super::Create(IDD, pParent);
 
-	 return CSamplePanelManager::Instance()->RegisterDockPane(this, _T("SamplePanelDialog"),eDockType, TRUE);
- }
+	 if (eDockType == ALIGN_CHILD)
+	 {
+		 return TRUE;
+	 }
+	 else
+	 {
+		return CSamplePanelManager::Instance()->RegisterDockPane(this, _T("SamplePanelDialog"),eDockType, TRUE);
+	 }
+}

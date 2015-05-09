@@ -2,7 +2,7 @@
 
 #include "..\Common\WndManager.h"
 
-class __declspec(dllexport) CDlgTest4InSV : public CDialogEx,public CBaseObj
+class /*__declspec(dllexport)*/ CDlgTest4InSV : public CDialogEx,public CBaseObj
 {
 	DECLARE_DYNAMIC(CDlgTest4InSV)
 

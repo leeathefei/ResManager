@@ -116,5 +116,12 @@ BOOL CSamplePanelDialog4::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)
 {
 	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 	__super::Create(IDD, pParent);
-	 return CSamplePanelManager::Instance()->RegisterDockPane(this, _T("SamplePanelDialog4"),eDockType, TRUE);
+	if (eDockType == ALIGN_CHILD)
+	{
+		return TRUE;
+	}
+	else
+	{
+		return CSamplePanelManager::Instance()->RegisterDockPane(this, _T("SamplePanelDialog4"),eDockType, TRUE);
+	}
 }
