@@ -24,12 +24,17 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 
+
+	afx_msg void OnBnClickedBtnCreateChildpane();
+	afx_msg void OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult);
+
 	DECLARE_MESSAGE_MAP()
 public:
+	int m_nParentIndex;
 	CListCtrl m_listPrentInCreateChild;
 	CString m_strClassnameInChild;
 	CString m_strDllname;
-	afx_msg void OnBnClickedBtnCreateChildpane();
+	
 	CString m_strPrtLeft;
 	CString m_strPrtTop;
 	CString m_strPrtRight;

@@ -23,6 +23,7 @@ CDlgCreateChildPane::CDlgCreateChildPane(CWnd* pParent /*=NULL*/)
 	, m_strChildRight(_T(""))
 	, m_strChildBottom(_T(""))
 	, m_nRadioSelect(0)
+	,m_nParentIndex(0)
 {
 	CWndManager::Instance()->AddEventHandler(this);
 }
@@ -91,6 +92,7 @@ BEGIN_MESSAGE_MAP(CDlgCreateChildPane, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_CREATE_CHILDPANE, &CDlgCreateChildPane::OnBnClickedBtnCreateChildpane)
 	ON_BN_CLICKED(IDC_RADIO3, &CDlgCreateChildPane::OnBnClickedRadiocreate)
 	ON_BN_CLICKED(IDC_RADIO5, &CDlgCreateChildPane::OnBnClickedRadiomodify)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_CREATECHILD_PARENTWND, OnParentSelectChanged)
 END_MESSAGE_MAP()
 
 void CDlgCreateChildPane::OnObjectCreated(CWnd* pWnd, CString& strClassName)
@@ -144,4 +146,48 @@ void CDlgCreateChildPane::OnBnClickedRadiomodify()
 	m_btnModifyChild.EnableWindow(TRUE);
 
 	// TODO: Add your control notification handler code here
+}
+
+void CDlgCreateChildPane::OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	POSITION pos = m_listPrentInCreateChild.GetFirstSelectedItemPosition();
+	DWORD dwErr = GetLastError();
+	if ( !pos )
+		return;
+
+	int nItem = m_listPrentInCreateChild.GetNextSelectedItem(pos);
+
+	if (nItem != m_nParentIndex)
+	{
+		m_nParentIndex = nItem;
+
+		CString strClassname = m_listPrentInCreateChild.GetItemText(nItem, 0);
+		CWnd* pWnd = (CWnd*)m_listPrentInCreateChild.GetItemData(nItem);
+		
+		if (NULL != pWnd)
+		{
+			CRect rcClient;
+			pWnd->GetClientRect(&rcClient);
+
+			CString strValue;
+			strValue.Format(_T("%d"),rcClient.left);
+			m_strPrtLeft  = strValue;
+			strValue.Empty();
+			strValue.Format(_T("%d"),rcClient.right);
+			m_strPrtRight = strValue;
+			strValue.Empty();
+			strValue.Format(_T("%d"),rcClient.top);
+			m_strPrtTop   = strValue;
+			strValue.Empty();
+			strValue.Format(_T("%d"),rcClient.bottom);
+			m_strPrtBottom = strValue;
+
+			UpdateData(FALSE);
+		}
+		
+		
+		
+	}
+
+	*pResult = 0;
 }
