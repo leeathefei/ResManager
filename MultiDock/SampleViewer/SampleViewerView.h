@@ -1,14 +1,19 @@
 #pragma once
 
+#include <vector>
+#include "..\Common\WndManager.h"
+
 // CSampleViewerView view
 class CMainFrame;
-class CSampleViewerView : public CScrollView
+class __declspec(dllexport) CSampleViewerView : public CScrollView,CLayoutObj
 {
 	DECLARE_DYNCREATE(CSampleViewerView)
 
 protected:
 	CSampleViewerView();           // protected constructor used by dynamic creation
 	virtual ~CSampleViewerView();
+
+	virtual void AdjustLayout();
 
 public:
 #ifdef _DEBUG
@@ -20,6 +25,7 @@ public:
 
 
    CMFCListCtrl    m_ListCtrl;
+   std::vector<CWnd*>	m_vecChild;
 
 protected:
 	virtual void OnDraw(CDC* pDC);      // overridden to draw this view

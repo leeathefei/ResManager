@@ -109,13 +109,21 @@ void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMEN
 	}
 }
 
-void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass)
+void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect)
 {
 	CWnd* pChildWnd = (CWnd*)CreateObj(strClass);
 	CBaseObj* pBase = dynamic_cast<CBaseObj*>(pChildWnd);
 	if (NULL != pBase)
 	{
 		pBase->CreateWnd(pParent, ALIGN_NON);
+		pChildWnd->ShowWindow(SW_SHOW);
+		
+		//add child to its parent:for resize.
+		CLayoutObj* pLayout = dynamic_cast<CLayoutObj*>(pParent);
+		if (pLayout != NULL)
+		{
+			pLayout->AddChild(pChildWnd, rect);
+		}
 	}
 }
 
@@ -144,4 +152,19 @@ BOOL CWndManager::GetCreatedWnd(MapWnd2Classname& mapAllCreated)
 	mapAllCreated = m_mapHins2Classname;
 
 	return mapAllCreated.size() > 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
+void CLayoutObj::AddChild(CWnd* pChildWnd, CRect& rect)
+{
+	if (NULL != pChildWnd)
+	{
+		m_mapChildWnds.insert(make_pair(pChildWnd, rect));
+	}
+}
+
+BOOL CLayoutObj::GetChildWnds(map<CWnd*, CRect>& mapChilds)
+{
+	mapChilds = m_mapChildWnds;
+	return mapChilds.size()>0;	
 }

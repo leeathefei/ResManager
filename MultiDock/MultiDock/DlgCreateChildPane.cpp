@@ -14,16 +14,17 @@ IMPLEMENT_DYNAMIC(CDlgCreateChildPane, CDialogEx)
 CDlgCreateChildPane::CDlgCreateChildPane(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgCreateChildPane::IDD, pParent)
 	, m_strClassnameInChild(_T(""))
-	, m_strPrtLeft(_T(""))
-	, m_strPrtTop(_T(""))
-	, m_strPrtRight(_T(""))
-	, m_strPrtBottom(_T(""))
-	, m_strChildLeft(_T(""))
-	, m_strChildTop(_T(""))
-	, m_strChildRight(_T(""))
-	, m_strChildBottom(_T(""))
 	, m_nRadioSelect(0)
 	,m_nParentIndex(0)
+	, m_uPrtLeft(0)
+	, m_uPrtRight(0)
+	, m_uPrtTop(0)
+	, m_uPrtBottom(0)
+	, m_uChildLeft(0)
+	, m_uChildRight(0)
+	, m_uChildTop(0)
+	, m_uChildBottom(0)
+	, m_pSelParentWnd(NULL)
 {
 	CWndManager::Instance()->AddEventHandler(this);
 }
@@ -66,17 +67,18 @@ void CDlgCreateChildPane::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_CREATECHILD_PARENTWND, m_listPrentInCreateChild);
 	DDX_Text(pDX, IDC_EDIT_CREATECHILD_CLASSNAME, m_strClassnameInChild);
-	DDX_Text(pDX, IDC_EDIT_PRT_LEFT, m_strPrtLeft);
-	DDX_Text(pDX, IDC_EDIT_PRT_TOP, m_strPrtTop);
-	DDX_Text(pDX, IDC_EDIT_PRT_RIGHT, m_strPrtRight);
-	DDX_Text(pDX, IDC_EDIT_PRT_BOTTOM, m_strPrtBottom);
-	DDX_Text(pDX, IDC_EDIT_CHILD_LEFT, m_strChildLeft);
-	DDX_Text(pDX, IDC_EDIT_CHILD_TOP, m_strChildTop);
-	DDX_Text(pDX, IDC_EDIT_CHILD_RIGHT, m_strChildRight);
-	DDX_Text(pDX, IDC_EDIT_CHILD_BOTTOM, m_strChildBottom);
+	DDX_Text(pDX, IDC_EDIT_PRT_LEFT, m_uPrtLeft);
+	DDX_Text(pDX, IDC_EDIT_PRT_TOP, m_uPrtTop);
+	DDX_Text(pDX, IDC_EDIT_PRT_RIGHT, m_uPrtRight);
+	DDX_Text(pDX, IDC_EDIT_PRT_BOTTOM, m_uPrtBottom);
+	DDX_Text(pDX, IDC_EDIT_CHILD_LEFT, m_uChildLeft);
+	DDX_Text(pDX, IDC_EDIT_CHILD_TOP, m_uChildTop);
+	DDX_Text(pDX, IDC_EDIT_CHILD_RIGHT, m_uChildRight);
+	DDX_Text(pDX, IDC_EDIT_CHILD_BOTTOM, m_uChildBottom);
 	DDX_Radio(pDX, IDC_RADIO3, m_nRadioSelect);
 	DDX_Control(pDX, IDC_BTN_CREATE_CHILDPANE, m_btnCreateChild);
 	DDX_Control(pDX, IDC_BTN_UPDATE_CHILDSIZE, m_btnModifyChild);
+	
 }
 
 
@@ -121,11 +123,6 @@ void CDlgCreateChildPane::InitCreatedWnd()
 	}
 }
 
-void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
-{
-	// TODO: Add your control notification handler code here
-}
-
 
 void CDlgCreateChildPane::OnBnClickedRadiocreate()
 {
@@ -166,28 +163,38 @@ void CDlgCreateChildPane::OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult)
 		
 		if (NULL != pWnd)
 		{
+			m_pSelParentWnd = pWnd;
+
 			CRect rcClient;
 			pWnd->GetClientRect(&rcClient);
-
-			CString strValue;
-			strValue.Format(_T("%d"),rcClient.left);
-			m_strPrtLeft  = strValue;
-			strValue.Empty();
-			strValue.Format(_T("%d"),rcClient.right);
-			m_strPrtRight = strValue;
-			strValue.Empty();
-			strValue.Format(_T("%d"),rcClient.top);
-			m_strPrtTop   = strValue;
-			strValue.Empty();
-			strValue.Format(_T("%d"),rcClient.bottom);
-			m_strPrtBottom = strValue;
+			m_uPrtLeft  = rcClient.left;
+			m_uPrtRight = rcClient.right;
+			m_uPrtTop	= rcClient.top;
+			m_uPrtBottom = rcClient.bottom;
 
 			UpdateData(FALSE);
+
+
 		}
-		
-		
-		
 	}
 
 	*pResult = 0;
+}
+
+void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
+{
+	UpdateData(TRUE);
+
+	CRect rcChild;
+	rcChild.left = m_uChildLeft;
+	rcChild.right = m_uChildRight;
+	rcChild.top  = m_uChildTop;
+	rcChild.bottom = m_uChildBottom;
+
+	//1.create child window.
+	if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
+	{
+		CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, m_strClassnameInChild, rcChild);
+		m_pSelParentWnd->SendMessage(WM_SIZE);
+	}
 }

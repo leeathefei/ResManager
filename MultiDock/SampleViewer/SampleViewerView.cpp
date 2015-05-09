@@ -66,14 +66,14 @@ void CSampleViewerView::OnInitialUpdate()
 	sizeTotal.cx = sizeTotal.cy = 100;
 	SetScrollSizes(MM_TEXT, sizeTotal);
 
-   CRect rcClient;
-   GetClientRect(&rcClient);
-   m_ListCtrl.Create(LVS_REPORT, rcClient, this, 99);
-   m_ListCtrl.SetExtendedStyle(LVS_EX_GRIDLINES|LVS_EX_FULLROWSELECT);
-   m_ListCtrl.ShowWindow(SW_SHOW);
-   m_ListCtrl.InsertColumn(0, _T("Index"));
-   m_ListCtrl.InsertColumn(1, _T("InstanceID"));
-   m_ListCtrl.InsertColumn(2, _T("Protocol"));
+	/* CRect rcClient;
+	GetClientRect(&rcClient);
+	m_ListCtrl.Create(LVS_REPORT, rcClient, this, 99);
+	m_ListCtrl.SetExtendedStyle(LVS_EX_GRIDLINES|LVS_EX_FULLROWSELECT);
+	m_ListCtrl.ShowWindow(SW_SHOW);
+	m_ListCtrl.InsertColumn(0, _T("Index"));
+	m_ListCtrl.InsertColumn(1, _T("InstanceID"));
+	m_ListCtrl.InsertColumn(2, _T("Protocol"));*/
 
 }
 
@@ -124,7 +124,7 @@ void CSampleViewerView::OnSize(UINT nType, int cx, int cy)
 {
    CScrollView::OnSize(nType, cx, cy);
 
-   if(m_ListCtrl.GetSafeHwnd())
+   /*if(m_ListCtrl.GetSafeHwnd())
    {
       CRect rc;
       GetClientRect(&rc);
@@ -132,7 +132,8 @@ void CSampleViewerView::OnSize(UINT nType, int cx, int cy)
       m_ListCtrl.SetColumnWidth(0, 100);
       m_ListCtrl.SetColumnWidth(1, 100);
       m_ListCtrl.SetColumnWidth(2, 100);
-   }
+   }*/
+   AdjustLayout();
 }
 
 void CSampleViewerView::OnDestroy()
@@ -153,4 +154,24 @@ void CSampleViewerView::OnToolButton2()
 void CSampleViewerView::OnToolButton3()
 {
 	AfxMessageBox(_T("Do something to response toolbar button 3."));
+}
+
+//////////////////////////////////////////////////////////////////////////
+//
+void CSampleViewerView::AdjustLayout()
+{
+	map<CWnd*, CRect> mapChilds;
+	if (GetChildWnds(mapChilds))
+	{
+		for (map<CWnd*, CRect>::iterator it = mapChilds.begin();
+			it != mapChilds.end(); ++it)
+		{
+			CWnd* pWnd = it->first;
+			CRect& rect = it->second;
+			if (NULL != pWnd && NULL != pWnd->GetSafeHwnd())
+			{
+				pWnd->MoveWindow(&rect);
+			}
+		}
+	}
 }

@@ -24,28 +24,31 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 
-
+	afx_msg void OnBnClickedRadiocreate();
+	afx_msg void OnBnClickedRadiomodify();
 	afx_msg void OnBnClickedBtnCreateChildpane();
 	afx_msg void OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult);
 
 	DECLARE_MESSAGE_MAP()
 public:
+	CWnd* m_pSelParentWnd;
 	int m_nParentIndex;
 	CListCtrl m_listPrentInCreateChild;
 	CString m_strClassnameInChild;
 	CString m_strDllname;
 	
-	CString m_strPrtLeft;
-	CString m_strPrtTop;
-	CString m_strPrtRight;
-	CString m_strPrtBottom;
-	CString m_strChildLeft;
-	CString m_strChildTop;
-	CString m_strChildRight;
-	CString m_strChildBottom;
+	UINT m_uPrtLeft;
+	UINT m_uPrtRight;
+	UINT m_uPrtTop;
+	UINT m_uPrtBottom;
+	UINT m_uChildLeft;
+	UINT m_uChildRight;
+	UINT m_uChildTop;
+	UINT m_uChildBottom;
+
 	int m_nRadioSelect;
 	CButton m_btnCreateChild;
 	CButton m_btnModifyChild;
-	afx_msg void OnBnClickedRadiocreate();
-	afx_msg void OnBnClickedRadiomodify();
+
+	
 };
