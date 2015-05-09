@@ -46,4 +46,9 @@ tips:xmlµÄ¶ÁÈ¡ÖĞ£¬Éè¼Æµ½µİ¹éµÄµØ·½Ö÷ÒªÊÇÇ¶Ì×¡£¿ÉÒÔ¶ÔÔö¼Ó½Úµã£º<bHasChild>À´´ïµ½µ
 TIPS£º¶ÔÓÚ´´½¨µÄ×Ó´°¿ÚºÍfloat´°¿Ú£¬²»Òªµ÷ÓÃÄ¬ÈÏµÄCSampleViewerManager::Instance()->RegisterDockPane(this, _T("DlgTest4InSV"),eDockType, TRUE);
 	¸ÄÎªµ÷ÓÃÄ¬ÈÏµÄretrun __super::Create(IDD, pParent);Ö±½Ó·µ»Ø¡£·ñÔò£¬»á³öÏÖÆæ¹ÖµÄÏÖÏó¡£
 TIPS:ÆÚ¼ä³öÏÖÒ»´Îdynamic cast µ½cbaseObjµÄÊ±ºòÊ§°ÜÁË£¬ÒÔÎªÊÇÃ»ÓĞ½«¶Ô»°¿òÀàµ¼³ö£¬ÆäÊµ²»ĞèÒªµ¼³ö¶Ô»°¿òÀà¡£²»ÊÇÕâ¸öÔ­Òò¡£
-TIPS:Èç¹û×Ó´°¿ÚµãÁËok°´Å¥£¬Ïú»ÙÁË£¬ÄÇÃ´wndManagerºÍlistctrlÀïÃæµÄ¶¼Òª¸üĞÂÅ¶===to be continued
+TIPS:Èç¹û¸Ã´°¿ÚÀàÏëÒª³ÉÎªcontainerÈİÆ÷´°¿ÚÀà£¬ĞèÒªĞ´×Ô¼ºµÄAdjustLayoutº¯Êı£º´ÓwndmanagerÖĞÄÃµ½×Ô¼ºµÄÖ¸Õë£¬²¢¿´ÊÇ·ñÓĞchild£¬²¢ÔÚwm_sizeÏûÏ¢ÖĞµ÷Õûlayout
+
+
+TODOS
+TIPS:Èç¹û×Ó´°¿ÚµãÁËok°´Å¥£¬Ïú»ÙÁË£¬ÄÇÃ´wndManagerºÍlistctrlÀïÃæµÄ¶¼Òª¸üĞÂÅ¶,·ñÔòÑ¡ÔñµÄ¸¸´°¿ÚÊÇÎŞĞ§µÄ===to be continued
+TIPS:¶ÔÓÚÃ¿¸öÀà£¬ĞèÒªÔö¼ÓAdjustLayoutº¯Êı¡£¶ÁÈ¡wndmanagerÀïÃæµÄÊı¾İ£¬²¢µ÷Õû¡£

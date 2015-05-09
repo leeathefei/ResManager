@@ -93,7 +93,7 @@ void CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass)
 	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
 	if (NULL != pBase)
 	{
-		pBase->CreateWnd((CWnd*)AfxGetMainWnd(), ALIGN_CHILD);//默认float的parent是mainframe！
+		pBase->CreateWnd((CWnd*)AfxGetMainWnd(), ALIGN_VERTICAL/*ALIGN_FLOAT*/);//默认float的parent是mainframe！
 		pDlg->ShowWindow(SW_SHOW);
 	}
 }

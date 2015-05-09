@@ -1417,6 +1417,14 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	{
 		nDockID = AFX_IDW_DOCKBAR_FLOAT;
 	}
+	else if (Align == ALIGN_HORIZONTAL)
+	{
+		nDockID = AFX_IDW_DOCKBAR_BOTTOM;
+	}
+	else if (Align == ALIGN_VERTICAL)
+	{
+		nDockID = AFX_IDW_DOCKBAR_RIGHT;
+	}
 
 	BOOL bVertical=FALSE;
 	CModulePane* pModulePane;
@@ -1441,7 +1449,7 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	int nNewID = BASE_MODULES_MENU_ID+MAX_NUM_VIEW_TYPES+counter++;
 	pModulePane = new CModulePane;
 	UINT style = WS_CHILD | CBRS_RIGHT |CBRS_FLOAT_MULTI|CBRS_HIDE_INPLACE;
-	DWORD tabbedStyle = (pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT)/*ALIGN_VERTICAL*/? AFX_CBRS_OUTLOOK_TABS: AFX_CBRS_REGULAR_TABS;
+	DWORD tabbedStyle = (pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT || pDef->nEnabledAlign == ALIGN_VERTICAL)/**/? AFX_CBRS_OUTLOOK_TABS: AFX_CBRS_REGULAR_TABS;
 	if (!pModulePane->Create(pDef->strWindowName, this, CRect(0, 0, 280, 220), TRUE,
 		nNewID, style, tabbedStyle))
 	{
@@ -1464,11 +1472,21 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	//////////////////////////////////////////////////////////////////////////
 	// Attach to existing Pane
 	CDockablePane* pTabbedBar = NULL;
-	//if( !AttachPane(pModulePane, pDef->nEnabledAlign, TRUE, &pTabbedBar) )
+	//lee:对于float，默认忘tab上加，成为一组。
+	if (pDef->nEnabledAlign == ALIGN_VERTICAL||pDef->nEnabledAlign == ALIGN_HORIZONTAL)
+	{
+		if( !AttachPane(pModulePane, pDef->nEnabledAlign, TRUE, &pTabbedBar) )
+		{
+			DockPane((CBasePane*)pModulePane, nDockID);  
+			pModulePane->ShowPane(TRUE,FALSE,TRUE);
+		}
+	}
+	else
 	{
 		DockPane((CBasePane*)pModulePane, nDockID);  
 		pModulePane->ShowPane(TRUE,FALSE,TRUE);
 	}
+	
 
 
 	//////////////////////////////////////////////////////////////////////////
@@ -1491,11 +1509,11 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 
 	//////////////////////////////////////////////////////////////////////////
 	//AddToMap
-	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT/*ALIGN_VERTICAL*/ )
+	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT||pDef->nEnabledAlign == ALIGN_VERTICAL )
 	{
 		m_VertPaneMap.SetAt(pDef->strWindowName, pModulePane);
 	}
-	if(pDef->nEnabledAlign== ALIGN_TOP||pDef->nEnabledAlign == ALIGN_BOTTON/*ALIGN_HORIZONTAL */)
+	if(pDef->nEnabledAlign== ALIGN_TOP||pDef->nEnabledAlign == ALIGN_BOTTON||pDef->nEnabledAlign == ALIGN_HORIZONTAL )
 	{
 		m_HoriPaneMap.SetAt(pDef->strWindowName, pModulePane);
 	}
@@ -1626,7 +1644,7 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 	CString strWindowName;
 	CModulePane* pPrevPane= NULL;
 
-	if( dwAlignment==ALIGN_LEFT || dwAlignment == ALIGN_RIGHT/*ALIGN_VERTICAL*/ )
+	if( dwAlignment==ALIGN_LEFT || dwAlignment == ALIGN_RIGHT ||dwAlignment == ALIGN_VERTICAL/**/ )
 	{
 		POSITION pos = m_VertPaneMap.GetStartPosition();
 		while( pos )
@@ -1635,7 +1653,7 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 		}
 	}
 
-	if(pPrevPane==NULL && (dwAlignment==ALIGN_TOP || dwAlignment == ALIGN_BOTTON)/*ALIGN_HORIZONTAL*/ )
+	if(pPrevPane==NULL && (dwAlignment==ALIGN_TOP || dwAlignment == ALIGN_BOTTON) ||dwAlignment == ALIGN_HORIZONTAL)
 	{
 		POSITION pos = m_HoriPaneMap.GetStartPosition();
 		while( pos )
