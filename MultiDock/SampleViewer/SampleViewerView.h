@@ -5,7 +5,7 @@
 
 // CSampleViewerView view
 class CMainFrame;
-class __declspec(dllexport) CSampleViewerView : public CScrollView,CLayoutObj
+class CSampleViewerView : public CScrollView
 {
 	DECLARE_DYNCREATE(CSampleViewerView)
 
@@ -13,7 +13,7 @@ protected:
 	CSampleViewerView();           // protected constructor used by dynamic creation
 	virtual ~CSampleViewerView();
 
-	virtual void AdjustLayout();
+    void AdjustLayout();
 
 public:
 #ifdef _DEBUG

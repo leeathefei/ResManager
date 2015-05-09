@@ -160,17 +160,18 @@ void CSampleViewerView::OnToolButton3()
 //
 void CSampleViewerView::AdjustLayout()
 {
-	map<CWnd*, CRect> mapChilds;
-	if (GetChildWnds(mapChilds))
+	ListChildWnd listChilds;
+	if (CWndManager::Instance()->GetChildWnds(this, listChilds))
 	{
-		for (map<CWnd*, CRect>::iterator it = mapChilds.begin();
-			it != mapChilds.end(); ++it)
+		for (ListChildWnd::iterator it = listChilds.begin();
+			it != listChilds.end(); ++it)
 		{
-			CWnd* pWnd = it->first;
-			CRect& rect = it->second;
+			stChildWnd& oneItem = *it;
+			CWnd* pWnd = oneItem.pChild;
+			CRect& rect = oneItem.rcChild;
 			if (NULL != pWnd && NULL != pWnd->GetSafeHwnd())
 			{
-				pWnd->MoveWindow(&rect);
+				pWnd->MoveWindow(&rect,TRUE);
 			}
 		}
 	}

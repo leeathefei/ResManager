@@ -119,11 +119,7 @@ void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect)
 		pChildWnd->ShowWindow(SW_SHOW);
 		
 		//add child to its parent:for resize.
-		CLayoutObj* pLayout = dynamic_cast<CLayoutObj*>(pParent);
-		if (pLayout != NULL)
-		{
-			pLayout->AddChild(pChildWnd, rect);
-		}
+		AddChild(pParent, pChildWnd, rect);
 	}
 }
 
@@ -154,17 +150,51 @@ BOOL CWndManager::GetCreatedWnd(MapWnd2Classname& mapAllCreated)
 	return mapAllCreated.size() > 0;
 }
 
-//////////////////////////////////////////////////////////////////////////
-void CLayoutObj::AddChild(CWnd* pChildWnd, CRect& rect)
+void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect)
 {
-	if (NULL != pChildWnd)
+	if (NULL != pChildWnd && pParent != NULL)
 	{
-		m_mapChildWnds.insert(make_pair(pChildWnd, rect));
+		MapParent2ChildWnds::iterator itFind = m_mapParent2Childs.find(pParent);
+		if (itFind != m_mapParent2Childs.end())
+		{
+			ListChildWnd& listChilds = itFind->second;
+			for (ListChildWnd::iterator it = listChilds.begin(); it != listChilds.end(); ++it)
+			{
+				stChildWnd& item = *it;
+				if (item.pChild != NULL && item.pChild == pChildWnd)
+				{
+					return;
+				}
+			}
+
+			//add new child item;
+			stChildWnd oneItem;
+			oneItem.pChild = pChildWnd;
+			oneItem.rcChild = rect;
+			listChilds.push_back(oneItem);
+		}
+		//add new parent wih its childs.
+		else
+		{
+			stChildWnd oneChild;
+			oneChild.pChild = pChildWnd;
+			oneChild.rcChild = rect;
+			ListChildWnd listChilds;
+			listChilds.push_back(oneChild);
+
+			m_mapParent2Childs.insert(make_pair(pParent, listChilds));
+		}
 	}
 }
 
-BOOL CLayoutObj::GetChildWnds(map<CWnd*, CRect>& mapChilds)
+BOOL CWndManager::GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds)
 {
-	mapChilds = m_mapChildWnds;
-	return mapChilds.size()>0;	
+	MapParent2ChildWnds::iterator itFind = m_mapParent2Childs.find(pParent);
+	if (itFind != m_mapParent2Childs.end())
+	{
+		mapChilds = itFind->second;
+		return TRUE;
+	}
+
+	return FALSE;
 }

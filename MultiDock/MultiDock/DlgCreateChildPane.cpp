@@ -195,6 +195,6 @@ void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
 	if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
 	{
 		CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, m_strClassnameInChild, rcChild);
-		m_pSelParentWnd->SendMessage(WM_SIZE);
+		m_pSelParentWnd->Invalidate();
 	}
 }
