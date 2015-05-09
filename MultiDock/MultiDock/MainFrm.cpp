@@ -117,7 +117,7 @@ void CMainFrame::OnClose()
 
 void CMainFrame::PostNcDestroy()
 {
-	SafeCloseModules();
+	//SafeCloseModules();//MAY CAUSE EXIT FAILED !
 
 	CMDIFrameWndEx::PostNcDestroy();
 }
