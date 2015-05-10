@@ -62,3 +62,9 @@ todo：xml文件的保存，和workspace的保存。
 todo：adjustlayout在一个dialog里面的添加并完成测试是否可以作为parent添加子对话框。
 todo：child窗口是否可以设置为resize style。
 todo：是否可以过滤将CMainFrame给过滤掉。不让其作为parent！！！
+todo：将子窗口设置为Resize style以后，如果用户鼠标拖拽了子对话框的大小，那么需要将新的rect更新到内存中去。
+	  否则，用户在添加新的子对话框的时候，刷新界面，就会出现拖拽没有生效的情况。---经过调研，发现getclientrect和GetWindowREct都不能准确的酸楚child对话框的
+	  crect值，即使调用ScreenToClient也不可以。所以还是让用户通过“更新位置”来修改child的尺寸。
+todo：在创建自对话框的时候，可以设置child name一栏让用户填写，一是为了在列表中好辨认，另外还可以给对话框设置
+	  名称。
+todo：为了刷新好看，是否考虑在带有bitmap的对话框中使用内存dc绘制图片。

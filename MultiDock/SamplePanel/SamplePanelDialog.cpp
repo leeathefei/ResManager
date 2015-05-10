@@ -39,6 +39,7 @@ void CSamplePanelDialog::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CSamplePanelDialog, CDialog)
    ON_WM_CLOSE()
    ON_WM_DESTROY()
+   ON_WM_SIZE()
    ON_MESSAGE(WM_RECVALUE_FROM_VIEWER,OnRecvValueFromView)
    ON_BN_CLICKED(IDC_BUTTON1, &CSamplePanelDialog::OnBnClickedButton1)
 END_MESSAGE_MAP()
@@ -51,6 +52,19 @@ void CSamplePanelDialog::OnClose()
    // TODO: Add your message handler code here and/or call default
    m_bPaneClosed = true;
    CDialog::OnClose();
+}
+
+void CSamplePanelDialog::OnSize(UINT nType, int cx, int cy)
+{
+	__super::OnSize(nType, cx, cy);
+
+	CRect rcFrame;
+	GetWindowRect(rcFrame);
+	ScreenToClient(rcFrame);
+
+	CRect rcClient;
+	GetClientRect(rcClient);
+
 }
 
 void CSamplePanelDialog::OnDestroy()

@@ -109,17 +109,18 @@ void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMEN
 	}
 }
 
-void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect)
+void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect,CString&strWndName)
 {
 	CWnd* pChildWnd = (CWnd*)CreateObj(strClass);
 	CBaseObj* pBase = dynamic_cast<CBaseObj*>(pChildWnd);
 	if (NULL != pBase)
 	{
 		pBase->CreateWnd(pParent, ALIGN_CHILD);
+		pChildWnd->SetWindowText(strWndName);
 		pChildWnd->ShowWindow(SW_SHOW);
 		
 		//add child to its parent:for resize.
-		AddChild(pParent, pChildWnd, rect);
+		AddChild(pParent, pChildWnd, rect, strWndName);
 	}
 }
 
@@ -150,7 +151,7 @@ BOOL CWndManager::GetCreatedWnd(MapWnd2Classname& mapAllCreated)
 	return mapAllCreated.size() > 0;
 }
 
-void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect)
+void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString& strChildName)
 {
 	if (NULL != pChildWnd && pParent != NULL)
 	{
@@ -171,6 +172,7 @@ void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect)
 			stChildWnd oneItem;
 			oneItem.pChild = pChildWnd;
 			oneItem.rcChild = rect;
+			oneItem.strChildWndName = strChildName;
 			listChilds.push_back(oneItem);
 		}
 		//add new parent wih its childs.
@@ -179,6 +181,7 @@ void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect)
 			stChildWnd oneChild;
 			oneChild.pChild = pChildWnd;
 			oneChild.rcChild = rect;
+			oneChild.strChildWndName = strChildName;
 			ListChildWnd listChilds;
 			listChilds.push_back(oneChild);
 
@@ -203,7 +206,7 @@ BOOL CWndManager::GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds)
 //但是有个问题，对于用户自动调整父窗口的时候，那么cache中的值就是old的了。。
 //父窗口，一开始的时候，就没有放值进来，那么修改的是父亲窗口，就会失败。
 //所以只能修改child窗口。
-CWnd* CWndManager::UpdateChildWndSize(CWnd* pSelChildWnd, CRect& rcNew)
+CWnd* CWndManager::UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, CString& strNewName)
 {
 	for(MapParent2ChildWnds::iterator it = m_mapParent2Childs.begin(); 
 		it != m_mapParent2Childs.end(); ++it)
@@ -216,6 +219,7 @@ CWnd* CWndManager::UpdateChildWndSize(CWnd* pSelChildWnd, CRect& rcNew)
 			if (oneChild.pChild == pSelChildWnd)
 			{
 				oneChild.rcChild = rcNew;
+				oneChild.strChildWndName = strNewName;
 				return it->first;//return parent window to send resize message.
 			}
 		}

@@ -25,6 +25,7 @@ CDlgCreateChildPane::CDlgCreateChildPane(CWnd* pParent /*=NULL*/)
 	, m_uChildTop(0)
 	, m_uChildBottom(0)
 	, m_pSelParentWnd(NULL)
+	, m_strChildWndName(_T(""))
 {
 	CWndManager::Instance()->AddEventHandler(this);
 }
@@ -78,7 +79,9 @@ void CDlgCreateChildPane::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_RADIO3, m_nRadioSelect);
 	DDX_Control(pDX, IDC_BTN_CREATE_CHILDPANE, m_btnCreateChild);
 	DDX_Control(pDX, IDC_BTN_UPDATE_CHILDSIZE, m_btnModifyChild);
-	
+
+	DDX_Control(pDX, IDC_EDIT_CHILDWIND_NAME, m_editChildWndName);
+	DDX_Text(pDX, IDC_EDIT_CHILDWIND_NAME, m_strChildWndName);
 }
 
 
@@ -217,7 +220,7 @@ void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
 	//1.create child window.
 	if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
 	{
-		CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, m_strClassnameInChild, rcChild);
+		CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, m_strClassnameInChild, rcChild, m_strChildWndName);
 		m_pSelParentWnd->SendMessage(WM_SIZE);
 	}
 	else
@@ -231,6 +234,10 @@ void CDlgCreateChildPane::OnBnClickedBtnUpdateChildsize()
 {
 	UpdateData(TRUE);
 
+	//update selected window's name first.
+	m_pSelParentWnd->SetWindowText(m_strChildWndName.GetString());
+	
+	//Update cache.
 	CRect rcNew;
 	rcNew.left = m_uChildLeft;
 	rcNew.right = m_uChildRight;
@@ -239,7 +246,7 @@ void CDlgCreateChildPane::OnBnClickedBtnUpdateChildsize()
 
 	if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
 	{
-		CWnd* pParent = CWndManager::Instance()->UpdateChildWndSize(m_pSelParentWnd, rcNew);
+		CWnd* pParent = CWndManager::Instance()->UpdateChildWndSizeAndName(m_pSelParentWnd, rcNew, m_strChildWndName);
 		if(pParent != NULL)
 		{
 			pParent->SendMessage(WM_SIZE);

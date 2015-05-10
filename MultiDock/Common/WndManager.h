@@ -46,9 +46,11 @@ struct stChildWnd
 {
 	CWnd* pChild;
 	CRect rcChild;
+	CString strChildWndName;
 	stChildWnd()
 	{
 		pChild = NULL;
+		strChildWndName = _T("");
 	}
 };
 typedef list<stChildWnd> ListChildWnd;
@@ -72,8 +74,8 @@ public:
 	//Create pane+dialogs.
 	void CreateFloatWnd(CWnd* pParent, CString& strClass);
 	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype);
-	void CreateChildWnd(CWnd* pParent, CString& strClass, CRect& rect);
-	CWnd* UpdateChildWndSize(CWnd* pSelChildWnd, CRect& rcNew);
+	void CreateChildWnd(CWnd* pParent, CString& strClass, CRect& rect, CString&strWndName);
+	CWnd* UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, CString& strNewName);
 
 	void AddCreatedWnd(CWnd* pWnd, CString strClass);
 	BOOL GetCreatedWnd(MapWnd2Classname& mapAllCreated);
@@ -82,7 +84,7 @@ public:
 protected:
 	CWndManager();
 	void ProcessEvent(CWnd*& pWnd, CString& strClass);
-	void AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect);
+	void AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString& strChildName);
 	
 
 protected:

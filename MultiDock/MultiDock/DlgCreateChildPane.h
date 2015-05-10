@@ -53,4 +53,6 @@ public:
 
 	
 	afx_msg void OnBnClickedBtnUpdateChildsize();
+	CEdit m_editChildWndName;
+	CString m_strChildWndName;
 };
