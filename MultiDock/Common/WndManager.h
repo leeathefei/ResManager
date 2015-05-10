@@ -73,6 +73,7 @@ public:
 	void CreateFloatWnd(CWnd* pParent, CString& strClass);
 	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype);
 	void CreateChildWnd(CWnd* pParent, CString& strClass, CRect& rect);
+	CWnd* UpdateChildWndSize(CWnd* pSelChildWnd, CRect& rcNew);
 
 	void AddCreatedWnd(CWnd* pWnd, CString strClass);
 	BOOL GetCreatedWnd(MapWnd2Classname& mapAllCreated);

@@ -28,6 +28,7 @@ protected:
 	afx_msg void OnBnClickedRadiomodify();
 	afx_msg void OnBnClickedBtnCreateChildpane();
 	afx_msg void OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult);
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -51,4 +52,5 @@ public:
 	CButton m_btnModifyChild;
 
 	
+	afx_msg void OnBnClickedBtnUpdateChildsize();
 };

@@ -95,6 +95,8 @@ BEGIN_MESSAGE_MAP(CDlgCreateChildPane, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO3, &CDlgCreateChildPane::OnBnClickedRadiocreate)
 	ON_BN_CLICKED(IDC_RADIO5, &CDlgCreateChildPane::OnBnClickedRadiomodify)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_CREATECHILD_PARENTWND, OnParentSelectChanged)
+	ON_NOTIFY(NM_CLICK, IDC_LIST_CREATECHILD_PARENTWND, OnMouseClicked)
+	ON_BN_CLICKED(IDC_BTN_UPDATE_CHILDSIZE, &CDlgCreateChildPane::OnBnClickedBtnUpdateChildsize)
 END_MESSAGE_MAP()
 
 void CDlgCreateChildPane::OnObjectCreated(CWnd* pWnd, CString& strClassName)
@@ -143,6 +145,27 @@ void CDlgCreateChildPane::OnBnClickedRadiomodify()
 	m_btnModifyChild.EnableWindow(TRUE);
 
 	// TODO: Add your control notification handler code here
+}
+
+void CDlgCreateChildPane::OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	int nSelectedItem = -1;
+	POSITION pos = m_listPrentInCreateChild.GetFirstSelectedItemPosition();
+	if (NULL == pos)
+	{
+		return;
+	}
+	else
+	{
+		nSelectedItem = m_listPrentInCreateChild.GetNextSelectedItem(pos);
+		if(nSelectedItem != -1)
+		{
+			m_nParentIndex = nSelectedItem;
+			m_pSelParentWnd = (CWnd*)m_listPrentInCreateChild.GetItemData(nSelectedItem);
+		}
+	}
+
+	*pResult = 0;	
 }
 
 void CDlgCreateChildPane::OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult) 
@@ -196,5 +219,30 @@ void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
 	{
 		CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, m_strClassnameInChild, rcChild);
 		m_pSelParentWnd->SendMessage(WM_SIZE);
+	}
+}
+
+
+void CDlgCreateChildPane::OnBnClickedBtnUpdateChildsize()
+{
+	UpdateData(TRUE);
+
+	CRect rcNew;
+	rcNew.left = m_uChildLeft;
+	rcNew.right = m_uChildRight;
+	rcNew.top  = m_uChildTop;
+	rcNew.bottom = m_uChildBottom;
+
+	if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
+	{
+		CWnd* pParent = CWndManager::Instance()->UpdateChildWndSize(m_pSelParentWnd, rcNew);
+		if(pParent != NULL)
+		{
+			pParent->SendMessage(WM_SIZE);
+		}
+		else
+		{
+			AfxMessageBox(_T("请选择子窗口，父窗口不可以修改大小！"));
+		}
 	}
 }

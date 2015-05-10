@@ -198,3 +198,28 @@ BOOL CWndManager::GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds)
 
 	return FALSE;
 }
+
+
+//但是有个问题，对于用户自动调整父窗口的时候，那么cache中的值就是old的了。。
+//父窗口，一开始的时候，就没有放值进来，那么修改的是父亲窗口，就会失败。
+//所以只能修改child窗口。
+CWnd* CWndManager::UpdateChildWndSize(CWnd* pSelChildWnd, CRect& rcNew)
+{
+	for(MapParent2ChildWnds::iterator it = m_mapParent2Childs.begin(); 
+		it != m_mapParent2Childs.end(); ++it)
+	{
+		ListChildWnd& listChilds = it->second;
+		for (ListChildWnd::iterator itChild = listChilds.begin();
+			itChild != listChilds.end(); ++itChild)
+		{
+			stChildWnd& oneChild = *itChild;
+			if (oneChild.pChild == pSelChildWnd)
+			{
+				oneChild.rcChild = rcNew;
+				return it->first;//return parent window to send resize message.
+			}
+		}
+	}
+	return NULL;
+
+}

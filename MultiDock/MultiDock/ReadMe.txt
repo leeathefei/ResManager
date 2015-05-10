@@ -52,6 +52,8 @@ TIPS:如果该窗口类想要成为container容器窗口类，需要写自己的AdjustLayout函数：从wn
 TODOS
 TIPS:如果子窗口点了ok按钮，销毁了，那么wndManager和listctrl里面的都要更新哦,否则选择的父窗口是无效的===to be continued
 TIPS:对于每个类，需要增加AdjustLayout函数。读取wndmanager里面的数据，并调整。
+TIPS:为了方便记忆和修改，在创建child实例的时候，让用户可以给实例取名。用于记忆。不填写的默认是空白列。因为有时候要修改child的size，这个时候，
+	可能会选择错误。
 
 
 2015年5月9日15:39:52
