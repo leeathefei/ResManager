@@ -24,7 +24,25 @@ CDlgTest1InSV::~CDlgTest1InSV()
 void CDlgTest1InSV::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST_SV_TEST1, m_listsvtest1);
 }
+
+BOOL CDlgTest1InSV::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	//1.Init dll name listctrl
+	DWORD dwStyle = m_listsvtest1.GetExtendedStyle();
+	dwStyle |= LVS_EX_FULLROWSELECT;       
+	dwStyle |= LVS_EX_GRIDLINES;    
+	m_listsvtest1.SetExtendedStyle(dwStyle);
+	m_listsvtest1.InsertColumn(0, _T("数据一"), LVCFMT_LEFT, 180);
+	m_listsvtest1.InsertColumn(1, _T("数据二"), LVCFMT_LEFT, 100);
+
+	return TRUE;
+
+}
+
 
 
 BEGIN_MESSAGE_MAP(CDlgTest1InSV, CDialogEx)

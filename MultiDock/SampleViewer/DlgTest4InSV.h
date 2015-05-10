@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Common\WndManager.h"
+#include "afxcmn.h"
 
 class /*__declspec(dllexport)*/ CDlgTest4InSV : public CDialogEx,public CBaseObj
 {
@@ -9,6 +10,8 @@ class /*__declspec(dllexport)*/ CDlgTest4InSV : public CDialogEx,public CBaseObj
 public:
 	CDlgTest4InSV(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDlgTest4InSV();
+
+	virtual BOOL OnInitDialog();
 
 
 	struct stRegister 
@@ -35,4 +38,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CListCtrl m_listsvtest11;
+	CListCtrl m_listsvtest12;
 };

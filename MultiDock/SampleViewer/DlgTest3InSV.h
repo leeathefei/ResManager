@@ -13,6 +13,8 @@ public:
 // Dialog Data
 	enum { IDD = IDD_SAMPLEVIEW_TEST_3 };
 
+	virtual BOOL OnInitDialog();
+
 	struct stRegister
 	{
 		stRegister()

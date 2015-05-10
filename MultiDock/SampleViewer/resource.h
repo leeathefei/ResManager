@@ -24,6 +24,16 @@
 #define IDC_EDIT2                       5010
 #define IDC_EDIT3                       5011
 #define IDC_BUTTON4                     5012
+#define IDC_LIST_SV_TEST1               5013
+#define IDC_LIST_SV_TEST2               5014
+#define IDC_STATIC_SV_PIC3              5015
+#define IDC_LIST_SV_TEST41              5016
+#define IDC_LIST_SV_TEST42              5017
+#define IDC_LIST2                       5018
+#define IDB_SAMPLEVIEWER_STATISTIC_1	5019
+#define IDB_SAMPLEVIEWER_STATISTIC_2	5020
+#define IDB_SAMPLEVIEWER_STATISTIC_3	5021
+#define IDB_SAMPLEVIEWER_STATISTIC_4	5022
 #define ID_SAMPLEVIEWER                 33100
 #define ID_SAMPLEVIEWER_SHOWPANE        33101
 #define ID_SAMPLEVIEWER_HIDEPANE        33102
@@ -45,7 +55,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        5009
 #define _APS_NEXT_COMMAND_VALUE         32785
-#define _APS_NEXT_CONTROL_VALUE         5013
+#define _APS_NEXT_CONTROL_VALUE         5019
 #define _APS_NEXT_SYMED_VALUE           5002
 #endif
 #endif

@@ -28,6 +28,16 @@ void CDlgTest3InSV::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 }
 
+BOOL CDlgTest3InSV::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	
+
+	return TRUE;
+}
+
+
 
 BEGIN_MESSAGE_MAP(CDlgTest3InSV, CDialogEx)
 END_MESSAGE_MAP()

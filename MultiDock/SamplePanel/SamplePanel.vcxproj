@@ -112,6 +112,12 @@
     <None Include="res\SamplePanel.ico" />
     <None Include="res\SamplePanel.rc2" />
     <None Include="res\SamplePanelDoc.ico" />
+    <None Include="res\static_10.bmp" />
+    <None Include="res\static_5.bmp" />
+    <None Include="res\static_6.bmp" />
+    <None Include="res\static_7.bmp" />
+    <None Include="res\static_8.bmp" />
+    <None Include="res\static_9.bmp" />
     <None Include="res\Toolbar.bmp" />
     <None Include="res\Toolbar24.bmp" />
     <None Include="res\Toolbar256.bmp" />

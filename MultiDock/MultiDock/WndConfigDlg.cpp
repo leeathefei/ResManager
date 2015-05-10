@@ -68,14 +68,14 @@ BOOL CWndConfigDlg::OnInitDialog()
 	dwStyle |= LVS_EX_FULLROWSELECT;       
 	dwStyle |= LVS_EX_GRIDLINES;    
 	m_listctrlDllName.SetExtendedStyle(dwStyle);
-	m_listctrlDllName.InsertColumn(0, _T("DllName"), LVCFMT_LEFT, 165);
+	m_listctrlDllName.InsertColumn(0, _T("动态库名称"), LVCFMT_LEFT, 165);
 
 	//2.Init classes names.
 	dwStyle = m_listctrlClassname.GetExtendedStyle();
 	dwStyle |= LVS_EX_FULLROWSELECT;        
 	dwStyle |= LVS_EX_GRIDLINES;     
 	m_listctrlClassname.SetExtendedStyle(dwStyle);
-	m_listctrlClassname.InsertColumn(0, _T("ClassNames"), LVCFMT_LEFT, 176);
+	m_listctrlClassname.InsertColumn(0, _T("窗口类名称"), LVCFMT_LEFT, 176);
 
 
 	//3.Init tab control

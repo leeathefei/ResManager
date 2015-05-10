@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Common\WndManager.h"
+#include "afxcmn.h"
 
 class CDlgTest2InSV : public CDialogEx, public CBaseObj
 {
@@ -12,6 +13,8 @@ public:
 
 // Dialog Data
 	enum { IDD = IDD_SAMPLEVIEW_TEST_2 };
+
+	virtual BOOL OnInitDialog();
 
 	struct stRegister
 	{
@@ -34,4 +37,6 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CListCtrl m_listsvtest2;
 };

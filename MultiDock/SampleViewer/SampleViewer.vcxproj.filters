@@ -65,6 +65,18 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="ReadMe.txt" />
+    <None Include="res\static_1.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\static_2.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\static_3.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\static_4.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">

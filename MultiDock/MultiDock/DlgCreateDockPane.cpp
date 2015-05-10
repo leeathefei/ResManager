@@ -43,8 +43,8 @@ BOOL CDlgCreateDockPane::OnInitDialog()
 	dwStyle |= LVS_EX_FULLROWSELECT;       
 	dwStyle |= LVS_EX_GRIDLINES;    
 	m_listParentsInDock.SetExtendedStyle(dwStyle);
-	m_listParentsInDock.InsertColumn(0, _T("ClassName"), LVCFMT_LEFT, 180);
-	m_listParentsInDock.InsertColumn(1, _T("hInstance"), LVCFMT_LEFT, 100);
+	m_listParentsInDock.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 180);
+	m_listParentsInDock.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 100);
 
 	InitCreatedWnd();
 

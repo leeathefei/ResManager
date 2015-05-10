@@ -51,6 +51,24 @@
     <None Include="res\Toolbar24.bmp">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\static_5.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\static_6.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\static_7.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\static_8.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\static_9.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\static_10.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">

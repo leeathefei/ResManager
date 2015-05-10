@@ -42,8 +42,8 @@ BOOL CDlgCreateChildPane::OnInitDialog()
 	dwStyle |= LVS_EX_FULLROWSELECT;       
 	dwStyle |= LVS_EX_GRIDLINES;    
 	m_listPrentInCreateChild.SetExtendedStyle(dwStyle);
-	m_listPrentInCreateChild.InsertColumn(0, _T("ClassName"), LVCFMT_LEFT, 180);
-	m_listPrentInCreateChild.InsertColumn(1, _T("hInstance"), LVCFMT_LEFT, 100);
+	m_listPrentInCreateChild.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 180);
+	m_listPrentInCreateChild.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 100);
 
 	InitCreatedWnd();
 
@@ -219,6 +219,10 @@ void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
 	{
 		CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, m_strClassnameInChild, rcChild);
 		m_pSelParentWnd->SendMessage(WM_SIZE);
+	}
+	else
+	{
+		AfxMessageBox(_T("请先选择父窗口！"));
 	}
 }
 

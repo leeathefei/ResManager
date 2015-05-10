@@ -140,6 +140,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\static_1.bmp" />
+    <None Include="res\static_2.bmp" />
+    <None Include="res\static_3.bmp" />
+    <None Include="res\static_4.bmp" />
     <None Include="SampleViewer.def" />
     <None Include="res\SampleViewer.ico" />
     <None Include="res\SampleViewer.rc2" />
