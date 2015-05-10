@@ -112,7 +112,7 @@ CWnd* CSamplePanelDialog4::CreateDlgObj()
 {
 	return new CSamplePanelDialog4;
 }
-BOOL CSamplePanelDialog4::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)
+BOOL CSamplePanelDialog4::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName)
 {
 	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 	__super::Create(IDD, pParent);
@@ -122,6 +122,6 @@ BOOL CSamplePanelDialog4::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)
 	}
 	else
 	{
-		return CSamplePanelManager::Instance()->RegisterDockPane(this, _T("SamplePanelDialog4"),eDockType, TRUE);
+		return CSamplePanelManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, TRUE);
 	}
 }

@@ -29,7 +29,7 @@ public:
 	};
 
 	static CWnd* CreateDlgObj();
-	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName);
 
 // Dialog Data
 	enum { IDD = IDD_SAMPLEVIEW_TEST_4 };

@@ -26,7 +26,7 @@ IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWndEx)
 const int  iMaxUserToolbars = 10;
 const UINT uiFirstUserToolBarId = AFX_IDW_CONTROLBAR_FIRST + 40;
 const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
-CString CMainFrame::m_strModuleMenuItems[2] = {_T("&Modules"), _T("&Utilities")};
+CString CMainFrame::m_strModuleMenuItems[2] = {_T("&动态链接库模块"), _T("&基础模块")};
 
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_SET_PANE1_CMD1, &CMainFrame::OnRibbonPane1Cmd1)

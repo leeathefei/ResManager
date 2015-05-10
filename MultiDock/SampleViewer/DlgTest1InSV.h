@@ -30,7 +30,7 @@ public:
 		}
 	};
 
-	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName);
 	static  CWnd* CreateDlgObj();
 
 protected:

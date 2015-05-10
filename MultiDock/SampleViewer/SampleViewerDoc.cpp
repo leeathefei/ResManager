@@ -19,7 +19,7 @@ BOOL CSampleViewerDoc::OnNewDocument()
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-   m_strTitle = _T("Sample Viewer");
+   m_strTitle = _T("≤‚ ‘π§≥Ã“ª");
 
 	return TRUE;
 }

@@ -27,7 +27,7 @@ typedef CWnd* (*PFUNC_CREATEOBJ)();
 class COMMON_DLLEXPORT CBaseObj
 {
 public:
-	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType)	{	return TRUE;	}
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName)	{	return TRUE;	}
 };
 
 struct stWndInfoItem
