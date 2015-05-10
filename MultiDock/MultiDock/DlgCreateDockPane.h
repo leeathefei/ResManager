@@ -32,4 +32,5 @@ public:
 	int m_nRadioDirection;
 	afx_msg void OnBnClickedCreatewndIndockpage();
 	CListCtrl m_listParentsInDock;
+	CString m_strDockWndName;
 };

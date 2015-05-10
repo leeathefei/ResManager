@@ -17,6 +17,7 @@ CDlgCreateDockPane::CDlgCreateDockPane(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgCreateDockPane::IDD, pParent)
 	, m_strClassname(_T(""))
 	, m_nRadioDirection(0)
+	, m_strDockWndName(_T(""))
 {
 	CWndManager::Instance()->AddEventHandler(this);
 }
@@ -32,6 +33,7 @@ void CDlgCreateDockPane::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_CLASSNAME_INDOCK, m_strClassname);
 	DDX_Radio(pDX, IDC_RADIO1, m_nRadioDirection);
 	DDX_Control(pDX, IDC_LIST_PARENTWNDINDOCKPANE, m_listParentsInDock);
+	DDX_Text(pDX, IDC_EDIT1, m_strDockWndName);
 }
 
 BOOL CDlgCreateDockPane::OnInitDialog()
@@ -103,7 +105,7 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 		}
 		else
 		{
-			CWndManager::Instance()->CreateDockWnd((CWnd*)pFrame, m_strClassname, eType);
+			CWndManager::Instance()->CreateDockWnd((CWnd*)pFrame, m_strClassname, eType, m_strDockWndName);
 		}
 
 	}

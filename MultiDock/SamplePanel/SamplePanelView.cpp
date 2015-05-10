@@ -86,7 +86,8 @@ int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
 	AppXml()->SetAttribute(strNode, _T("CSamplePanelView"));
 	AppXml()->FlushData();*/
 
-	CWndManager::Instance()->AddCreatedWnd(this, _T("CSamplePanelView"));
+	CString strName(_T("没有View的窗口！"));
+	CWndManager::Instance()->AddCreatedWnd(this, _T("CSamplePanelView"), strName);
 
 
 	return 0;

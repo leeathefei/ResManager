@@ -67,17 +67,17 @@ public:
 public:
 	void AddEventHandler(IObjCreatedEvent* pEvent);
 	void Register(CString lpszClassName, PFUNC_CREATEOBJ pFun);
-	CWnd* CreateObj(CString lpszClassName);
+	CWnd* CreateObj(CString lpszClassName, CString& strWndName);
 	UINT GetNextViewIndex();
 
 	//for different createing window page wndcofigdlg.h
 	//Create pane+dialogs.
-	void CreateFloatWnd(CWnd* pParent, CString& strClass);
-	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype);
+	void CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName);
+	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName);
 	void CreateChildWnd(CWnd* pParent, CString& strClass, CRect& rect, CString&strWndName);
 	CWnd* UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, CString& strNewName);
 
-	void AddCreatedWnd(CWnd* pWnd, CString strClass);
+	void AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndName);
 	BOOL GetCreatedWnd(MapWnd2Classname& mapAllCreated);
 	BOOL GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds);
 

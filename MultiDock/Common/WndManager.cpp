@@ -46,7 +46,7 @@ void CWndManager::Register(CString lpszClassName, PFUNC_CREATEOBJ pFun)
 	m_mapClassName2Func.insert(map<CString, PFUNC_CREATEOBJ>::value_type(lpszClassName, pFun));
 }
 
-CWnd* CWndManager::CreateObj(CString strClass) 
+CWnd* CWndManager::CreateObj(CString strClass, CString& strWndName) 
 {
 	CWnd* pWnd = NULL;
 
@@ -62,7 +62,7 @@ CWnd* CWndManager::CreateObj(CString strClass)
 
 	if (NULL != pWnd)
 	{
-		AddCreatedWnd(pWnd,strClass);
+		AddCreatedWnd(pWnd,strClass, strWndName);
 	}
 
 	return pWnd;
@@ -86,10 +86,10 @@ UINT CWndManager::GetNextViewIndex()
 	return m_nViewIndex++;
 }
 
-void CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass)
+void CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName)
 {
 	//create panes.
-	CWnd* pDlg = (CWnd*)CreateObj(strClass);
+	CWnd* pDlg = (CWnd*)CreateObj(strClass, strWndName);
 	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
 	if (NULL != pBase)
 	{
@@ -98,9 +98,9 @@ void CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass)
 	}
 }
 
-void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype)
+void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName)
 {
-	CWnd* pDlg = (CWnd*)CreateObj(strClass);
+	CWnd* pDlg = (CWnd*)CreateObj(strClass, strWndName);
 	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
 	if (NULL != pBase)
 	{
@@ -111,7 +111,7 @@ void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMEN
 
 void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect,CString&strWndName)
 {
-	CWnd* pChildWnd = (CWnd*)CreateObj(strClass);
+	CWnd* pChildWnd = (CWnd*)CreateObj(strClass, strWndName);
 	CBaseObj* pBase = dynamic_cast<CBaseObj*>(pChildWnd);
 	if (NULL != pBase)
 	{
@@ -124,17 +124,19 @@ void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect,CS
 	}
 }
 
-void CWndManager::AddCreatedWnd(CWnd* pWnd, CString strClass)
+void CWndManager::AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndName)
 {
 	//cache
 	CString strHinst;
 	strHinst.Format(_T("0x%08x"), pWnd);
+	CString strAlias;
+	strAlias.Format(_T("%s(%s)"), strWndName, strHinst);
 	MapWnd2Classname::iterator itFind = m_mapHins2Classname.find(strHinst);
 	if (itFind == m_mapHins2Classname.end())
 	{
 		stWndInfoItem oneItem;
 		oneItem.strClassName = strClass;
-		oneItem.strHinstance = strHinst;
+		oneItem.strHinstance = strAlias/*strHinst*/;
 		oneItem.pWnd		 = pWnd;
 
 		m_mapHins2Classname.insert(make_pair(strHinst, oneItem));

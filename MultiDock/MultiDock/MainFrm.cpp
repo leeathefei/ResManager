@@ -223,7 +223,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 // 	AppXml()->SetAttribute(_T("MainFrame\\ClassName"), _T("CMainFrame"));
 // 	AppXml()->FlushData();
 
-	CWndManager::Instance()->AddCreatedWnd(this, _T("CMainFrame"));
+	CString strMainframName = _T("Ö÷¿ò¼Ü´°¿Ú");
+	CWndManager::Instance()->AddCreatedWnd(this, _T("CMainFrame"), strMainframName);
 
 	if (!m_wndMenuBar.Create(this))
 	{

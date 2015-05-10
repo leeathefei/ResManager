@@ -33,4 +33,5 @@ public:
 	CString m_strEditClassname;
 	CString m_strDllname;
 	CListCtrl m_listParentInFloat;
+	CString m_strFloatWndName;
 };

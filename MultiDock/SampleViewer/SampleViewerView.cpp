@@ -51,7 +51,8 @@ int CSampleViewerView::OnCreate(LPCREATESTRUCT lpcs)
 		return -1;
 	}
 
-	CWndManager::Instance()->AddCreatedWnd(this, _T("CSampleViewerView"));
+	CString strSampleViewName = _T("Ä£°å´°¿Ú");
+	CWndManager::Instance()->AddCreatedWnd(this, _T("CSampleViewerView"), strSampleViewName);
 
 	return 0;
 }
