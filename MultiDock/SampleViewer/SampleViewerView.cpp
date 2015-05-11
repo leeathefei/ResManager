@@ -68,20 +68,10 @@ void CSampleViewerView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
-
 	CSize sizeTotal;
 	// TODO: calculate the total size of this view
 	sizeTotal.cx = sizeTotal.cy = 100;
 	SetScrollSizes(MM_TEXT, sizeTotal);
-
-	/* CRect rcClient;
-	GetClientRect(&rcClient);
-	m_ListCtrl.Create(LVS_REPORT, rcClient, this, 99);
-	m_ListCtrl.SetExtendedStyle(LVS_EX_GRIDLINES|LVS_EX_FULLROWSELECT);
-	m_ListCtrl.ShowWindow(SW_SHOW);
-	m_ListCtrl.InsertColumn(0, _T("Index"));
-	m_ListCtrl.InsertColumn(1, _T("InstanceID"));
-	m_ListCtrl.InsertColumn(2, _T("Protocol"));*/
 
 }
 

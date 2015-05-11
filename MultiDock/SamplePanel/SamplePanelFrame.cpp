@@ -16,6 +16,7 @@
 #include "SamplePanel.h"
 #include "SamplePanelFrame.h"
 #include "SamplePanelManager.h"
+#include "SamplePanelView.h"
 
 
 #ifdef _DEBUG
@@ -48,8 +49,6 @@ void CSamplePanelFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* 
 	if(bActivate&&pActivateWnd==this)
 	{
 		pDllManager->ShowToolBar(TRUE);
-		pDllManager->ActivatePane(_T("Vertical Pane 0"));
-		pDllManager->ActivatePane(_T("Horizontal Pane 3"));
 	}
 
 	if(!bActivate&&pDeactivateWnd==this)
@@ -61,12 +60,22 @@ void CSamplePanelFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* 
 }
 
 void CSamplePanelFrame::OnClose()
+{	
+	CSamplePanelManager::Instance()->RemoveFrameWnd(this);
+	CSamplePanelView* pView = (CSamplePanelView*)GetActiveView();
+	if (NULL != pView)
+	{
+		pView->SendMessage(WM_CLOSE);
+	}
+
+	CMDIChildWndEx::OnClose();
+}
+
+void CSamplePanelFrame::PostNcDestroy()
 {
 	//Control the toolbar's refer_counter
 	CSamplePanelManager::Instance()->RemoveFrameWnd(this);
-
-	
-	CMDIChildWndEx::OnClose();
+	__super::PostNcDestroy();
 }
 
 

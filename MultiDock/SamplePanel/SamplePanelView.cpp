@@ -43,12 +43,16 @@ END_MESSAGE_MAP()
 
 CSamplePanelView::CSamplePanelView()
 {
-	// TODO: add construction code here
 
 }
 
 CSamplePanelView::~CSamplePanelView()
 {
+}
+
+void CSamplePanelView::OnClose()
+{
+	CWndManager::Instance()->RemoveCreatedWnd(this);
 }
 
 void CSamplePanelView::OnToolButton1()
@@ -73,12 +77,7 @@ void CSamplePanelView::OnDraw(CDC* /*pDC*/)
 // 	ASSERT_VALID(pDoc);
 // 	if (!pDoc)
 // 		return;
-
-	// TODO: add draw code for native data here
 }
-
-
-// CSamplePanelView printing
 
 void CSamplePanelView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
@@ -93,19 +92,8 @@ int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
 		return -1;
 	}
 
-	/*UINT nIndex = CWndManager::Instance()->GetNextViewIndex();
-	CString strAddr;
-	strAddr.Format(_T("0x%08x"), this);
-	CString strNode;
-	strNode.Format(_T("MainFrame\\View_%d\\Address"), nIndex);
-	AppXml()->SetAttribute(strNode, strAddr);
-	strNode.Format(_T("MainFrame\\View_%d\\ClassName"), nIndex);
-	AppXml()->SetAttribute(strNode, _T("CSamplePanelView"));
-	AppXml()->FlushData();*/
-
 	CString strName(_T("工程二View窗口"));
 	CWndManager::Instance()->AddCreatedWnd(this, _T("CSamplePanelView"), strName);
-
 
 	return 0;
 }
