@@ -45,6 +45,9 @@ protected:
 
 // Generated message map functions
 protected:
+	afx_msg void OnToolButton1();
+	afx_msg void OnToolButton2();
+	afx_msg void OnToolButton3();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg int  OnCreate(LPCREATESTRUCT lpcs);
 	DECLARE_MESSAGE_MAP()

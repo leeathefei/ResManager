@@ -26,7 +26,7 @@ IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWndEx)
 const int  iMaxUserToolbars = 10;
 const UINT uiFirstUserToolBarId = AFX_IDW_CONTROLBAR_FIRST + 40;
 const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
-CString CMainFrame::m_strModuleMenuItems[2] = {_T("&动态链接库模块"), _T("&基础模块")};
+CString CMainFrame::m_strModuleMenuItems[2] = {_T("&动态链接库模块"), _T("&动态库的工具栏")};
 
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_SET_PANE1_CMD1, &CMainFrame::OnRibbonPane1Cmd1)
@@ -60,6 +60,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	//ON_UPDATE_COMMAND_UI(ID_VIEW_CAPTION_BAR, &CMainFrame::OnUpdateViewCaptionBar)
 	ON_COMMAND_RANGE(BASE_MODULES_MENU_ID, BASE_MODULES_MENU_ID+MAX_NUM_MODULES, OnModuleMenuItem)
 	ON_COMMAND_RANGE(BASE_UTILITIES_MENU_ID, BASE_UTILITIES_MENU_ID+MAX_NUM_UTILITES, OnUtilityMenuItem)
+	ON_UPDATE_COMMAND_UI_RANGE(BASE_UTILITIES_MENU_ID, BASE_UTILITIES_MENU_ID+MAX_NUM_UTILITES, OnUpdateToolbarMenu)
 
 	ON_MESSAGE(WM_USER+100, OnGetMainMenu)
 	ON_MESSAGE(WM_USER+101, OnGetMainMenuBar)
@@ -734,6 +735,17 @@ void CMainFrame::OnUtilityMenuItem( UINT nID )
 	OpenToolbar(nID);
 	UnlockWindowUpdate();
 }
+void CMainFrame::OnUpdateToolbarMenu(CCmdUI* pCmdUI)
+{
+	for (POSITION pos  = m_AllCommands.GetHeadPosition(); pos !=NULL; )
+	{
+		CMenuCommand &mc = m_AllCommands.GetNext(pos);
+		if(pCmdUI->m_nID == mc.m_nMenuID+BASE_UTILITIES_MENU_ID)
+		{
+			pCmdUI->Enable(mc.m_bInitialized);
+		}
+	}
+}
 
 BOOL CMainFrame::OpenUtilityByName(CString strUtilName)
 {
@@ -780,11 +792,15 @@ BOOL CMainFrame::OpenToolbar(UINT nID)
 			}
 
 			//load toolbar.
-			LPDLLFUNC* pAddToolbar = (LPDLLFUNC*)GetProcAddress(mc.hLib, "AddToolbar");
-			if (pAddToolbar)
+			if (!mc.m_bToolbarLoaded)
 			{
-				pAddToolbar(0);
-				return TRUE;
+				LPDLLFUNC* pAddToolbar = (LPDLLFUNC*)GetProcAddress(mc.hLib, "AddToolbar");
+				if (pAddToolbar)
+				{
+					pAddToolbar(0);
+					mc.m_bToolbarLoaded = true;
+					return TRUE;
+				}
 			}
 		}
 	}

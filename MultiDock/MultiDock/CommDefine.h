@@ -19,6 +19,7 @@ public:
 	bool	   m_bSingleView;
 	bool     m_bLoadAtStartup;
 	bool     m_bInitialized;
+	bool	 m_bToolbarLoaded;
 
 	HINSTANCE	hLib;
 	HICON    m_hIcon;
@@ -32,6 +33,7 @@ public:
 		m_bSingleView = false; 
 		m_bLoadAtStartup = true; 
 		m_bInitialized=false;
+		m_bToolbarLoaded=false;
 	}
 };
 

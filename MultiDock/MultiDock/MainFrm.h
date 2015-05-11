@@ -199,6 +199,7 @@ protected:
 	afx_msg void OnUpdateViewCaptionBar(CCmdUI* pCmdUI);
 	afx_msg void OnModuleMenuItem(UINT nID);
 	afx_msg void OnUtilityMenuItem(UINT nID);
+	afx_msg void OnUpdateToolbarMenu(CCmdUI* pCmdUI);
 	//afx_msg void OnViewMenuItem(UINT nID);
 	//afx_msg void OnUpdateViewMenuItem(CCmdUI *pCmdUI);
 	

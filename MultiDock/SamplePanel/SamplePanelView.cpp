@@ -36,6 +36,9 @@ IMPLEMENT_DYNCREATE(CSamplePanelView, CScrollView)
 BEGIN_MESSAGE_MAP(CSamplePanelView, CScrollView)
 	ON_WM_RBUTTONUP()
 	ON_WM_CREATE()
+	ON_COMMAND(ID_SAMPLEPANEL_SHOWPANE, OnToolButton1)
+	ON_COMMAND(ID_SAMPLEPANEL_HIDEPANE,OnToolButton2)
+	ON_COMMAND(ID_SAMPLEPANEL_NEWVIEWER,OnToolButton3)
 END_MESSAGE_MAP()
 
 CSamplePanelView::CSamplePanelView()
@@ -48,6 +51,20 @@ CSamplePanelView::~CSamplePanelView()
 {
 }
 
+void CSamplePanelView::OnToolButton1()
+{
+	AfxMessageBox(_T("Do something to response toolbar button 1."));
+}
+
+void CSamplePanelView::OnToolButton2()
+{
+	AfxMessageBox(_T("Do something to response toolbar button 2."));
+}
+
+void CSamplePanelView::OnToolButton3()
+{
+	AfxMessageBox(_T("Do something to response toolbar button 3."));
+}
 // CSamplePanelView drawing
 
 void CSamplePanelView::OnDraw(CDC* /*pDC*/)
