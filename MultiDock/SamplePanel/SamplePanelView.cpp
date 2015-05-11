@@ -31,9 +31,9 @@
 
 // CSamplePanelView
 
-IMPLEMENT_DYNCREATE(CSamplePanelView, CScrollView)
+IMPLEMENT_DYNCREATE(CSamplePanelView, CView)
 
-BEGIN_MESSAGE_MAP(CSamplePanelView, CScrollView)
+BEGIN_MESSAGE_MAP(CSamplePanelView, CView)
 	ON_WM_RBUTTONUP()
 	ON_WM_CREATE()
 	ON_COMMAND(ID_SAMPLEPANEL_SHOWPANE, OnToolButton1)
@@ -70,9 +70,9 @@ void CSamplePanelView::OnToolButton3()
 void CSamplePanelView::OnDraw(CDC* /*pDC*/)
 {
 	CSamplePanelDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
+// 	ASSERT_VALID(pDoc);
+// 	if (!pDoc)
+// 		return;
 
 	// TODO: add draw code for native data here
 }
@@ -88,7 +88,7 @@ void CSamplePanelView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 
 int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
 {
-	if (CScrollView::OnCreate(lpcs) == -1)
+	if (CView::OnCreate(lpcs) == -1)
 	{
 		return -1;
 	}
@@ -117,12 +117,12 @@ int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
 #ifdef _DEBUG
 void CSamplePanelView::AssertValid() const
 {
-	CScrollView::AssertValid();
+	CView::AssertValid();
 }
 
 void CSamplePanelView::Dump(CDumpContext& dc) const
 {
-	CScrollView::Dump(dc);
+	CView::Dump(dc);
 }
 
 CSamplePanelDoc* CSamplePanelView::GetDocument() const // non-debug version is inline

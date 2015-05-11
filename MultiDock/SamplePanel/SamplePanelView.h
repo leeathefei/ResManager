@@ -15,7 +15,7 @@
 #pragma once
 
 
-class CSamplePanelView : public CScrollView
+class CSamplePanelView : public CView
 {
 	DECLARE_DYNCREATE(CSamplePanelView)
 
@@ -53,8 +53,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-#ifndef _DEBUG  // debug version in SamplePanelView.cpp
-inline CSamplePanelDoc* CSamplePanelView::GetDocument() const
-   { return reinterpret_cast<CSamplePanelDoc*>(m_pDocument); }
-#endif
+//#ifndef _DEBUG  // debug version in SamplePanelView.cpp
+//inline CSamplePanelDoc* CSamplePanelView::GetDocument() const
+//   { return reinterpret_cast<CSamplePanelDoc*>(m_pDocument); }
+//#endif
 
