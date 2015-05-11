@@ -55,6 +55,8 @@ TIPS:如果子窗口点了ok按钮，销毁了，那么wndManager和listctrl里面的都要更新哦,否则
 TIPS:对于每个类，需要增加AdjustLayout函数。读取wndmanager里面的数据，并调整。
 TIPS:为了方便记忆和修改，在创建child实例的时候，让用户可以给实例取名。用于记忆。不填写的默认是空白列。因为有时候要修改child的size，这个时候，
 	可能会选择错误。
+TIPS:在修改config\Modules.csv的工程名的是，修改后的值应该和代码里面的 CSampleViewerManager::RegisterDocTemplate()的最后一个参数名一致，否则
+	  加载dll失败！
 
 
 
@@ -75,8 +77,9 @@ todo：如果子对话框关闭了，需要告知创建的三个page对话框，进行树形列表更新。删除掉
 task
 1.菜单乱码
 2.演示一个child对话框嵌套child的实例。
-3.对话框关闭了，对应的树列表，更新。
-4.对于父窗口中的NULL和Mainframe是否需要？
+3.对话框关闭了，对应的树列表，更新。===>done!
+4.对于父窗口中的NULL和Mainframe是否需要？==>done!:null会缓存，但不显示
 5.float窗口的研究，如何float，不停靠。
-6.如果是父亲窗口关闭了，那么它下面的所有的child窗口都要关闭！！！
+6.如果是父亲窗口关闭了，那么它下面的所有的child窗口都要关闭！！！===>done,如果父亲窗口关闭了，那么子窗口，全部DestroyWindow，并清除响应的缓存。
 7.menu ,toolbar的加载。
+8.多文档的sampleviewerview的演示？！
