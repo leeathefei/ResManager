@@ -117,7 +117,11 @@ BOOL CXmlDataProc::GetClassNames(CString& strDll, vector<CString>& vecClasses)
 		for (MapName2Index::iterator it = mapAllClasses.begin(); 
 			it != mapAllClasses.end(); ++it)
 		{
-			vecClasses.push_back(it->first);
+			//we read NULL from xml and cache , but we do not show it.
+			if (it->first.CompareNoCase(_T("NULL")) != 0)
+			{
+				vecClasses.push_back(it->first);
+			}
 		}
 	}
 	
@@ -191,6 +195,12 @@ void CXmlDataProc::ProcessChildType(UINT uDllIndex, UINT uGroupIndex, CString& s
 }
 void CXmlDataProc::AddClassName(CString& strDll, CString& strClassName, UINT nIndex)
 {
+	////do not add 'null' 
+	//if (strClassName.CompareNoCase(_T("NULL")) == 0)
+	//{
+	//	return;
+	//}
+
 	MapDll2ClassNames::iterator itFind = m_mapAllDllClassNames.find(strDll);
 	if (itFind != m_mapAllDllClassNames.end())
 	{
