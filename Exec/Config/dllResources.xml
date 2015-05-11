@@ -165,9 +165,6 @@
 	<Workspace>
 		<TabbedView>
 			<Alignment>0</Alignment>
-			<Group0>
-				<Tab0 Name="SampleViewer">false</Tab0>
-			</Group0>
 		</TabbedView>
 		<DockablePane>false</DockablePane>
 	</Workspace>

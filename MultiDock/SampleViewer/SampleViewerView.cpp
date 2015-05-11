@@ -110,16 +110,14 @@ void CSampleViewerView::Dump(CDumpContext& dc) const
 
 void CSampleViewerView::OnSampleviewerActivateVerticalPane0()
 {
-   //CSampleViewerManager* pManager = CSampleViewerManager::Instance();
-   //pManager->ActivatePane(_T("工程一的垂直自动删除面板1"));
-	AfxMessageBox(_T("Do something to response menu 1 !"));
+   CSampleViewerManager* pManager = CSampleViewerManager::Instance();
+   pManager->ActivatePane(_T("工程一的垂直自动删除面板1"));
 }
 
 void CSampleViewerView::OnSampleviewerActivateHorizontalPane3()
 {
-	AfxMessageBox(_T("Do something to response menu 2!"));
-   //CSampleViewerManager* pManager = CSampleViewerManager::Instance();
-   //pManager->ActivatePane(_T("工程一的垂直可关闭面板2"));
+   CSampleViewerManager* pManager = CSampleViewerManager::Instance();
+   pManager->ActivatePane(_T("工程一的垂直可关闭面板2"));
 }
 
 void CSampleViewerView::OnRButtonUp(UINT nFlags, CPoint point)
