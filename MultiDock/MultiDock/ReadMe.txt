@@ -79,3 +79,4 @@ task
 4.对于父窗口中的NULL和Mainframe是否需要？
 5.float窗口的研究，如何float，不停靠。
 6.如果是父亲窗口关闭了，那么它下面的所有的child窗口都要关闭！！！
+7.menu ,toolbar的加载。

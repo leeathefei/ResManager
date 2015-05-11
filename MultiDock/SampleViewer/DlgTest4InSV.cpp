@@ -56,7 +56,7 @@ BOOL CDlgTest4InSV::OnInitDialog()
 
 void CDlgTest4InSV::OnClose()
 {
-	CWndManager::Instance()->RemoveCreatedWnd(this, _T("CDlgTest4InSV"));
+	CWndManager::Instance()->RemoveCreatedWnd(this/*, _T("CDlgTest4InSV")*/);
 	CDialogEx::OnClose();
 }
 

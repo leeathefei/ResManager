@@ -243,22 +243,37 @@ CWnd* CWndManager::UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, C
 
 }
 
-BOOL CWndManager::RemoveCreatedWnd(CWnd* pRemoved, CString strClassname)
+BOOL CWndManager::RemoveCreatedWnd(CWnd* pRemoved)
 {
-	//1. update m_mapCreatedWnds cache.
+	//1.read m_mapParent2Childs cache to get children of pRemove 
+	//  and remove its child first in m_mapCreatedWnds cache.
+	ListChildWnd listChilds;
+	if (GetChildWnds(pRemoved, listChilds))
+	{
+		for (ListChildWnd::iterator itChild = listChilds.begin(); 
+			itChild != listChilds.end(); ++itChild)
+		{
+			if (RemoveCreatedWnd(itChild->pChild))
+			{
+
+			}
+		}
+	}
+
+	//2.remove it in m_mapCreatedWnds cache.
 	BOOL bRemoved = FALSE;
 	for(MapCreatedWnd::iterator it = m_mapCreatedWnds.begin(); 
 		it != m_mapCreatedWnds.end(); ++it)
 	{
 		stCreateWndItem& CreatedWnd = it->second;
-		if (pRemoved == CreatedWnd.pWnd 
-			&& CreatedWnd.strClassName.CompareNoCase(strClassname) == 0)
+		if (pRemoved == CreatedWnd.pWnd )
 		{
-			//1.check if it has child windows,if yes, remove child window first.
-			RemoveChildWnd();
-
-			//2.remove myself.
-			pRemoved->DestroyWindow();
+			//remove myself.
+			if (pRemoved->GetSafeHwnd() != NULL)
+			{
+				pRemoved->DestroyWindow();
+			}
+			
 			//delete pRemoved;
 			m_mapCreatedWnds.erase(it);
 			bRemoved = TRUE;
@@ -266,7 +281,12 @@ BOOL CWndManager::RemoveCreatedWnd(CWnd* pRemoved, CString strClassname)
 		}
 	}
 
-	//2. update m_mapParent2Childs cache!
+	//3. update m_mapParent2Childs cache!
+	MapParent2ChildWnds::iterator itParent = m_mapParent2Childs.find(pRemoved);
+	if ( itParent != m_mapParent2Childs.end())
+	{
+		m_mapParent2Childs.erase(itParent);
+	}
 
 
 	if (bRemoved)
@@ -275,9 +295,4 @@ BOOL CWndManager::RemoveCreatedWnd(CWnd* pRemoved, CString strClassname)
 	}
 
 	return bRemoved;
-}
-
-void CWndManager::RemoveChildWnd(CWnd* pRemoved)
-{
-
 }

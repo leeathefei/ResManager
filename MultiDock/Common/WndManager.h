@@ -82,14 +82,13 @@ public:
 	BOOL GetCreatedWnd(MapCreatedWnd& mapAllCreated);
 	BOOL GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds);
 
-	BOOL RemoveCreatedWnd(CWnd* pRemoved, CString strClassname);
+	BOOL RemoveCreatedWnd(CWnd* pRemoved/*, CString strClassname*/);
 
 protected:
 	CWndManager();
 	void NotifyWndCreated(/*CWnd*& pWnd, CString& strClass*/);
 	void NotifyWndRemoved();
 	void AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString& strChildName);
-	
 
 protected:
 	UINT m_nViewIndex;	

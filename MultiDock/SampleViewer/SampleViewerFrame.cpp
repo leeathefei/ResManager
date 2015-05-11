@@ -6,6 +6,7 @@
 #include "SampleViewerFrame.h"
 #include "SampleViewerManager.h"
 #include "SampleViewerDialog.h"
+#include "SampleViewerView.h"
 
 // CSampleViewerFrame
 
@@ -59,7 +60,12 @@ void CSampleViewerFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd*
 void CSampleViewerFrame::OnClose()
 {
    //Control the toolbar's refer_counter
-   CSampleViewerManager::Instance()->RemoveFrameWnd(this);
+	CSampleViewerManager::Instance()->RemoveFrameWnd(this);
+	CSampleViewerView* pView = (CSampleViewerView*)GetActiveView();
+	if (NULL != pView)
+	{
+		pView->SendMessage(WM_CLOSE);
+	}
 
    //CSampleViewerManager::Instance()->UnregisterModulePane( _T("Vertical Pane 1"));
    //CSampleViewerManager::Instance()->UnregisterModulePane(_T("Vertical Pane 0"));

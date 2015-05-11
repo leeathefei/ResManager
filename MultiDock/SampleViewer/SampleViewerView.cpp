@@ -36,8 +36,8 @@ END_MESSAGE_MAP()
 
 void CSampleViewerView::OnClose()
 {
-	CWndManager::Instance()->RemoveCreatedWnd(this, _T("CSampleViewerView"));
-	CScrollView::OnClose();
+	CWndManager::Instance()->RemoveCreatedWnd(this/*, _T("CSampleViewerView")*/);
+	//CScrollView::OnClose();
 }
 
 // CSampleViewerView drawing

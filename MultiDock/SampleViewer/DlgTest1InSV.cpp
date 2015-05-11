@@ -23,7 +23,7 @@ CDlgTest1InSV::~CDlgTest1InSV()
 
 void CDlgTest1InSV::OnClose()
 {
-	CWndManager::Instance()->RemoveCreatedWnd(this, _T("CDlgTest1InSV"));
+	CWndManager::Instance()->RemoveCreatedWnd(this/*, _T("CDlgTest1InSV")*/);
 	// TODO: Add your message handler code here and/or call default
 	CDialogEx::OnClose();
 }
