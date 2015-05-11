@@ -729,7 +729,10 @@ void CMainFrame::OnModuleMenuItem(UINT nID)
 void CMainFrame::OnUtilityMenuItem( UINT nID )
 {
 	//(_T("MenuID:%d"),nID-BASE_UTILITIES_MENU_ID);
-	OpenUtility(nID);
+	//OpenUtility(nID);
+	LockWindowUpdate();
+	OpenToolbar(nID);
+	UnlockWindowUpdate();
 }
 
 BOOL CMainFrame::OpenUtilityByName(CString strUtilName)
@@ -744,6 +747,47 @@ BOOL CMainFrame::OpenUtilityByName(CString strUtilName)
 		}
 	}
 
+	return FALSE;
+}
+
+BOOL CMainFrame::OpenToolbar(UINT nID)
+{
+	for (POSITION pos  = m_AllCommands.GetHeadPosition(); pos !=NULL; )
+	{
+		CMenuCommand &mc = m_AllCommands.GetNext(pos);
+		if(mc.m_nMenuID == nID-BASE_UTILITIES_MENU_ID )
+		{
+			if( !mc.hLib )
+			{
+				CString strPath = CFileHelper::GetModuleDir();
+				mc.hLib = LoadLibrary(strPath+_T("\\")+mc.m_strDll);
+			}
+
+			if( !mc.hLib )
+			{
+				CString strError;
+				strError.Format(_T("Load %s failed. ErrorCode:%u"), mc.m_strDll, GetLastError());
+				AfxMessageBox(strError);
+				return FALSE;
+			}
+
+			if( !mc.m_bInitialized)
+			{
+				LPDLLFUNC *pInit = (LPDLLFUNC*)GetProcAddress(mc.hLib, "Init");
+				if(pInit)
+					pInit(0);
+				mc.m_bInitialized = true;
+			}
+
+			//load toolbar.
+			LPDLLFUNC* pAddToolbar = (LPDLLFUNC*)GetProcAddress(mc.hLib, "AddToolbar");
+			if (pAddToolbar)
+			{
+				pAddToolbar(0);
+				return TRUE;
+			}
+		}
+	}
 	return FALSE;
 }
 
@@ -906,7 +950,13 @@ void CMainFrame::LoadModuleMenuItems()
 	{
 		CMenuCommand &mc = m_AllCommands.GetNext(pos);
 		if ( mc.m_bAddToMenu )
+		{
 			AddModuleMenuItem(mc.m_strTitle, mc.m_nMenuID, FALSE, mc.m_bUtility);
+			
+			CString strLoadToolbar;
+			strLoadToolbar.Format(_T("╪сть%s Toolbar"), mc.m_strTitle.GetString());
+			AddModuleMenuItem(strLoadToolbar, mc.m_nMenuID, FALSE, TRUE);
+		}
 
 		if(!mc.hLib)
 		{

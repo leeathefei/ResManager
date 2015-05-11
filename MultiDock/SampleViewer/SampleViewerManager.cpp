@@ -72,7 +72,7 @@ BOOL CSampleViewerManager::RegisterDocTemplate()
       RUNTIME_CLASS(CSampleViewerDoc),
       RUNTIME_CLASS(CSampleViewerFrame),
       RUNTIME_CLASS(CSampleViewerView),
-      _T("SampleViewer.dll"), _T("SampleViewer"));
+      _T("SampleViewer.dll"), _T("SampleViewer.dll"));
 
 
    // 调用基类的函数实现真正的文档模板注册
@@ -236,7 +236,7 @@ BOOL CSampleViewerManager::UnregisterModulePane(LPCTSTR lpszWndName)
 extern "C"
 {
 	//new api for register toolbar.
-	void __declspec(dllexport) AddToolbar()
+	void __declspec(dllexport) AddToolbar(WORD w)
 	{
 		CSampleViewerManager::Instance()->RegisterToolBar();
 	}

@@ -108,6 +108,8 @@ protected:
 	void EnumDockablePane();
 	void ResetWorkspaceNode();
 
+	BOOL OpenToolbar(UINT nID);
+
 public:
 	virtual ~CMainFrame();
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);

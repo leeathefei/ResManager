@@ -76,7 +76,7 @@ BOOL CSamplePanelManager::RegisterDocTemplate()
 		RUNTIME_CLASS(CSamplePanelDoc),
 		RUNTIME_CLASS(CSamplePanelFrame),
 		RUNTIME_CLASS(CSamplePanelView),
-		_T("SamplePanel.dll"), _T("SamplePanel"));
+		_T("SamplePanel.dll"), _T("SamplePanel.dll"));
 
 	return m_pModuleManager->RegisterDocTemplate(pDocTemplate);
 }
