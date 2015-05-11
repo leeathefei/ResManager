@@ -34,7 +34,7 @@
 15.对于父窗口的指定，实际上指定的是已经创建好的 窗口实例。那么这个时候，不能用类名来告诉他而应该用树形的结构来指定。important!!!!!\
     树形结构的实例在指定tab的各个page中。创建好一个实例后，需要实时更新这个tree。对于实例的命名，加上引用计数，格式为：memoryaddres(Cclassname)_Index
 
-tips:命名注册了文档模板，却没有显示view呢？先查看下你的csv文件中的参数是否正确。
+tips:明明注册了文档模板，却没有显示view呢？先查看下你的csv文件中的参数是否正确。
 tips:mainframe提供两种接口
 	1.CreateDockWnd用于创建非frame/view的窗口。每个实现了CBaseObj接口的窗口类都需要在重载函数里面调用CXXXmanager::RegisterDockPane对象里面的接口创建自己。
 	2.LoadDllByName是创建frame+view（直接调用注册文档模板对象创建框架）
@@ -47,6 +47,7 @@ TIPS：对于创建的子窗口和float窗口，不要调用默认的CSampleViewerManager::Instance(
 	改为调用默认的retrun __super::Create(IDD, pParent);直接返回。否则，会出现奇怪的现象。
 TIPS:期间出现一次dynamic cast 到cbaseObj的时候失败了，以为是没有将对话框类导出，其实不需要导出对话框类。不是这个原因。
 TIPS:如果该窗口类想要成为container容器窗口类，需要写自己的AdjustLayout函数：从wndmanager中拿到自己的指针，并看是否有child，并在wm_size消息中调整layout
+TIPS:每个窗口资源需要在onClose函数中销毁掉自己的窗口资源。完成父亲窗口列表。注意改对象没有free，会有内存泄露，==>谁创建谁free。
 
 
 TODOS
@@ -54,6 +55,7 @@ TIPS:如果子窗口点了ok按钮，销毁了，那么wndManager和listctrl里面的都要更新哦,否则
 TIPS:对于每个类，需要增加AdjustLayout函数。读取wndmanager里面的数据，并调整。
 TIPS:为了方便记忆和修改，在创建child实例的时候，让用户可以给实例取名。用于记忆。不填写的默认是空白列。因为有时候要修改child的size，这个时候，
 	可能会选择错误。
+
 
 
 2015年5月9日15:39:52
@@ -69,3 +71,11 @@ todo：在创建自对话框的时候，可以设置child name一栏让用户填写，一是为了在列表中好
 	  名称。
 todo：为了刷新好看，是否考虑在带有bitmap的对话框中使用内存dc绘制图片。
 todo：如果子对话框关闭了，需要告知创建的三个page对话框，进行树形列表更新。删除掉那个关闭的自对话框实例。
+2015年5月11日10:24:36
+task
+1.菜单乱码
+2.演示一个child对话框嵌套child的实例。
+3.对话框关闭了，对应的树列表，更新。
+4.对于父窗口中的NULL和Mainframe是否需要？
+5.float窗口的研究，如何float，不停靠。
+6.如果是父亲窗口关闭了，那么它下面的所有的child窗口都要关闭！！！

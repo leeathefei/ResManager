@@ -43,10 +43,10 @@ BOOL CDlgCreateChildPane::OnInitDialog()
 	dwStyle |= LVS_EX_FULLROWSELECT;       
 	dwStyle |= LVS_EX_GRIDLINES;    
 	m_listPrentInCreateChild.SetExtendedStyle(dwStyle);
-	m_listPrentInCreateChild.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 180);
-	m_listPrentInCreateChild.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 100);
+	m_listPrentInCreateChild.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 130);
+	m_listPrentInCreateChild.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 180);
 
-	InitCreatedWnd();
+	RefreshCreatedWndTree();
 
 	if (m_nRadioSelect == 0)
 	{
@@ -102,23 +102,28 @@ BEGIN_MESSAGE_MAP(CDlgCreateChildPane, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_UPDATE_CHILDSIZE, &CDlgCreateChildPane::OnBnClickedBtnUpdateChildsize)
 END_MESSAGE_MAP()
 
-void CDlgCreateChildPane::OnObjectCreated(CWnd* pWnd, CString& strClassName)
+
+void CDlgCreateChildPane::OnObjectCreated()
 {
-	InitCreatedWnd();
+	RefreshCreatedWndTree();
+}
+void CDlgCreateChildPane::OnWndClosed()
+{
+	RefreshCreatedWndTree();
 }
 
-void CDlgCreateChildPane::InitCreatedWnd()
+void CDlgCreateChildPane::RefreshCreatedWndTree()
 {
 	m_listPrentInCreateChild.DeleteAllItems();
 
-	MapWnd2Classname mapAllCreatedWnd;
+	MapCreatedWnd mapAllCreatedWnd;
 	if(CWndManager::Instance()->GetCreatedWnd(mapAllCreatedWnd))
 	{
 		int index = 0;
-		for (MapWnd2Classname::iterator it = mapAllCreatedWnd.begin();
+		for (MapCreatedWnd::iterator it = mapAllCreatedWnd.begin();
 			it != mapAllCreatedWnd.end(); ++it)
 		{
-			stWndInfoItem& oneItem = it->second;
+			stCreateWndItem& oneItem = it->second;
 			m_listPrentInCreateChild.InsertItem(index, oneItem.strClassName);
 			m_listPrentInCreateChild.SetItemText(index, 1, oneItem.strHinstance);
 			m_listPrentInCreateChild.SetItemData(index, (DWORD_PTR)oneItem.pWnd);

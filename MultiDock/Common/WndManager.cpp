@@ -68,7 +68,7 @@ CWnd* CWndManager::CreateObj(CString strClass, CString& strWndName)
 	return pWnd;
 } 
 
- void CWndManager::ProcessEvent(CWnd*& pWnd, CString& strClass)
+ void CWndManager::NotifyWndCreated(/*CWnd*& pWnd, CString& strClass*/)
  {
  	for (list<IObjCreatedEvent*>::iterator it = m_listHandlers.begin();
  		it != m_listHandlers.end(); ++it)
@@ -76,9 +76,22 @@ CWnd* CWndManager::CreateObj(CString strClass, CString& strWndName)
  		IObjCreatedEvent* pEvent = (*it);
  		if (NULL != pEvent)
  		{
- 			pEvent->OnObjectCreated(pWnd, strClass);
+ 			pEvent->OnObjectCreated(/*pWnd, strClass*/);
  		}
  	}
+ }
+
+ void CWndManager::NotifyWndRemoved()
+ {
+	 for (list<IObjCreatedEvent*>::iterator it = m_listHandlers.begin();
+		 it != m_listHandlers.end(); ++it)
+	 {
+		 IObjCreatedEvent* pEvent = (*it);
+		 if (NULL != pEvent)
+		 {
+			 pEvent->OnWndClosed();
+		 }
+	 }
  }
 
 UINT CWndManager::GetNextViewIndex()
@@ -131,24 +144,24 @@ void CWndManager::AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndNam
 	strHinst.Format(_T("0x%08x"), pWnd);
 	CString strAlias;
 	strAlias.Format(_T("%s(%s)"), strWndName, strHinst);
-	MapWnd2Classname::iterator itFind = m_mapHins2Classname.find(strHinst);
-	if (itFind == m_mapHins2Classname.end())
+	MapCreatedWnd::iterator itFind = m_mapCreatedWnds.find(strHinst);
+	if (itFind == m_mapCreatedWnds.end())
 	{
-		stWndInfoItem oneItem;
+		stCreateWndItem oneItem;
 		oneItem.strClassName = strClass;
 		oneItem.strHinstance = strAlias/*strHinst*/;
 		oneItem.pWnd		 = pWnd;
 
-		m_mapHins2Classname.insert(make_pair(strHinst, oneItem));
+		m_mapCreatedWnds.insert(make_pair(strHinst, oneItem));
 	}
 
 	//notify to update parent window listctrl.
-	ProcessEvent(pWnd, strClass);
+	NotifyWndCreated(/*pWnd, strClass*/);
 }
 
-BOOL CWndManager::GetCreatedWnd(MapWnd2Classname& mapAllCreated)
+BOOL CWndManager::GetCreatedWnd(MapCreatedWnd& mapAllCreated)
 {
-	mapAllCreated = m_mapHins2Classname;
+	mapAllCreated = m_mapCreatedWnds;
 
 	return mapAllCreated.size() > 0;
 }
@@ -228,4 +241,31 @@ CWnd* CWndManager::UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, C
 	}
 	return NULL;
 
+}
+
+BOOL CWndManager::RemoveCreatedWnd(CWnd* pRemoved, CString strClassname)
+{
+	// update cache.
+	BOOL bRemoved = FALSE;
+	for(MapCreatedWnd::iterator it = m_mapCreatedWnds.begin(); 
+		it != m_mapCreatedWnds.end(); ++it)
+	{
+		stCreateWndItem& CreatedWnd = it->second;
+		if (pRemoved == CreatedWnd.pWnd 
+			&& CreatedWnd.strClassName.CompareNoCase(strClassname) == 0)
+		{
+			pRemoved->DestroyWindow();
+			//delete pRemoved;
+			m_mapCreatedWnds.erase(it);
+			bRemoved = TRUE;
+			break;
+		}
+	}
+
+	if (bRemoved)
+	{
+		NotifyWndRemoved();
+	}
+
+	return bRemoved;
 }

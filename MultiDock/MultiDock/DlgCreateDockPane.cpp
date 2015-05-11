@@ -45,10 +45,10 @@ BOOL CDlgCreateDockPane::OnInitDialog()
 	dwStyle |= LVS_EX_FULLROWSELECT;       
 	dwStyle |= LVS_EX_GRIDLINES;    
 	m_listParentsInDock.SetExtendedStyle(dwStyle);
-	m_listParentsInDock.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 180);
-	m_listParentsInDock.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 100);
+	m_listParentsInDock.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 130);
+	m_listParentsInDock.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 180);
 
-	InitCreatedWnd();
+	RefreshCreatedWndTree();
 
 	return TRUE;
 
@@ -110,23 +110,27 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 
 	}
 }
-void CDlgCreateDockPane::OnObjectCreated(CWnd* pWnd, CString& strClassName)
+void CDlgCreateDockPane::OnObjectCreated()
 {
-	InitCreatedWnd();
+	RefreshCreatedWndTree();
+}
+void CDlgCreateDockPane::OnWndClosed()
+{
+	RefreshCreatedWndTree();
 }
 
-void CDlgCreateDockPane::InitCreatedWnd()
+void CDlgCreateDockPane::RefreshCreatedWndTree()
 {
 	m_listParentsInDock.DeleteAllItems();
 
-	MapWnd2Classname mapAllCreatedWnd;
+	MapCreatedWnd mapAllCreatedWnd;
 	if(CWndManager::Instance()->GetCreatedWnd(mapAllCreatedWnd))
 	{
 		int index = 0;
-		for (MapWnd2Classname::iterator it = mapAllCreatedWnd.begin();
+		for (MapCreatedWnd::iterator it = mapAllCreatedWnd.begin();
 			it != mapAllCreatedWnd.end(); ++it)
 		{
-			stWndInfoItem& oneItem = it->second;
+			stCreateWndItem& oneItem = it->second;
 			m_listParentsInDock.InsertItem(index, oneItem.strClassName);
 			m_listParentsInDock.SetItemText(index, 1, oneItem.strHinstance);
 			m_listParentsInDock.SetItemData(index, (DWORD_PTR)oneItem.pWnd);

@@ -42,10 +42,10 @@ BOOL CDlgCreateFloatPane::OnInitDialog()
 	dwStyle |= LVS_EX_FULLROWSELECT;       
 	dwStyle |= LVS_EX_GRIDLINES;    
 	m_listParentInFloat.SetExtendedStyle(dwStyle);
-	m_listParentInFloat.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 180);
-	m_listParentInFloat.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 100);
+	m_listParentInFloat.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 130);
+	m_listParentInFloat.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 180);
 
-	InitCreatedLisctrl();
+	RefreshCreatedWndTree();
 
 	return TRUE;
 	
@@ -93,23 +93,27 @@ void CDlgCreateFloatPane::UpdateClassName(CString& strClass, CString& strDllName
 
 	UpdateData(FALSE);
 }
-void CDlgCreateFloatPane::OnObjectCreated(CWnd* pWnd, CString& strClassName)
+void CDlgCreateFloatPane::OnObjectCreated()
 {
-	InitCreatedLisctrl();
+	RefreshCreatedWndTree();
+}
+void CDlgCreateFloatPane::OnWndClosed()
+{
+	RefreshCreatedWndTree();
 }
 
-void CDlgCreateFloatPane::InitCreatedLisctrl()
+void CDlgCreateFloatPane::RefreshCreatedWndTree()
 {
 	m_listParentInFloat.DeleteAllItems();
 
-	MapWnd2Classname mapAllCreatedWnd;
+	MapCreatedWnd mapAllCreatedWnd;
 	if(CWndManager::Instance()->GetCreatedWnd(mapAllCreatedWnd))
 	{
 		int index = 0;
-		for (MapWnd2Classname::iterator it = mapAllCreatedWnd.begin();
+		for (MapCreatedWnd::iterator it = mapAllCreatedWnd.begin();
 			it != mapAllCreatedWnd.end(); ++it)
 		{
-			stWndInfoItem& oneItem = it->second;
+			stCreateWndItem& oneItem = it->second;
 			m_listParentInFloat.InsertItem(index, oneItem.strClassName);
 			m_listParentInFloat.SetItemText(index, 1, oneItem.strHinstance);
 			m_listParentInFloat.SetItemData(index, (DWORD_PTR)oneItem.pWnd);

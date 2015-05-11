@@ -19,8 +19,9 @@ using namespace std;
 
 class IObjCreatedEvent
 {
-	public:
- 		virtual void OnObjectCreated(CWnd* pWnd, CString& strClassName) = 0;
+public:
+ 	virtual void OnObjectCreated(/*CWnd* pWnd, CString& strClassName*/) = 0;
+	virtual void OnWndClosed(/*CWnd* pWnd, CString& strClassName*/)		= 0;	
 };
 
 typedef CWnd* (*PFUNC_CREATEOBJ)();
@@ -30,17 +31,17 @@ public:
 	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName)	{	return TRUE;	}
 };
 
-struct stWndInfoItem
+struct stCreateWndItem
 {
 	CString strHinstance;	
 	CString strClassName;
 	CWnd*   pWnd;
-	stWndInfoItem()
+	stCreateWndItem()
 	{
 		pWnd = NULL;
 	}
 };
-typedef map<CString, stWndInfoItem> MapWnd2Classname;
+typedef map<CString, stCreateWndItem> MapCreatedWnd;
 
 struct stChildWnd
 {
@@ -78,12 +79,15 @@ public:
 	CWnd* UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, CString& strNewName);
 
 	void AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndName);
-	BOOL GetCreatedWnd(MapWnd2Classname& mapAllCreated);
+	BOOL GetCreatedWnd(MapCreatedWnd& mapAllCreated);
 	BOOL GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds);
+
+	BOOL RemoveCreatedWnd(CWnd* pRemoved, CString strClassname);
 
 protected:
 	CWndManager();
-	void ProcessEvent(CWnd*& pWnd, CString& strClass);
+	void NotifyWndCreated(/*CWnd*& pWnd, CString& strClass*/);
+	void NotifyWndRemoved();
 	void AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString& strChildName);
 	
 
@@ -93,6 +97,6 @@ protected:
 	map<CString, PFUNC_CREATEOBJ> m_mapClassName2Func;
 	list<IObjCreatedEvent*> m_listHandlers;
 	
-	MapWnd2Classname m_mapHins2Classname;
+	MapCreatedWnd m_mapCreatedWnds;
 	MapParent2ChildWnds m_mapParent2Childs;
 };
