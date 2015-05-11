@@ -22,7 +22,7 @@ CSampleViewerView::~CSampleViewerView()
 
 BEGIN_MESSAGE_MAP(CSampleViewerView, CScrollView)
    ON_COMMAND(ID_SAMPLEVIEWER_ACTIVATEVERTICALPANE0, &CSampleViewerView::OnSampleviewerActivateVerticalPane0)
-   ON_COMMAND(ID_SAMPLEVIEWER_ACTIVATEHORIZONTALPANE3, &CSampleViewerView::OnSampleviewerActivateHorizontalPane3)
+   ON_COMMAND(ID_SAMPLEVIEWER_ACTIVATEHORIZONTALPANE3,/* &CSampleViewerView::*/OnSampleviewerActivateHorizontalPane3)
    ON_COMMAND(ID_SAMPLEVIEWER_SHOWPANE, OnToolButton1)
    ON_COMMAND(ID_SAMPLEVIEWER_HIDEPANE,OnToolButton2)
    ON_COMMAND(ID_SAMPLEVIEWER_NEWVIEWER,OnToolButton3)
@@ -110,14 +110,16 @@ void CSampleViewerView::Dump(CDumpContext& dc) const
 
 void CSampleViewerView::OnSampleviewerActivateVerticalPane0()
 {
-   CSampleViewerManager* pManager = CSampleViewerManager::Instance();
-   pManager->ActivatePane(_T("工程一的垂直自动删除面板1"));
+   //CSampleViewerManager* pManager = CSampleViewerManager::Instance();
+   //pManager->ActivatePane(_T("工程一的垂直自动删除面板1"));
+	AfxMessageBox(_T("Do something to response menu 1 !"));
 }
 
 void CSampleViewerView::OnSampleviewerActivateHorizontalPane3()
 {
-   CSampleViewerManager* pManager = CSampleViewerManager::Instance();
-   pManager->ActivatePane(_T("工程一的垂直可关闭面板2"));
+	AfxMessageBox(_T("Do something to response menu 2!"));
+   //CSampleViewerManager* pManager = CSampleViewerManager::Instance();
+   //pManager->ActivatePane(_T("工程一的垂直可关闭面板2"));
 }
 
 void CSampleViewerView::OnRButtonUp(UINT nFlags, CPoint point)
