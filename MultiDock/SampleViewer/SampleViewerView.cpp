@@ -30,8 +30,15 @@ BEGIN_MESSAGE_MAP(CSampleViewerView, CScrollView)
    ON_WM_SIZE()
    ON_WM_DESTROY()
    ON_WM_CREATE()
+   ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
+
+void CSampleViewerView::OnClose()
+{
+	CWndManager::Instance()->RemoveCreatedWnd(this, _T("CSampleViewerView"));
+	CScrollView::OnClose();
+}
 
 // CSampleViewerView drawing
 int CSampleViewerView::OnCreate(LPCREATESTRUCT lpcs)

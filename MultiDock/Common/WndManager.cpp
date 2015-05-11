@@ -245,7 +245,7 @@ CWnd* CWndManager::UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, C
 
 BOOL CWndManager::RemoveCreatedWnd(CWnd* pRemoved, CString strClassname)
 {
-	// update cache.
+	//1. update m_mapCreatedWnds cache.
 	BOOL bRemoved = FALSE;
 	for(MapCreatedWnd::iterator it = m_mapCreatedWnds.begin(); 
 		it != m_mapCreatedWnds.end(); ++it)
@@ -254,6 +254,10 @@ BOOL CWndManager::RemoveCreatedWnd(CWnd* pRemoved, CString strClassname)
 		if (pRemoved == CreatedWnd.pWnd 
 			&& CreatedWnd.strClassName.CompareNoCase(strClassname) == 0)
 		{
+			//1.check if it has child windows,if yes, remove child window first.
+			RemoveChildWnd();
+
+			//2.remove myself.
 			pRemoved->DestroyWindow();
 			//delete pRemoved;
 			m_mapCreatedWnds.erase(it);
@@ -262,10 +266,18 @@ BOOL CWndManager::RemoveCreatedWnd(CWnd* pRemoved, CString strClassname)
 		}
 	}
 
+	//2. update m_mapParent2Childs cache!
+
+
 	if (bRemoved)
 	{
 		NotifyWndRemoved();
 	}
 
 	return bRemoved;
+}
+
+void CWndManager::RemoveChildWnd(CWnd* pRemoved)
+{
+
 }

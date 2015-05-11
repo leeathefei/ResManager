@@ -54,7 +54,14 @@ BOOL CDlgTest4InSV::OnInitDialog()
 }
 
 
+void CDlgTest4InSV::OnClose()
+{
+	CWndManager::Instance()->RemoveCreatedWnd(this, _T("CDlgTest4InSV"));
+	CDialogEx::OnClose();
+}
+
 BEGIN_MESSAGE_MAP(CDlgTest4InSV, CDialogEx)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 CWnd* CDlgTest4InSV::CreateDlgObj()

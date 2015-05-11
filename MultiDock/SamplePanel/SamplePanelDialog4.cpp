@@ -54,6 +54,7 @@ END_MESSAGE_MAP()
 
 void CSamplePanelDialog4::OnClose()
 {
+	CWndManager::Instance()->RemoveCreatedWnd(this, _T("CSamplePanelDialog4"));
 	// TODO: Add your message handler code here and/or call default
 	m_bPaneClosed = true;
 	CDialog::OnClose();

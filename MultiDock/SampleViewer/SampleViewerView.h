@@ -43,6 +43,7 @@ public:
    afx_msg void OnTimer(UINT_PTR nIDEvent);
    afx_msg void OnDestroy();
    afx_msg int  OnCreate(LPCREATESTRUCT lpcs);
+   afx_msg void OnClose();
 };
 
 

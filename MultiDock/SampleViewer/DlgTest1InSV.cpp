@@ -21,6 +21,13 @@ CDlgTest1InSV::~CDlgTest1InSV()
 {
 }
 
+void CDlgTest1InSV::OnClose()
+{
+	CWndManager::Instance()->RemoveCreatedWnd(this, _T("CDlgTest1InSV"));
+	// TODO: Add your message handler code here and/or call default
+	CDialogEx::OnClose();
+}
+
 void CDlgTest1InSV::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
@@ -46,6 +53,7 @@ BOOL CDlgTest1InSV::OnInitDialog()
 
 
 BEGIN_MESSAGE_MAP(CDlgTest1InSV, CDialogEx)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
