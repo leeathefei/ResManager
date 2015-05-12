@@ -120,6 +120,7 @@
     <None Include="res\static_9.bmp" />
     <None Include="res\Toolbar.bmp" />
     <None Include="res\Toolbar24.bmp" />
+    <None Include="res\Toolbar24EX.bmp" />
     <None Include="res\Toolbar256.bmp" />
     <None Include="res\writelarge.bmp" />
     <None Include="res\writesmall.bmp" />

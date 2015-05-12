@@ -72,7 +72,7 @@ BOOL CSampleViewerManager::RegisterDocTemplate()
       RUNTIME_CLASS(CSampleViewerDoc),
       RUNTIME_CLASS(CSampleViewerFrame),
       RUNTIME_CLASS(CSampleViewerView),
-      _T("SampleViewer.dll"), _T("SampleViewer.dll"));
+      _T("SampleViewer.dll"), _T("TestProj1.dll"));
 
 
    // 调用基类的函数实现真正的文档模板注册

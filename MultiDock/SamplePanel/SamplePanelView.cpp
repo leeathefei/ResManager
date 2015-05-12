@@ -36,11 +36,16 @@ IMPLEMENT_DYNCREATE(CSamplePanelView, CView)
 BEGIN_MESSAGE_MAP(CSamplePanelView, CView)
 	ON_WM_RBUTTONUP()
 	ON_WM_CREATE()
+	ON_WM_SIZE()
+	ON_WM_DESTROY()
+	ON_WM_CLOSE()
 	ON_COMMAND(ID_SAMPLEPANEL_SHOWPANE, OnToolButton1)
 	ON_COMMAND(ID_SAMPLEPANEL_HIDEPANE,OnToolButton2)
 	ON_COMMAND(ID_SAMPLEPANEL_NEWVIEWER,OnToolButton3)
 	ON_COMMAND(ID_SAMPLEPANEL_ACTIVATEVERTICALPANE0, OnResponseMenuItem1)
 	ON_COMMAND(ID_SAMPLEPANEL_ACTIVATEHORIZONTALPANE3, OnResponseMenuItem2)
+	ON_COMMAND(ID_TEST_ITEM1, &CSamplePanelView::OnTestItem1)
+	ON_COMMAND(ID_TEST_ITEM2, &CSamplePanelView::OnTestItem2)
 END_MESSAGE_MAP()
 
 CSamplePanelView::CSamplePanelView()
@@ -59,27 +64,27 @@ void CSamplePanelView::OnClose()
 
 void CSamplePanelView::OnResponseMenuItem1()
 {
-	AfxMessageBox(_T("Do something to response pop up menu item 1!"));
+	AfxMessageBox(_T("响应工程二菜单1!"));
 }
 
 void CSamplePanelView::OnResponseMenuItem2()
 {
-	AfxMessageBox(_T("Do something to response pop up menu item 2!"));
+	AfxMessageBox(_T("响应工程二菜单2!"));
 }
 
 void CSamplePanelView::OnToolButton1()
 {
-	AfxMessageBox(_T("Do something to response toolbar button 1."));
+	AfxMessageBox(_T("响应工程二toolbar button 1."));
 }
 
 void CSamplePanelView::OnToolButton2()
 {
-	AfxMessageBox(_T("Do something to response toolbar button 2."));
+	AfxMessageBox(_T("响应工程二toolbar button 2."));
 }
 
 void CSamplePanelView::OnToolButton3()
 {
-	AfxMessageBox(_T("Do something to response toolbar button 3."));
+	AfxMessageBox(_T("响应工程二toolbar button 3."));
 }
 // CSamplePanelView drawing
 
@@ -134,3 +139,45 @@ CSamplePanelDoc* CSamplePanelView::GetDocument() const // non-debug version is i
 
 
 // CSamplePanelView message handlers
+
+
+void CSamplePanelView::OnTestItem1()
+{
+	AfxMessageBox(_T("工程二测试菜单一"));
+}
+
+
+void CSamplePanelView::OnTestItem2()
+{
+	AfxMessageBox(_T("工程二测试菜单二"));
+	// TODO: Add your command handler code here
+}
+void CSamplePanelView::OnSize(UINT nType, int cx, int cy)
+{
+	CView::OnSize(nType, cx, cy);
+
+	AdjustLayout();
+}
+void CSamplePanelView::AdjustLayout()
+{
+	ListChildWnd listChilds;
+	if (CWndManager::Instance()->GetChildWnds(this, listChilds))
+	{
+		for (ListChildWnd::iterator it = listChilds.begin();
+			it != listChilds.end(); ++it)
+		{
+			stChildWnd& oneItem = *it;
+			CWnd* pWnd = oneItem.pChild;
+			CRect& rect = oneItem.rcChild;
+			if (NULL != pWnd && NULL != pWnd->GetSafeHwnd())
+			{
+				pWnd->MoveWindow(&rect,TRUE);
+			}
+		}
+	}
+}
+void CSamplePanelView::OnDestroy()
+{
+	__super::OnDestroy();
+}
+

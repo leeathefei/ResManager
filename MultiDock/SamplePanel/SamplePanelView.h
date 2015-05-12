@@ -31,7 +31,7 @@ public:
 
 public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-
+	void AdjustLayout();
 	
 
 public:
@@ -53,7 +53,12 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg int  OnCreate(LPCREATESTRUCT lpcs);
 	afx_msg void OnClose();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnDestroy();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnTestItem1();
+	afx_msg void OnTestItem2();
 };
 
 #ifndef _DEBUG  // debug version in SamplePanelView.cpp

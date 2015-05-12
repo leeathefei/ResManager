@@ -41,4 +41,3 @@ BOOL CSamplePanelApp::InitInstance()
 
 	return TRUE;
 }
-

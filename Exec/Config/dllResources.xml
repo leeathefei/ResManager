@@ -1,7 +1,7 @@
 <config>
 	<DllCount>2</DllCount>
 	<Dll_0>
-		<DllName>SampleViewer.dll</DllName>
+		<DllName>TestProj1.dll</DllName>
 		<FrameWndClassName>CSampleViewerFrame</FrameWndClassName>
 		<ViewClassName>CSampleViewerView</ViewClassName>
 		<bLoad>FALSE</bLoad>
@@ -82,7 +82,7 @@
 		</Panels>
 	</Dll_0>
 	<Dll_1>
-		<DllName>SamplePanel.dll</DllName>
+		<DllName>TestProj2.dll</DllName>
 		<FrameWndClassName>CSamplePanelFrame</FrameWndClassName>
 		<ViewClassName>CSamplePanelView</ViewClassName>
 		<bLoad>FALSE</bLoad>
@@ -165,9 +165,6 @@
 	<Workspace>
 		<TabbedView>
 			<Alignment>0</Alignment>
-			<Group0>
-				<Tab0 Name="SampleViewer.dll">false</Tab0>
-			</Group0>
 		</TabbedView>
 		<DockablePane>false</DockablePane>
 	</Workspace>

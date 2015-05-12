@@ -42,16 +42,16 @@ CSamplePanelManager::CSamplePanelManager(void)
 	m_pModuleDlg3= NULL;
 	m_pModuleDlg4= NULL;
 
-	m_dwAlign[0] = ALIGN_HORIZONTAL /*ALIGN_VERTICAL*/;
-	m_dwAlign[1] = ALIGN_HORIZONTAL;
-	m_dwAlign[2] = ALIGN_HORIZONTAL;
-	m_dwAlign[3] = ALIGN_HORIZONTAL;
+	m_dwAlign[0] = ALIGN_LEFT /*ALIGN_VERTICAL*/;
+	m_dwAlign[1] = ALIGN_TOP;
+	m_dwAlign[2] = ALIGN_RIGHT;
+	m_dwAlign[3] = ALIGN_BOTTON;
 
 
-	m_strModuleName[0] = _T("工程二的水平自动删除面板1");
-	m_strModuleName[1] = _T("工程二的水平可关闭面板2");
-	m_strModuleName[2] = _T("工程二的水平自动删除面板3");
-	m_strModuleName[3] = _T("工程二的水平可关闭面板4");
+	m_strModuleName[0] = _T("工程二的自动删除面板1");
+	m_strModuleName[1] = _T("工程二的可关闭面板2");
+	m_strModuleName[2] = _T("工程二的自动删除面板3");
+	m_strModuleName[3] = _T("工程二的可关闭面板4");
 
 	m_bAutoDelete[0] = true;
 	m_bAutoDelete[1] = false;
@@ -72,11 +72,11 @@ BOOL CSamplePanelManager::RegisterDocTemplate()
 {
 	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 
-	CMTDocTemplate* pDocTemplate = new CMTDocTemplate(IDR_SAMPLEPANEL_TYPE,
+	CMTDocTemplate* pDocTemplate = new CMTDocTemplate(IDR_SAMPLEPANEL_MENU/*IDR_SAMPLEPANEL_TYPE*/,
 		RUNTIME_CLASS(CSamplePanelDoc),
 		RUNTIME_CLASS(CSamplePanelFrame),
 		RUNTIME_CLASS(CSamplePanelView),
-		_T("SamplePanel.dll"), _T("SamplePanel.dll"));
+		_T("SamplePanel.dll"), _T("TestProj2.dll"));
 
 	return m_pModuleManager->RegisterDocTemplate(pDocTemplate);
 }
@@ -114,7 +114,7 @@ BOOL CSamplePanelManager::RegisterDockPane(CWnd* pAttachWnd,
 	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 
 	HICON hIcon = (HICON)::LoadImage(::AfxGetResourceHandle(), 
-		MAKEINTRESOURCE(IDR_SAMPLEPANEL_TYPE),
+		MAKEINTRESOURCE(IDR_SAMPLEPANEL_MENU),
 		IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 
 	m_pModuleManager->RegisterModulePane(
@@ -145,7 +145,7 @@ BOOL CSamplePanelManager::RegisterModulePane()
 			m_pModuleDlg1->Create(CSamplePanelDialog::IDD, NULL);
 
 		HICON hIcon = (HICON)::LoadImage(::AfxGetResourceHandle(), 
-			MAKEINTRESOURCE(IDR_SAMPLEPANEL_TYPE),
+			MAKEINTRESOURCE(IDR_SAMPLEPANEL_MENU),
 			IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 
 		m_pModuleManager->RegisterModulePane(
@@ -163,7 +163,7 @@ BOOL CSamplePanelManager::RegisterModulePane()
 		m_pModuleDlg2->Create(CSamplePanelDialog2::IDD, NULL);
 
 		HICON hIcon2 = (HICON)::LoadImage(::AfxGetResourceHandle(), 
-		MAKEINTRESOURCE(IDR_SAMPLEPANEL_TYPE),
+		MAKEINTRESOURCE(IDR_SAMPLEPANEL_MENU),
 		IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 
 		m_pModuleManager->RegisterModulePane(
@@ -181,7 +181,7 @@ BOOL CSamplePanelManager::RegisterModulePane()
 			m_pModuleDlg3->Create(CSamplePanelDialog3::IDD, NULL);
 
 		HICON hIcon3 = (HICON)::LoadImage(::AfxGetResourceHandle(), 
-			MAKEINTRESOURCE(IDR_SAMPLEPANEL_TYPE),
+			MAKEINTRESOURCE(IDR_SAMPLEPANEL_MENU),
 			IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 
 		m_pModuleManager->RegisterModulePane(
@@ -200,7 +200,7 @@ BOOL CSamplePanelManager::RegisterModulePane()
 		m_pModuleDlg4->Create(CSamplePanelDialog4::IDD, NULL);
 
 		HICON hIcon4 = (HICON)::LoadImage(::AfxGetResourceHandle(), 
-		MAKEINTRESOURCE(IDR_SAMPLEPANEL_TYPE),
+		MAKEINTRESOURCE(IDR_SAMPLEPANEL_MENU),
 		IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 
 		m_pModuleManager->RegisterModulePane(
@@ -234,28 +234,28 @@ void CSamplePanelManager::Terminate()
 
 	m_pModuleManager->Terminate();
 	
-// 	m_pModuleDlg1->PostMessage(WM_CLOSE);
-// 	m_pModuleDlg1->DestroyWindow();
-// 	delete m_pModuleDlg1;
+ 	m_pModuleDlg1->PostMessage(WM_CLOSE);
+ 	m_pModuleDlg1->DestroyWindow();
+ 	delete m_pModuleDlg1;
 
-	/*m_pModuleDlg2->PostMessage(WM_CLOSE);
+	m_pModuleDlg2->PostMessage(WM_CLOSE);
 	m_pModuleDlg2->DestroyWindow();
-	delete m_pModuleDlg2;*/
+	delete m_pModuleDlg2;
 
-// 	m_pModuleDlg3->PostMessage(WM_CLOSE);
-// 	m_pModuleDlg2->DestroyWindow();
-// 	delete m_pModuleDlg3;
+ 	m_pModuleDlg3->PostMessage(WM_CLOSE);
+ 	m_pModuleDlg2->DestroyWindow();
+ 	delete m_pModuleDlg3;
 
-	/*m_pModuleDlg4->PostMessage(WM_CLOSE);
+	m_pModuleDlg4->PostMessage(WM_CLOSE);
 	m_pModuleDlg3->DestroyWindow();
-	delete m_pModuleDlg4;*/
+	delete m_pModuleDlg4;
 
-	/*for(int i=0; i<4; ++i)
-	{
-		m_pModuleDlg[i]->PostMessage(WM_CLOSE);
-		m_pModuleDlg[i]->DestroyWindow();
-		delete m_pModuleDlg[i];
-	}*/
+	//for(int i=0; i<4; ++i)
+	//{
+	//	m_pModuleDlg[i]->PostMessage(WM_CLOSE);
+	//	m_pModuleDlg[i]->DestroyWindow();
+	//	delete m_pModuleDlg[i];
+	//}
 
 	CSamplePanelManager::DestroyInstance();
 
@@ -275,10 +275,10 @@ void CSamplePanelManager::RemoveFrameWnd( CFrameWnd* pFrameWnd )
 		m_InstanceList.RemoveAt(pos);
 	}
 
-	if( m_InstanceList.IsEmpty() )
-	{
-		ShowToolBar(SW_HIDE);
-	}
+// 	if( m_InstanceList.IsEmpty() )
+// 	{
+// 		ShowToolBar(SW_HIDE);
+// 	}
 }
 
 void CSamplePanelManager::ActivatePane( CString strWindowName )
@@ -316,7 +316,7 @@ extern "C"
 
 	BOOL __declspec(dllexport) GetIconResourceID(UINT& nResID)
 	{
-		nResID = IDR_SAMPLEPANEL_TYPE;
+		nResID = IDR_SAMPLEPANEL_MENU;
 		return TRUE;
 	}
 
@@ -332,7 +332,7 @@ extern "C"
 
 	void __declspec(dllexport) LoadModulePane(WORD w)
 	{
-		//CSamplePanelManager::Instance()->RegisterModulePane();
+		CSamplePanelManager::Instance()->RegisterModulePane();
 	}
 
 };

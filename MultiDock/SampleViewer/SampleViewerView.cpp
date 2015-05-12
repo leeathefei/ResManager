@@ -102,12 +102,12 @@ void CSampleViewerView::OnSampleviewerActivateVerticalPane0()
 {
    //CSampleViewerManager* pManager = CSampleViewerManager::Instance();
    //pManager->ActivatePane(_T("工程一的垂直自动删除面板1"));
-	AfxMessageBox(_T("Do something to response menu 1 !"));
+	AfxMessageBox(_T("工程一测试菜单一响应!"));
 }
 
 void CSampleViewerView::OnSampleviewerActivateHorizontalPane3()
 {
-	AfxMessageBox(_T("Do something to response menu 2!"));
+	AfxMessageBox(_T("工程一测试菜单二响应!"));
    //CSampleViewerManager* pManager = CSampleViewerManager::Instance();
    //pManager->ActivatePane(_T("工程一的垂直可关闭面板2"));
 }
@@ -143,17 +143,17 @@ void CSampleViewerView::OnDestroy()
 
 void CSampleViewerView::OnToolButton1()
 {
-	AfxMessageBox(_T("Do something to response toolbar button 1."));
+	AfxMessageBox(_T("响应工程一 toolbar button 1."));
 }
 
 void CSampleViewerView::OnToolButton2()
 {
-	AfxMessageBox(_T("Do something to response toolbar button 2."));
+	AfxMessageBox(_T("响应工程一 toolbar button 2."));
 }
 
 void CSampleViewerView::OnToolButton3()
 {
-	AfxMessageBox(_T("Do something to response toolbar button 3."));
+	AfxMessageBox(_T("响应工程一 toolbar button 3."));
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,3 @@
 DLLName,Title,IsAddToMenu,IsUtility,HasView,IsSingleView,IsLoadAtStartup
-SampleViewer.dll,SampleViewer.dll,TRUE,FALSE,TRUE,TRUE,TRUE
-SamplePanel.dll,SamplePanel.dll,TRUE,FALSE,TRUE,TRUE,TRUE
+SampleViewer.dll,TestProj1.dll,TRUE,FALSE,TRUE,TRUE,TRUE
+SamplePanel.dll,TestProj2.dll,TRUE,FALSE,TRUE,TRUE,TRUE
