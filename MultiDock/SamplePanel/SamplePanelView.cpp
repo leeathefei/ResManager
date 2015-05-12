@@ -39,6 +39,8 @@ BEGIN_MESSAGE_MAP(CSamplePanelView, CView)
 	ON_COMMAND(ID_SAMPLEPANEL_SHOWPANE, OnToolButton1)
 	ON_COMMAND(ID_SAMPLEPANEL_HIDEPANE,OnToolButton2)
 	ON_COMMAND(ID_SAMPLEPANEL_NEWVIEWER,OnToolButton3)
+	ON_COMMAND(ID_SAMPLEPANEL_ACTIVATEVERTICALPANE0, OnResponseMenuItem1)
+	ON_COMMAND(ID_SAMPLEPANEL_ACTIVATEHORIZONTALPANE3, OnResponseMenuItem2)
 END_MESSAGE_MAP()
 
 CSamplePanelView::CSamplePanelView()
@@ -53,6 +55,16 @@ CSamplePanelView::~CSamplePanelView()
 void CSamplePanelView::OnClose()
 {
 	CWndManager::Instance()->RemoveCreatedWnd(this);
+}
+
+void CSamplePanelView::OnResponseMenuItem1()
+{
+	AfxMessageBox(_T("Do something to response pop up menu item 1!"));
+}
+
+void CSamplePanelView::OnResponseMenuItem2()
+{
+	AfxMessageBox(_T("Do something to response pop up menu item 2!"));
 }
 
 void CSamplePanelView::OnToolButton1()

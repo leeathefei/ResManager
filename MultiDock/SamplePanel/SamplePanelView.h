@@ -45,6 +45,8 @@ protected:
 
 // Generated message map functions
 protected:
+	afx_msg void OnResponseMenuItem1();
+	afx_msg void OnResponseMenuItem2();
 	afx_msg void OnToolButton1();
 	afx_msg void OnToolButton2();
 	afx_msg void OnToolButton3();
@@ -54,8 +56,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-//#ifndef _DEBUG  // debug version in SamplePanelView.cpp
-//inline CSamplePanelDoc* CSamplePanelView::GetDocument() const
-//   { return reinterpret_cast<CSamplePanelDoc*>(m_pDocument); }
-//#endif
+#ifndef _DEBUG  // debug version in SamplePanelView.cpp
+inline CSamplePanelDoc* CSamplePanelView::GetDocument() const
+   { return reinterpret_cast<CSamplePanelDoc*>(m_pDocument); }
+#endif
 
