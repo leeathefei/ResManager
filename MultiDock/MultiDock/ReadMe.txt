@@ -49,6 +49,8 @@ TIPS:期间出现一次dynamic cast 到cbaseObj的时候失败了，以为是没有将对话框类导出，
 TIPS:如果该窗口类想要成为container容器窗口类，需要写自己的AdjustLayout函数：从wndmanager中拿到自己的指针，并看是否有child，并在wm_size消息中调整layout
 TIPS:每个窗口资源需要在onClose函数中销毁掉自己的窗口资源。完成父亲窗口列表。注意改对象没有free，会有内存泄露，==>谁创建谁free。
 
+TIPS:对于不同dll和主程序，资源菜单需要分配不同的id号，如果菜单定义相同的id，就会出现诡异的现象。
+
 
 TODOS
 TIPS:如果子窗口点了ok按钮，销毁了，那么wndManager和listctrl里面的都要更新哦,否则选择的父窗口是无效的===to be continued
