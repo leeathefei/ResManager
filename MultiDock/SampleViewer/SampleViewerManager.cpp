@@ -94,6 +94,10 @@ BOOL CSampleViewerManager::RegisterToolBar()
       return FALSE;
 
 }
+CMFCToolBar* CSampleViewerManager::GetToolBar()
+{
+	return m_pToolbar;
+}
 
 void CSampleViewerManager::RemoveToolBar()
 {
@@ -207,10 +211,10 @@ void CSampleViewerManager::RemoveFrameWnd( CFrameWnd* pFrameWnd )
       m_InstanceList.RemoveAt(pos);
    }
 
-   if( m_InstanceList.IsEmpty() )
-   {
-      ShowToolBar(SW_HIDE);
-   }
+//    if( m_InstanceList.IsEmpty() )
+//    {
+//       ShowToolBar(SW_HIDE);
+//    }
 }
 
 void CSampleViewerManager::ActivatePane( CString strWindowName )
@@ -222,6 +226,12 @@ BOOL CSampleViewerManager::UnregisterModulePane(LPCTSTR lpszWndName)
 {
    return m_pModuleManager->UnregisterModulePane(lpszWndName);
 }
+
+void CSampleViewerManager::ActivateChildFrame(CMDIChildWnd* pFrame)
+{
+	m_pModuleManager->ActivateFrame(pFrame);
+}
+
 
 
 
@@ -256,6 +266,7 @@ extern "C"
    void __declspec(dllexport) Term(WORD w)
    {
       CSampleViewerManager::Instance()->Terminate();
+	  CSampleViewerManager::DestroyInstance();
 
    }
 

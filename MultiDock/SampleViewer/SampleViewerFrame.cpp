@@ -32,12 +32,6 @@ END_MESSAGE_MAP()
 
 // CSampleViewerFrame message handlers
 
-void CSampleViewerFrame::PostNcDestroy()
-{
-	CSampleViewerManager::Instance()->RemoveFrameWnd(this);
-	__super::PostNcDestroy();
-}
-
 void CSampleViewerFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
 {
    CSampleViewerManager* pDllManager = CSampleViewerManager::Instance();
@@ -83,4 +77,11 @@ int CSampleViewerFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
    return 0;
+}
+
+
+void CSampleViewerFrame::PostNcDestroy()
+{
+	CSampleViewerManager::Instance()->RemoveFrameWnd(this);
+	__super::PostNcDestroy();
 }

@@ -310,7 +310,7 @@ extern "C"
 
 	void __declspec(dllexport) Init(WORD w)
 	{
-		//CSamplePanelManager::Instance()->RegisterDocTemplate();
+		CSamplePanelManager::Instance()->RegisterDocTemplate();
 		//CSamplePanelManager::Instance()->RegisterToolBar();
 	}
 

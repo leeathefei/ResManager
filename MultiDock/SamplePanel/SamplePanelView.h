@@ -14,8 +14,8 @@
 
 #pragma once
 
-
-class CSamplePanelView : public CScrollView
+class CSamplePanelDoc;
+class CSamplePanelView : public CView
 {
 	DECLARE_DYNCREATE(CSamplePanelView)
 
@@ -50,11 +50,12 @@ protected:
 	afx_msg void OnToolButton3();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg int  OnCreate(LPCREATESTRUCT lpcs);
+	afx_msg void OnClose();
 	DECLARE_MESSAGE_MAP()
 };
 
-#ifndef _DEBUG  // debug version in SamplePanelView.cpp
-inline CSamplePanelDoc* CSamplePanelView::GetDocument() const
-   { return reinterpret_cast<CSamplePanelDoc*>(m_pDocument); }
-#endif
+//#ifndef _DEBUG  // debug version in SamplePanelView.cpp
+//inline CSamplePanelDoc* CSamplePanelView::GetDocument() const
+//   { return reinterpret_cast<CSamplePanelDoc*>(m_pDocument); }
+//#endif
 

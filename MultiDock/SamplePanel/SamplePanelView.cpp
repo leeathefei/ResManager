@@ -31,9 +31,9 @@
 
 // CSamplePanelView
 
-IMPLEMENT_DYNCREATE(CSamplePanelView, CScrollView)
+IMPLEMENT_DYNCREATE(CSamplePanelView, CView)
 
-BEGIN_MESSAGE_MAP(CSamplePanelView, CScrollView)
+BEGIN_MESSAGE_MAP(CSamplePanelView, CView)
 	ON_WM_RBUTTONUP()
 	ON_WM_CREATE()
 	ON_COMMAND(ID_SAMPLEPANEL_SHOWPANE, OnToolButton1)
@@ -43,12 +43,16 @@ END_MESSAGE_MAP()
 
 CSamplePanelView::CSamplePanelView()
 {
-	// TODO: add construction code here
 
 }
 
 CSamplePanelView::~CSamplePanelView()
 {
+}
+
+void CSamplePanelView::OnClose()
+{
+	CWndManager::Instance()->RemoveCreatedWnd(this);
 }
 
 void CSamplePanelView::OnToolButton1()
@@ -70,15 +74,10 @@ void CSamplePanelView::OnToolButton3()
 void CSamplePanelView::OnDraw(CDC* /*pDC*/)
 {
 	CSamplePanelDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
-
-	// TODO: add draw code for native data here
+// 	ASSERT_VALID(pDoc);
+// 	if (!pDoc)
+// 		return;
 }
-
-
-// CSamplePanelView printing
 
 void CSamplePanelView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
@@ -88,24 +87,13 @@ void CSamplePanelView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 
 int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
 {
-	if (CScrollView::OnCreate(lpcs) == -1)
+	if (CView::OnCreate(lpcs) == -1)
 	{
 		return -1;
 	}
 
-	/*UINT nIndex = CWndManager::Instance()->GetNextViewIndex();
-	CString strAddr;
-	strAddr.Format(_T("0x%08x"), this);
-	CString strNode;
-	strNode.Format(_T("MainFrame\\View_%d\\Address"), nIndex);
-	AppXml()->SetAttribute(strNode, strAddr);
-	strNode.Format(_T("MainFrame\\View_%d\\ClassName"), nIndex);
-	AppXml()->SetAttribute(strNode, _T("CSamplePanelView"));
-	AppXml()->FlushData();*/
-
-	CString strName(_T("没有View的窗口！"));
+	CString strName(_T("工程二View窗口"));
 	CWndManager::Instance()->AddCreatedWnd(this, _T("CSamplePanelView"), strName);
-
 
 	return 0;
 }
@@ -117,12 +105,12 @@ int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
 #ifdef _DEBUG
 void CSamplePanelView::AssertValid() const
 {
-	CScrollView::AssertValid();
+	CView::AssertValid();
 }
 
 void CSamplePanelView::Dump(CDumpContext& dc) const
 {
-	CScrollView::Dump(dc);
+	CView::Dump(dc);
 }
 
 CSamplePanelDoc* CSamplePanelView::GetDocument() const // non-debug version is inline

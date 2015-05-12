@@ -29,11 +29,13 @@ public:
    BOOL UnregisterModulePane(LPCTSTR);
    BOOL CanClose(CString& strMessage);
    void Terminate();
+   CMFCToolBar* GetToolBar();
 
 public:
 
    void AddFrameWnd(CFrameWnd* pFrmaeWnd);
    void RemoveFrameWnd(CFrameWnd* pFrmeWnd);
+   void ActivateChildFrame(CMDIChildWnd* pFrame);
 
 private:
    CModuleManager* m_pModuleManager;

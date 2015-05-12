@@ -21,6 +21,7 @@ class CSamplePanelFrame : public CMDIChildWndEx
 protected: 
 	CSamplePanelFrame();
 	virtual ~CSamplePanelFrame();
+	virtual void PostNcDestroy();
 
 protected:
 	afx_msg void OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd);
