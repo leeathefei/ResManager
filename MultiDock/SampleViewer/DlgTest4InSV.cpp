@@ -74,12 +74,13 @@ BOOL CDlgTest4InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString 
 	USE_CUSTOM_RESOURCE(_T("SampleViewer.dll"));
 	__super::Create(IDD, pParent);
 
-	if (eDockType == ALIGN_CHILD)
+	if (eDockType == ALIGN_CHILD_WITH_TITLE)
 	{
 		return TRUE;
 	}
 	else
 	{
+		ModifyStyle(WS_BORDER|WS_CAPTION|WS_SIZEBOX,0);
 		return CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, TRUE);
 	}
 }

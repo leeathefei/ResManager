@@ -143,6 +143,7 @@ BOOL CSamplePanelManager::RegisterModulePane()
 			m_pModuleDlg1= new CSamplePanelDialog(NULL);
 		if(m_pModuleDlg1->GetSafeHwnd()==NULL)
 			m_pModuleDlg1->Create(CSamplePanelDialog::IDD, NULL);
+		m_pModuleDlg1->ModifyStyle(WS_CAPTION|WS_BORDER|WS_SIZEBOX,0);
 
 		HICON hIcon = (HICON)::LoadImage(::AfxGetResourceHandle(), 
 			MAKEINTRESOURCE(IDR_SAMPLEPANEL_MENU),
@@ -161,6 +162,7 @@ BOOL CSamplePanelManager::RegisterModulePane()
 		m_pModuleDlg2= new CSamplePanelDialog2(NULL);
 		if(m_pModuleDlg2->GetSafeHwnd()==NULL)
 		m_pModuleDlg2->Create(CSamplePanelDialog2::IDD, NULL);
+		m_pModuleDlg2->ModifyStyle(WS_CAPTION|WS_BORDER|WS_SIZEBOX,0);
 
 		HICON hIcon2 = (HICON)::LoadImage(::AfxGetResourceHandle(), 
 		MAKEINTRESOURCE(IDR_SAMPLEPANEL_MENU),
@@ -179,6 +181,7 @@ BOOL CSamplePanelManager::RegisterModulePane()
 			m_pModuleDlg3= new CSamplePanelDialog3(NULL);
 		if(m_pModuleDlg3->GetSafeHwnd()==NULL)
 			m_pModuleDlg3->Create(CSamplePanelDialog3::IDD, NULL);
+		m_pModuleDlg3->ModifyStyle(WS_CAPTION|WS_BORDER|WS_SIZEBOX,0);
 
 		HICON hIcon3 = (HICON)::LoadImage(::AfxGetResourceHandle(), 
 			MAKEINTRESOURCE(IDR_SAMPLEPANEL_MENU),
@@ -198,6 +201,7 @@ BOOL CSamplePanelManager::RegisterModulePane()
 		m_pModuleDlg4= new CSamplePanelDialog4(NULL);
 		if(m_pModuleDlg4->GetSafeHwnd()==NULL)
 		m_pModuleDlg4->Create(CSamplePanelDialog4::IDD, NULL);
+		m_pModuleDlg4->ModifyStyle(WS_CAPTION|WS_BORDER|WS_SIZEBOX,0);
 
 		HICON hIcon4 = (HICON)::LoadImage(::AfxGetResourceHandle(), 
 		MAKEINTRESOURCE(IDR_SAMPLEPANEL_MENU),

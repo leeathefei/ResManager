@@ -106,7 +106,7 @@ void CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strW
 	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
 	if (NULL != pBase)
 	{
-		pBase->CreateWnd((CWnd*)AfxGetMainWnd(), ALIGN_VERTICAL/*ALIGN_FLOAT*/, strWndName);//默认float的parent是mainframe！
+		pBase->CreateWnd((CWnd*)AfxGetMainWnd(), ALIGN_VERTICAL, strWndName);//默认float的parent是mainframe！
 		pDlg->ShowWindow(SW_SHOW);
 	}
 }
@@ -122,14 +122,23 @@ void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMEN
 	}
 }
 
-void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect,CString&strWndName)
+void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect,CString&strWndName,bool bWithTitle)
 {
 	CWnd* pChildWnd = (CWnd*)CreateObj(strClass, strWndName);
 	CBaseObj* pBase = dynamic_cast<CBaseObj*>(pChildWnd);
 	if (NULL != pBase)
 	{
-		pBase->CreateWnd(pParent, ALIGN_CHILD, strWndName);
-		pChildWnd->SetWindowText(strWndName);
+		if (bWithTitle)
+		{
+			pBase->CreateWnd(pParent, ALIGN_CHILD_WITH_TITLE, strWndName);
+			pChildWnd->SetWindowText(strWndName);
+		}
+		else
+		{
+			pBase->CreateWnd(pParent, ALIGN_CHILD_WITH_NO_TITLE, strWndName);
+		}
+		
+		
 		pChildWnd->ShowWindow(SW_SHOW);
 		
 		//add child to its parent:for resize.

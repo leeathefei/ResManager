@@ -113,12 +113,13 @@ void CSamplePanelDialog::OnBnClickedButton1()
 	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 	 __super::Create(IDD, pParent);
 
-	 if (eDockType == ALIGN_CHILD)
+	 if (eDockType == ALIGN_CHILD_WITH_TITLE)
 	 {
 		 return TRUE;
 	 }
 	 else
 	 {
+		 ModifyStyle(WS_BORDER|WS_CAPTION|WS_SIZEBOX,0);
 		return CSamplePanelManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, TRUE);
 	 }
 }

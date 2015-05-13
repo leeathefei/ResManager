@@ -75,7 +75,7 @@ public:
 	//Create pane+dialogs.
 	void CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName);
 	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName);
-	void CreateChildWnd(CWnd* pParent, CString& strClass, CRect& rect, CString&strWndName);
+	void CreateChildWnd(CWnd* pParent, CString& strClass, CRect& rect, CString&strWndName, bool bWithTitle = false);
 	CWnd* UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, CString& strNewName);
 
 	void AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndName);
