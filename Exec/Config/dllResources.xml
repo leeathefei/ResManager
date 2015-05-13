@@ -164,11 +164,13 @@
 	</Dll_1>
 	<Workspace>
 		<TabbedView>
-			<Alignment>0</Alignment>
+			<Alignment>1</Alignment>
 			<Group0>
 				<Tab0 Name="TestProj1.dll">false</Tab0>
-				<Tab1 Name="TestProj2.dll">false</Tab1>
 			</Group0>
+			<Group1>
+				<Tab0 Name="TestProj2.dll">false</Tab0>
+			</Group1>
 		</TabbedView>
 		<DockablePane>false</DockablePane>
 	</Workspace>

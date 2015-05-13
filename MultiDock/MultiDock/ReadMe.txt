@@ -88,3 +88,6 @@ task
 9.增加了菜单和toolbar的加载，对于samplepanel工程，由于加载文档模板失败了，所有的关于samplePanelView的菜单/toolbar的响应函数都不起作用了。
 	现在的问题是解决samplePanelViewer的加载成功，将其属性修改为和SampleViewerView一样的：带View的测试工程！！！
 	否则Menu的加载就需要独立出来(这个是在LoadDocTemplate时候动态加载的)， toolbar的响应函数应该写入到Mainframe里面去，因为View没有注册成功
+
+2015年5月13日17:02:54
+todo：考虑使用宏注册完成动态创建工作。
