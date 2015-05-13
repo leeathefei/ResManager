@@ -107,10 +107,6 @@
   <ItemGroup>
     <ClCompile Include="..\Common\CSVFileReader.cpp" />
     <ClCompile Include="..\Common\FileHelper.cpp" />
-    <ClCompile Include="..\Common\Imc.cpp" />
-    <ClCompile Include="..\Common\Imc\Message.cpp" />
-    <ClCompile Include="..\Common\Imc\MessageLoop.cpp" />
-    <ClCompile Include="..\Common\Imc\MessageReceiver.cpp" />
     <ClCompile Include="..\Common\ModuleManager.cpp" />
     <ClCompile Include="..\Common\MTDocTemplate.cpp" />
     <ClCompile Include="..\Common\RWLock.cpp" />
@@ -126,13 +122,6 @@
     <ClInclude Include="..\Common\CSVFileReader.h" />
     <ClInclude Include="..\Common\FileHelper.h" />
     <ClInclude Include="..\Common\GeneralMacroDefine.h" />
-    <ClInclude Include="..\Common\Imc.h" />
-    <ClInclude Include="..\Common\Imc\ImcListener.h" />
-    <ClInclude Include="..\Common\Imc\Message.h" />
-    <ClInclude Include="..\Common\Imc\MessageLoop.h" />
-    <ClInclude Include="..\Common\Imc\MessageQueue.hpp" />
-    <ClInclude Include="..\Common\Imc\MessageReceiver.h" />
-    <ClInclude Include="..\Common\MessageDefs.h" />
     <ClInclude Include="..\Common\ModuleDefs.h" />
     <ClInclude Include="..\Common\ModuleManager.h" />
     <ClInclude Include="..\Common\MTDocTemplate.h" />

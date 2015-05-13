@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "Utility.h"
 #include "..\Common\XmlConfig.h"
-#include "..\Common\Imc\MessageLoop.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -66,7 +65,6 @@ BOOL CUtilityApp::InitInstance()
 
 int CUtilityApp::ExitInstance()
 {
-	CMessageLoop::DestroyInstance();
 	CXmlConfig::DeleteInstance();
 	return CWinApp::ExitInstance();
 }

@@ -17,8 +17,6 @@ IMPLEMENT_DYNAMIC(CSamplePanelDialog2, CDialog)
 {
 	m_bPaneClosed = false;
 	m_uRecvSelection = 0;
-	m_receiver.Listen(IMC_SAMPLE_VIEW1_PANE3);
-	m_receiver.Register(this);
 }
 
 
@@ -81,18 +79,6 @@ void CSamplePanelDialog2::PostNcDestroy()
 	// TODO: Add your specialized code here and/or call the base class
 
 	CDialog::PostNcDestroy();
-}
-
-LRESULT CSamplePanelDialog2::OnMessageReceived(CMessage* pMessage)
-{
-	UINT nMessageID = pMessage->message;
-	if (nMessageID == IMC_SAMPLE_VIEW1_PANE3)
-	{
-		CMsgView1ToPane3* pMsg = dynamic_cast<CMsgView1ToPane3*>(pMessage);
-		m_uRecvSelection = pMsg->m_comboSelection;
-		PostMessage(WM_RECVCOMBOSEL_FROM_PANE1);
-	}
-	return 0;
 }
 
 LRESULT CSamplePanelDialog2::OnRecvSelection(WPARAM w, LPARAM l)

@@ -1,8 +1,6 @@
 #pragma once
 #include "Resource.h"
 #include "afxwin.h"
-#include "..\Common\Imc.h"
-#include "..\Common\Imc\ImcListener.h"
 #include "..\Common\WndManager.h"
 
 // CSamplePanelDialog dialog
@@ -10,7 +8,6 @@
 #define WM_RECV_POSITION WM_USER+2020
 
 class CSamplePanelDialog4 : public CDialog,
-							public ImcListener,
 							public CBaseObj
 {
 	DECLARE_DYNAMIC(CSamplePanelDialog4)
@@ -40,8 +37,6 @@ public:
 	enum { IDD = IDD_SAMPLE_PANEDIALOG_4 };
 
 	bool m_bPaneClosed;
-	virtual LRESULT OnMessageReceived(CMessage* pMessage);
-	CImcReceiver m_receiver;
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

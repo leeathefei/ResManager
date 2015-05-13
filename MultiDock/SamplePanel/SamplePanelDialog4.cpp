@@ -19,8 +19,6 @@ IMPLEMENT_DYNAMIC(CSamplePanelDialog4, CDialog)
 	, m_dbEditValue3(0)
 {
 	m_bPaneClosed = false;
-	m_receiver.Listen(IMC_SAMPLE_VIWE1_PANE4);
-	m_receiver.Register(this);
 }
 
 CSamplePanelDialog4::~CSamplePanelDialog4()
@@ -85,19 +83,6 @@ void CSamplePanelDialog4::PostNcDestroy()
 void CSamplePanelDialog4::OnBnClickedButton1()
 {
 	// TODO: Add your control notification handler code here
-}
-
-LRESULT CSamplePanelDialog4::OnMessageReceived(CMessage* pMessage)
-{
-	if (pMessage->message == IMC_SAMPLE_VIWE1_PANE4)
-	{
-		CMsgView1ToPane4* pMsg = dynamic_cast<CMsgView1ToPane4*>(pMessage);
-		m_dbEditvalue1 = pMsg->dbAtti;
-		m_dbEditValue2 = pMsg->dbLatti;
-		m_dbEditValue3 = pMsg->dbTensity;
-		PostMessage(WM_RECV_POSITION);
-	}
-	return 0;
 }
 
 LRESULT CSamplePanelDialog4::OnRecvPostion(WPARAM W,LPARAM L)

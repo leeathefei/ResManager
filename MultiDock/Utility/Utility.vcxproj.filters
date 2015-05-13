@@ -9,9 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\imc">
-      <UniqueIdentifier>{f78b5ab8-3725-442d-a3de-de8d009c23ba}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -46,18 +43,6 @@
     </ClCompile>
     <ClCompile Include="..\Common\XmlConfig.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Imc\Message.cpp">
-      <Filter>Source Files\imc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Imc\MessageLoop.cpp">
-      <Filter>Source Files\imc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Imc\MessageReceiver.cpp">
-      <Filter>Source Files\imc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Imc.cpp">
-      <Filter>Source Files\imc</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\WndManager.cpp">
       <Filter>Source Files</Filter>
@@ -102,27 +87,6 @@
     </ClInclude>
     <ClInclude Include="..\Common\GeneralMacroDefine.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Imc\ImcListener.h">
-      <Filter>Source Files\imc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Imc\Message.h">
-      <Filter>Source Files\imc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Imc\MessageLoop.h">
-      <Filter>Source Files\imc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Imc\MessageQueue.hpp">
-      <Filter>Source Files\imc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Imc\MessageReceiver.h">
-      <Filter>Source Files\imc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Imc.h">
-      <Filter>Source Files\imc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\MessageDefs.h">
-      <Filter>Source Files\imc</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\WndManager.h">
       <Filter>Source Files</Filter>

@@ -20,8 +20,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SamplePanel", "SamplePanel\
 		{0C6BA7E4-79CD-4F6D-A092-EF22418DF667} = {0C6BA7E4-79CD-4F6D-A092-EF22418DF667}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestProj", "TestProj\TestProj.vcxproj", "{DC80684D-2EBC-4994-9DE2-48F8E48087CD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -53,12 +51,6 @@ Global
 		{C7064067-8C32-4DA2-90CD-99F3F1E06206}.Release|Win32.Build.0 = Release|Win32
 		{C7064067-8C32-4DA2-90CD-99F3F1E06206}.Template|Win32.ActiveCfg = Release|Win32
 		{C7064067-8C32-4DA2-90CD-99F3F1E06206}.Template|Win32.Build.0 = Release|Win32
-		{DC80684D-2EBC-4994-9DE2-48F8E48087CD}.Debug|Win32.ActiveCfg = Debug|Win32
-		{DC80684D-2EBC-4994-9DE2-48F8E48087CD}.Debug|Win32.Build.0 = Debug|Win32
-		{DC80684D-2EBC-4994-9DE2-48F8E48087CD}.Release|Win32.ActiveCfg = Release|Win32
-		{DC80684D-2EBC-4994-9DE2-48F8E48087CD}.Release|Win32.Build.0 = Release|Win32
-		{DC80684D-2EBC-4994-9DE2-48F8E48087CD}.Template|Win32.ActiveCfg = Release|Win32
-		{DC80684D-2EBC-4994-9DE2-48F8E48087CD}.Template|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

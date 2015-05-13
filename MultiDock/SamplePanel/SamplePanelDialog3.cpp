@@ -17,15 +17,9 @@ IMPLEMENT_DYNAMIC(CSamplePanelDialog3, CDialog)
 	, m_nRadio(FALSE)
 {
 	m_bPaneClosed = false;
-	RegisterImc();
 	m_nRadioValue = -1;
 }
 
-void CSamplePanelDialog3::RegisterImc()
-{
-	m_ImcReceiver.Listen(IMC_SAMPLE_VIEW1_PANE2);
-	m_ImcReceiver.Register(this);
-}
 
 CSamplePanelDialog3::~CSamplePanelDialog3()
 {
@@ -77,25 +71,6 @@ void CSamplePanelDialog3::PostNcDestroy()
 	CDialog::PostNcDestroy();
 }
 
-LRESULT CSamplePanelDialog3::OnMessageReceived(CMessage* pMessage)
-{
-	UINT uMessageID = pMessage->message;
-	switch( pMessage->message )
-	{
-	case IMC_SAMPLE_VIEW1_PANE2:
-		{
-			CMsgView1ToPanel2* pMsg = dynamic_cast<CMsgView1ToPanel2*>(pMessage);
-			m_nRadioValue = pMsg->radioValue;
-			PostMessage(WM_RECVALUE_VIEWER1_PANE2);
-			return 0;
-		}
-	default:
-		break;
-
-	}
-
-	return 0;
-}
 
 LRESULT CSamplePanelDialog3::OnRecvValueFromView(WPARAM W,LPARAM L)
 {

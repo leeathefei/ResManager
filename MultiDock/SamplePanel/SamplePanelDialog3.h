@@ -1,14 +1,12 @@
 #pragma once
 #include "Resource.h"
-#include "..\Common\Imc.h"
-#include "..\Common\Imc\ImcListener.h"
 #include "..\Common\WndManager.h"
 // CSamplePanelDialog dialog
 
 
 #define WM_RECVALUE_VIEWER1_PANE2 WM_USER+2016
 
-class CSamplePanelDialog3 : public CDialog,public ImcListener, public CBaseObj
+class CSamplePanelDialog3 : public CDialog,public CBaseObj
 {
 	DECLARE_DYNAMIC(CSamplePanelDialog3)
 
@@ -37,9 +35,6 @@ public:
 	enum { IDD = IDD_SAMPLE_PANEDIALOG_3 };
 
 	bool m_bPaneClosed;
-	void RegisterImc();
-	virtual LRESULT OnMessageReceived(CMessage* pMessage);
-	CImcReceiver m_ImcReceiver;
 	int m_nRadioValue;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

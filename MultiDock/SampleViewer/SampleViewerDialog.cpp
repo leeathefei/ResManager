@@ -5,7 +5,6 @@
 #include "SampleViewer.h"
 #include "SampleViewerDialog.h"
 #include "SampleViewerManager.h"
-#include "..\Common\Imc.h"
 
 static CSampleViewerDialog::DerivedRegister Derived_for_registering; // 没有其它机制能够保证在全局空间调用注册函数
 // CSampleViewerDialog dialog
@@ -21,13 +20,6 @@ CSampleViewerDialog::CSampleViewerDialog(CWnd* pParent /*=NULL*/)
 	, m_dbTensity(0)
 {
    m_bPaneClosed = false;
-   RegisterImc();
-}
-
-void CSampleViewerDialog::RegisterImc()
-{
-	m_ImcReceiver.Listen(IMC_SAMPLE_PANE1_VIEW1);
-	m_ImcReceiver.Register(this);
 }
 
 CSampleViewerDialog::~CSampleViewerDialog()
@@ -105,8 +97,6 @@ void CSampleViewerDialog::PostNcDestroy()
 void CSampleViewerDialog::OnBnClickedButton1()
 {
 	UpdateData(TRUE);
-	CImcSender sender;
-	sender.SendView1ToPanel1(m_dbSent2Module);
 
 	// TODO: Add your control notification handler code here
 }
@@ -114,15 +104,11 @@ void CSampleViewerDialog::OnBnClickedButton1()
 void CSampleViewerDialog::OnBnClickedButton3()
 {
 	UpdateData(TRUE);
-	CImcSender sender;
-	sender.SendView1ToPanel3(m_comboControl.GetCurSel());
 }
 
 void CSampleViewerDialog::OnBnClickedButton2()
 {
 	UpdateData(TRUE);
-	CImcSender sender;
-	sender.SendView1ToPanel2(m_radioValue);
 
 	// TODO: Add your control notification handler code here
 }
@@ -132,31 +118,8 @@ void CSampleViewerDialog::OnBnClickedButton4()
 {
 	// TODO: Add your control notification handler code here
 	UpdateData(TRUE);
-	CImcSender sender;
-	sender.SendView1ToPanel4(m_dbAttitude, m_dbLattitude,m_dbTensity);
 }
 
-LRESULT CSampleViewerDialog::OnMessageReceived(CMessage* pMessage)
-{
-	UINT uMessageID = pMessage->message;
-	switch( pMessage->message )
-	{
-		//Before loading log file.
-	case IMC_SAMPLE_PANE1_VIEW1:
-		{
-			CMsgPanel1ToView1* pMsg = dynamic_cast<CMsgPanel1ToView1*> (pMessage);
-			m_dbRecvValue = pMsg->dbValue;
-			PostMessage(WM_RECVALUE_PANE1_VIEW1);
-			return 0;
-		}
-		break;
-	default:
-		break;
-
-	}
-
-	return 0;
-}
 
 LRESULT CSampleViewerDialog::OnRecvValueFromPane(WPARAM W,LPARAM L)
 {

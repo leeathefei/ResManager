@@ -17,13 +17,8 @@ CSamplePanelDialog::CSamplePanelDialog(CWnd* pParent /*=NULL*/)
 {
 	m_dbRecvValue = 0;
    m_bPaneClosed = false;
-   RegisterImc();
 }
-void CSamplePanelDialog::RegisterImc()
-{
-	m_ImcReceiver.Listen(IMC_SAMPLE_VIEW1_PANE1);
-	m_ImcReceiver.Register(this);
-}
+
 CSamplePanelDialog::~CSamplePanelDialog()
 {
 }
@@ -93,32 +88,9 @@ void CSamplePanelDialog::PostNcDestroy()
 void CSamplePanelDialog::OnBnClickedButton1()
 {
 	UpdateData(TRUE);
-	CImcSender sender;
-	sender.SendPanel1ToView1(m_dEdit1Value);
 
 	// TODO: Add your control notification handler code here
 }
- LRESULT CSamplePanelDialog::OnMessageReceived(CMessage* pMessage)
- {
-	 UINT uMessageID = pMessage->message;
-	 switch( pMessage->message )
-	 {
-		 //Before loading log file.
-	 case IMC_SAMPLE_VIEW1_PANE1:
-		 {
-			 CMsgView1ToPanel1* pMsg = dynamic_cast<CMsgView1ToPanel1*> (pMessage);
-			 m_dbRecvValue = pMsg->dbValue;
-			 PostMessage(WM_RECVALUE_FROM_VIEWER);
-			 return 0;
-		 }
-		 break;
-	 default:
-		 break;
-
-	 }
-
-	 return 0;
- }
 
  LRESULT CSamplePanelDialog::OnRecvValueFromView(WPARAM W,LPARAM L)
  {

@@ -1,14 +1,12 @@
 #pragma once
 #include "Resource.h"
 #include "afxwin.h"
-#include "..\Common\Imc.h"
-#include "..\Common\Imc\ImcListener.h"
 #include "..\Common\WndManager.h"
 
 // CSampleViewerDialog dialog
 #define WM_RECVALUE_PANE1_VIEW1 WM_USER+2017
 
-class CSampleViewerDialog : public CDialog,public ImcListener,public CBaseObj
+class CSampleViewerDialog : public CDialog,public CBaseObj
 {
 	DECLARE_DYNAMIC(CSampleViewerDialog)
 
@@ -38,10 +36,7 @@ public:
 	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName);
 
    bool m_bPaneClosed;
-
-   void RegisterImc();
-   virtual LRESULT OnMessageReceived(CMessage* pMessage);
-   CImcReceiver m_ImcReceiver;
+ 
    double m_dbRecvValue;
 
 protected:

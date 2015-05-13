@@ -1,7 +1,5 @@
 #pragma once
 #include "Resource.h"
-#include "..\Common\Imc.h"
-#include "..\Common\Imc\ImcListener.h"
 #include "..\Common\WndManager.h"
 #include "afxwin.h"
 
@@ -10,7 +8,6 @@
 #define WM_RECVCOMBOSEL_FROM_PANE1 WM_USER+2019
 
 class CSamplePanelDialog2 : public CDialog,
-							public ImcListener,
 							public CBaseObj
 {
 	DECLARE_DYNAMIC(CSamplePanelDialog2)
@@ -42,13 +39,9 @@ public:
 	enum { IDD = IDD_SAMPLE_PANEDIALOG_2 };
 
 	bool m_bPaneClosed;
-
-	CImcReceiver m_receiver;
 	
-
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	virtual LRESULT OnMessageReceived(CMessage* pMessage);
 
 	DECLARE_MESSAGE_MAP()
 public:
