@@ -138,7 +138,6 @@
   <ItemGroup>
     <ClInclude Include="BaseDlg.h" />
     <ClInclude Include="ChildFrm.h" />
-    <ClInclude Include="ClassView.h" />
     <ClInclude Include="CommDefine.h" />
     <ClInclude Include="DlgConfig.h" />
     <ClInclude Include="DlgCreateChildPane.h" />
@@ -152,8 +151,6 @@
     <ClInclude Include="FileView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="ModulePane.h" />
-    <ClInclude Include="OutputWnd.h" />
-    <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="XmlDataProc.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -168,7 +165,6 @@
   <ItemGroup>
     <ClCompile Include="BaseDlg.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
-    <ClCompile Include="ClassView.cpp" />
     <ClCompile Include="DlgConfig.cpp" />
     <ClCompile Include="DlgCreateChildPane.cpp" />
     <ClCompile Include="DlgCreateDockPane.cpp" />
@@ -181,8 +177,6 @@
     <ClCompile Include="FileView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="ModulePane.cpp" />
-    <ClCompile Include="OutputWnd.cpp" />
-    <ClCompile Include="PropertiesWnd.cpp" />
     <ClCompile Include="XmlDataProc.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -64,36 +64,8 @@ void CMTDocTemplate::LoadTemplate()
    pMainMenu->Detach();
 }
 
-//////////////////////////////////////////////////////////////////////////
-// nID   
-//    -1       subMenu (e.g. Modules)
-//    0        seperator in submenu
-//    others   menuItem in submenu  (e.g. Viewer)
-//    
-// pSource 
-//    Main frame menu
-//    
-// pTarget
-//    View menu, from DLL
-//    
-// pSource duplicate to pTarget
-//    采用迭代的方式复制（InsertMenu函数）
-//    从pSource 的第一个子菜单至最后一个子菜单
-//    从子菜单的第一个MenuItem 至子菜单的最后一个MenuItem
-//    
-// InsertMenu函数
-//    InsertMenu(nPosition, nFlags, nNewMenuItemID, strNewMenuItemName)
-//    nFlags
-//       MF_BYPOSITION, MF_BYCOMMAND
-//       MF_STRING, MF_BITMAP, MF_OWNERDRAW
-//       MF_SEPERATOR
-//       MF_INSERT, MF_CHANGE, MF_APPEND, MF_DELETE, MF_REMOVE
-//       MF_ENABLE, MF_GRAYED, MF_DISABLE
-//       MF_UNCHECKED, MF_CHECKED, MF_USECHECKBITMAP
-//  
-
-#define MAINMENU_ITEMNUM_LEFT   4
-#define MAINMENU_ITEMNUM_RIGHT  4
+#define MAINMENU_ITEMNUM_LEFT   3
+#define MAINMENU_ITEMNUM_RIGHT  3
 
 void CMTDocTemplate::DuplicateMenu(const CMenu *pSource, CMenu *pTarget)
 {
