@@ -78,6 +78,11 @@ BOOL CDlgTest4InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString 
 	{
 		return TRUE;
 	}
+	else if (eDockType == ALIGN_CHILD_WITH_NO_TITLE)
+	{
+		ModifyStyle(WS_CAPTION|WS_BORDER|WS_SIZEBOX,0);
+		return TRUE;
+	}
 	else
 	{
 		ModifyStyle(WS_BORDER|WS_CAPTION|WS_SIZEBOX,0);

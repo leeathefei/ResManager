@@ -70,7 +70,12 @@ BOOL CDlgTest1InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString 
 	{
 		return TRUE;
 	}
-	else
+	else if (eDockType == ALIGN_CHILD_WITH_NO_TITLE)
+	{
+		ModifyStyle(WS_CAPTION|WS_BORDER|WS_SIZEBOX,0);
+		return TRUE;
+	}
+	else 
 	{
 		ModifyStyle(WS_CAPTION|WS_BORDER|WS_SIZEBOX,0);
 		return CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, TRUE);

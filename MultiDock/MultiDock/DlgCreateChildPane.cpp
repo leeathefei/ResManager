@@ -26,6 +26,7 @@ CDlgCreateChildPane::CDlgCreateChildPane(CWnd* pParent /*=NULL*/)
 	, m_uChildBottom(0)
 	, m_pSelParentWnd(NULL)
 	, m_strChildWndName(_T(""))
+	, m_nRadioWithNoCaption(0)
 {
 	CWndManager::Instance()->AddEventHandler(this);
 }
@@ -82,6 +83,7 @@ void CDlgCreateChildPane::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Control(pDX, IDC_EDIT_CHILDWIND_NAME, m_editChildWndName);
 	DDX_Text(pDX, IDC_EDIT_CHILDWIND_NAME, m_strChildWndName);
+	DDX_Radio(pDX, IDC_RADIO_WITH_NO_CAPTION, m_nRadioWithNoCaption);
 }
 
 
@@ -100,6 +102,8 @@ BEGIN_MESSAGE_MAP(CDlgCreateChildPane, CDialogEx)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_CREATECHILD_PARENTWND, OnParentSelectChanged)
 	ON_NOTIFY(NM_CLICK, IDC_LIST_CREATECHILD_PARENTWND, OnMouseClicked)
 	ON_BN_CLICKED(IDC_BTN_UPDATE_CHILDSIZE, &CDlgCreateChildPane::OnBnClickedBtnUpdateChildsize)
+	ON_BN_CLICKED(IDC_RADIO_WITH_CAPTION, &CDlgCreateChildPane::OnBnClickedRadioWithCaption)
+	ON_BN_CLICKED(IDC_RADIO_WITH_NO_CAPTION, &CDlgCreateChildPane::OnBnClickedRadioWithNoCaption)
 END_MESSAGE_MAP()
 
 
@@ -154,6 +158,22 @@ void CDlgCreateChildPane::OnBnClickedRadiomodify()
 
 	// TODO: Add your control notification handler code here
 }
+
+
+void CDlgCreateChildPane::OnBnClickedRadioWithNoCaption()
+{
+	m_nRadioWithNoCaption = 0;
+	UpdateData(FALSE);
+	// TODO: Add your control notification handler code here
+}
+
+
+void CDlgCreateChildPane::OnBnClickedRadioWithCaption()
+{
+	m_nRadioWithNoCaption = 1;
+	UpdateData(FALSE);
+}
+
 
 void CDlgCreateChildPane::OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult)
 {
@@ -225,7 +245,11 @@ void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
 	//1.create child window.
 	if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
 	{
-		CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, m_strClassnameInChild, rcChild, m_strChildWndName);
+		CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, 
+			m_strClassnameInChild, 
+			rcChild, 
+			m_strChildWndName,
+			(bool)m_nRadioWithNoCaption);
 		m_pSelParentWnd->SendMessage(WM_SIZE);
 	}
 	else
@@ -262,3 +286,5 @@ void CDlgCreateChildPane::OnBnClickedBtnUpdateChildsize()
 		}
 	}
 }
+
+
