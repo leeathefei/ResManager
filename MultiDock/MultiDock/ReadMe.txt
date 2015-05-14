@@ -59,7 +59,8 @@ TIPS:为了方便记忆和修改，在创建child实例的时候，让用户可以给实例取名。用于记忆。
 	可能会选择错误。
 TIPS:在修改config\Modules.csv的工程名的是，修改后的值应该和代码里面的 CSampleViewerManager::RegisterDocTemplate()的最后一个参数名一致，否则
 	  加载dll失败！
-
+TIPS:CreatenewTabGroup:当分屏的时候，就会创建一个新的Group，把拖拽的的tab放入到新的group里面去。
+		对于新load的tab，默认放入到当前激活的group里面的。
 
 
 2015年5月9日15:39:52

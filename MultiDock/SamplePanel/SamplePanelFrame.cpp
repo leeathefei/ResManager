@@ -59,9 +59,10 @@ void CSamplePanelFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* 
 	CMDIChildWndEx::OnMDIActivate(bActivate, pActivateWnd, pDeactivateWnd);
 }
 
+//if tab was closed, and postNcDestroy will be called.
 void CSamplePanelFrame::OnClose()
 {	
-	CSamplePanelManager::Instance()->RemoveFrameWnd(this);
+	//这个是否可以考虑移到PostNcDestroy函数里面去
 	CSamplePanelView* pView = (CSamplePanelView*)GetActiveView();
 	if (NULL != pView)
 	{

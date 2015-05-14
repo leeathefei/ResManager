@@ -1120,11 +1120,13 @@ BOOL CMainFrame::StartupAsWorkspace()
 						strModule = (LPCTSTR)pAttr->value();
 						if (!strModule.IsEmpty())
 						{
-							pXml->UnLock();
-							OpenModuleByName(strModule);
+							pXml->UnLock();//释放xmllock，允许其他模块写入
+							OpenModuleByName(strModule);//打开dll模块。
 
+							//默认的都是一个组里面。
 							if( bNewMDITabbedGroup && iGroupAlign>0 )
 							{
+								//新建一个tab组，在里面放置tab列。
 								MDITabNewGroup(bVert);
 								bNewMDITabbedGroup = FALSE;
 							}
@@ -1314,7 +1316,7 @@ BOOL CMainFrame::OpenModule( UINT nID, bool onStartup /*=true*/ )
 			{
 				LPDLLFUNC *pInit = (LPDLLFUNC*)GetProcAddress(mc.hLib, "Init");
 				if(pInit)
-					pInit(0);
+					pInit(0);//lee:注册并生成文档模板（docTemplate+Toolbar完成加载）
 				mc.m_bInitialized = true;
 			}
 
@@ -1322,6 +1324,7 @@ BOOL CMainFrame::OpenModule( UINT nID, bool onStartup /*=true*/ )
 			{
 				BeginWaitCursor();
 				CIntaffCommonResourceHandle resHandle(mc.m_strDll, __FILEW__, __LINE__);
+				//lee：如果包含view，此时打开(View+doc)
 				m_pViewLastCreated = theApp.OpenView(mc.m_strTitle, mc.m_bSingleView);
 				EndWaitCursor();
 				m_mapViewRegister[m_pViewLastCreated] = mc.m_strTitle;
@@ -1330,8 +1333,9 @@ BOOL CMainFrame::OpenModule( UINT nID, bool onStartup /*=true*/ )
 
 			LPDLLFUNC* pFunc = (LPDLLFUNC*)GetProcAddress(mc.hLib, "LoadModulePane");
 			if(pFunc)
-				pFunc(0);
+				pFunc(0);//lee:加载panels
 
+			//不是通过读取csv的workspace来加载的，是用户点击菜单加载的。
 			if (!onStartup)	this->EnumTabbedView();
 
 			return TRUE;

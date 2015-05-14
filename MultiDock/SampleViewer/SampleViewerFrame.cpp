@@ -50,11 +50,10 @@ void CSampleViewerFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd*
 
    CMDIChildWndEx::OnMDIActivate(bActivate, pActivateWnd, pDeactivateWnd);
 }
-
+//tab was closed.and postNcDestroy will be called.
 void CSampleViewerFrame::OnClose()
 {
-   //Control the toolbar's refer_counter
-	CSampleViewerManager::Instance()->RemoveFrameWnd(this);
+   //这个时候，view对象还没有销毁？！如果是，这个是否可以考虑移到PostNcDestroy函数里面去
 	CSampleViewerView* pView = (CSampleViewerView*)GetActiveView();
 	if (NULL != pView)
 	{
