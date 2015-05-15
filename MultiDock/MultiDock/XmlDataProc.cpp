@@ -252,6 +252,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 //里面已经存在的多个同类名的实例，具体该找哪个是父窗口呢？
 //===>通过判断该child的parent的rcWnd来判断。如果当前已经有多个改父类的实例了，那么就判断rWnd值是否一致。
 //但有个前提！这些多实例的父窗口必须是view的子窗口层次的。
+//建议：一般只有一个group：view里面放一些二级的child子窗口，不牵扯到三级的child子窗口。
 void CXmlDataProc::ProcessChildType(int nDllIndex)
 {
 	//cache left dock panes
