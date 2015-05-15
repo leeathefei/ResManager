@@ -159,6 +159,9 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 		
 
 			stDockWnd oneDock;
+			oneDock.eDockType = enmDockType_Left;
+			oneDock.rcWnd = rcWnd;
+			oneDock.strClass = wsClassname.c_str();
 			m_listDockWnds.push_back(oneDock);
 		}
 		
@@ -186,6 +189,9 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 
 
 			stDockWnd oneDock;
+			oneDock.eDockType = enmDockType_Right;
+			oneDock.rcWnd = rcWnd;
+			oneDock.strClass = wsClassname.c_str();
 			m_listDockWnds.push_back(oneDock);
 		}
 
@@ -213,6 +219,9 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 
 
 			stDockWnd oneDock;
+			oneDock.eDockType = enmDockType_Top;
+			oneDock.rcWnd = rcWnd;
+			oneDock.strClass = wsClassname.c_str();
 			m_listDockWnds.push_back(oneDock);
 		}
 
@@ -240,6 +249,9 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 
 
 			stDockWnd oneDock;
+			oneDock.eDockType = enmDockType_Bottom;
+			oneDock.rcWnd = rcWnd;
+			oneDock.strClass = wsClassname.c_str();
 			m_listDockWnds.push_back(oneDock);
 		}
 
@@ -267,19 +279,47 @@ void CXmlDataProc::ProcessChildType(int nDllIndex)
 			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\ClassName"), nDllIndex, i);
 			wstring wsParentClassname = AppXml()->GetAttributeText(strNode, _T(""));
 
-			CRect rcWnd;
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\LEFT\\Wnd_%d\\SIZE\\left"), nDllIndex, i);
-			rcWnd.left = AppXml()->GetAttributeInt(strNode, 0);
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\LEFT\\Wnd_%d\\SIZE\\right"), nDllIndex, i);
-			rcWnd.right = AppXml()->GetAttributeInt(strNode, 0);
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\LEFT\\Wnd_%d\\SIZE\\top"), nDllIndex, i);
-			rcWnd.top = AppXml()->GetAttributeInt(strNode, 0);
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\LEFT\\Wnd_%d\\SIZE\\bottom"), nDllIndex, i);
-			rcWnd.bottom = AppXml()->GetAttributeInt(strNode, 0);
+			CRect rcParentWnd;
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\left"), nDllIndex, i);
+			rcParentWnd.left = AppXml()->GetAttributeInt(strNode, 0);
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\right"), nDllIndex, i);
+			rcParentWnd.right = AppXml()->GetAttributeInt(strNode, 0);
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\top"), nDllIndex, i);
+			rcParentWnd.top = AppXml()->GetAttributeInt(strNode, 0);
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\bottom"), nDllIndex, i);
+			rcParentWnd.bottom = AppXml()->GetAttributeInt(strNode, 0);
 
-
-			stDockWnd oneDock;
-			m_listDockWnds.push_back(oneDock);
+			//read child item;
+			//所有的child的父窗口和rect相同。表示是一组的。
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildCount"), nDllIndex, i);
+			int nChildCount = AppXml()->GetAttributeInt(strNode, 0);
+			if (nChildCount>0)
+			{
+				for (int j=0; j<nChildCount;j++)
+				{
+					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\ClassName"), nDllIndex, i, j);
+					wstring wsChildClass = AppXml()->GetAttributeText(strNode, _T(""));
+					if (!wsChildClass.empty())
+					{
+						CRect rcChild;
+						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\left"), nDllIndex, i, j);
+						rcChild.left = AppXml()->GetAttributeInt(strNode, 0);
+						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\right"), nDllIndex, i, j);
+						rcChild.right = AppXml()->GetAttributeInt(strNode, 0);
+						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\top"), nDllIndex, i, j);
+						rcChild.top = AppXml()->GetAttributeInt(strNode, 0);
+						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\bottom"), nDllIndex, i, j);
+						rcChild.bottom = AppXml()->GetAttributeInt(strNode, 0);
+					
+						stChildWnd oneDock;
+						oneDock.strParentClass = wsParentClassname.c_str();
+						oneDock.strChildClass  = wsChildClass.c_str();
+						oneDock.rcParent = rcParentWnd;
+						oneDock.rcChild  = rcChild;
+						m_listChildWnds.push_back(oneDock);
+					}
+				}
+			}
 		}
 
 	}

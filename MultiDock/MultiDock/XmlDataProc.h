@@ -49,7 +49,8 @@ struct stChildWnd
 {
 	CString strChildClass;
 	CString strParentClass;
-	CRect rcWnd;
+	CRect rcChild;
+	CRect rcParent;
 };
 
 class CXmlDataProc
