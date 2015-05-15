@@ -61,6 +61,9 @@ TIPS:在修改config\Modules.csv的工程名的是，修改后的值应该和代码里面的 CSampleVie
 	  加载dll失败！
 TIPS:CreatenewTabGroup:当分屏的时候，就会创建一个新的Group，把拖拽的的tab放入到新的group里面去。
 		对于新load的tab，默认放入到当前激活的group里面的。
+TIPS:各个模块的pane都通过utility的RegistermodulePane函数进行注册，在mainFrame中完成创建和cache。参考：OnRegisterModulePane
+	 各个模块可以通过UngisterModulePane动态的完成模块资源的销毁。并在Mainframe的两个map中删除（垂直和水平的）；
+
 
 
 2015年5月9日15:39:52

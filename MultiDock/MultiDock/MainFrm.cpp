@@ -1517,6 +1517,7 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	//	return 0;
 	//}
 
+	//为pane分配ID，并创建Pane。
 	int nNewID = BASE_MODULES_MENU_ID+MAX_NUM_VIEW_TYPES+counter++;
 	pModulePane = new CModulePane;
 	UINT style = WS_CHILD | CBRS_RIGHT |CBRS_FLOAT_MULTI|CBRS_HIDE_INPLACE;
@@ -1546,8 +1547,10 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	//lee:对于float，默认忘tab上加，成为一组。
 	if (pDef->nEnabledAlign == ALIGN_VERTICAL||pDef->nEnabledAlign == ALIGN_HORIZONTAL)
 	{
+		//当前是否存在Pane，如果有就往响应的pane组上靠。
 		if( !AttachPane(pModulePane, pDef->nEnabledAlign, TRUE, &pTabbedBar) )
 		{
+			//没有，就单独停靠。
 			DockPane((CBasePane*)pModulePane, nDockID);  
 			pModulePane->ShowPane(TRUE,FALSE,TRUE);
 		}
@@ -1733,6 +1736,7 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 		}
 	}
 
+	//当前是否有Pane跟当前待靠的pane是否是一个停靠类型，有就停靠到一组。
 	if( pPrevPane && pPrevPane->GetSafeHwnd() )
 	{
 		BOOL bIsAutoHide = pPrevPane->IsAutoHideMode();

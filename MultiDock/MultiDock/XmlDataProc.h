@@ -8,7 +8,7 @@
 
 #pragma once
 #include <map>
-#include <vector>
+#include <list>
 
 using namespace std;
 
@@ -25,6 +25,33 @@ struct stDllFrameView
 	}
 };
 
+struct stFloatWnd
+{
+	CString strClass;
+	CRect rcWnd;
+};
+
+enum EDockType
+{
+	enmDockType_Left = 0,
+	enmDockType_Right = 1,
+	enmDockType_Top   = 2,
+	enmDockType_Bottom = 3,
+};
+struct stDockWnd
+{
+	CString strClass;
+	EDockType eDockType;
+	CRect rcWnd;
+};
+
+struct stChildWnd
+{
+	CString strChildClass;
+	CString strParentClass;
+	CRect rcWnd;
+};
+
 class CXmlDataProc
 {
 public:
@@ -33,7 +60,6 @@ public:
 	static void DestroyInstance();
 	~CXmlDataProc();
 
-	BOOL Init();
 	BOOL GetDllNames(vector<CString>&);
 	BOOL GetClassNames(CString& strDll, vector<CString>&);
 
@@ -41,29 +67,34 @@ public:
 	BOOL IsFrameViewLoaded(CString& strClassname);
 	BOOL SetFrameViewLoadFlag(CString& strClassname);
 
+	//add new api
+	BOOL Initialize();
+
 protected:
 	CXmlDataProc();
 	static CXmlDataProc* m_pInstance;
 
 
 protected:
-	UINT GetClassesCount(CString& strDll);
 	void AddFrameViewClassName(LPCTSTR strDll, LPCTSTR strFrame, LPCTSTR strView);
 	void AddClassName(CString& strDll, CString& strClassName, UINT nIndex);
 	BOOL IsDllAdded(CString& strDllName);
 	BOOL IsClassNameAdded(CString& strDll, CString& strClassname);
-	void ProcessFloatType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
-	void ProcessDockType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
-	void ProcessChildType(UINT uDllIndex, UINT uGroupIndex, CString& strDllName);
+	void ProcessFloatType(int nDllIndex);
+	void ProcessDockType(int nDllIndex);
+	void ProcessChildType(int nDllIndex);
 
-	typedef map<CString, UINT> MapName2Index;
-	typedef map<CString, MapName2Index> MapDll2ClassNames;
 	typedef map<CString, stDllFrameView> MapDllFrameView;
-
-	map<CString, UINT> m_mapDllName2Index;
-	MapDll2ClassNames  m_mapAllDllClassNames;
 	MapDllFrameView	   m_mapDll2FrameView;
 
+	typedef list<CString> ListClasses;
+	typedef map<CString, ListClasses> MapDllname2Classes;
+	MapDllname2Classes m_mapDll2Classnames;
+	
+	//workspace info
+	list<stFloatWnd> m_listFloatWnds;
+	list<stDockWnd>  m_listDockWnds;
+	list<stChildWnd> m_listChildWnds;
 
 protected:
 
