@@ -9,6 +9,7 @@
 #pragma once
 #include <map>
 #include <list>
+#include <vector>
 
 using namespace std;
 
@@ -45,7 +46,7 @@ struct stDockWnd
 	CRect rcWnd;
 };
 
-struct stChildWnd
+struct stChildWndObj
 {
 	CString strChildClass;
 	CString strParentClass;
@@ -61,6 +62,7 @@ public:
 	static void DestroyInstance();
 	~CXmlDataProc();
 
+	BOOL Initialize();
 	BOOL GetDllNames(vector<CString>&);
 	BOOL GetClassNames(CString& strDll, vector<CString>&);
 
@@ -68,8 +70,7 @@ public:
 	BOOL IsFrameViewLoaded(CString& strClassname);
 	BOOL SetFrameViewLoadFlag(CString& strClassname);
 
-	//add new api
-	BOOL Initialize();
+	
 
 protected:
 	CXmlDataProc();
@@ -78,7 +79,7 @@ protected:
 
 protected:
 	void AddFrameViewClassName(LPCTSTR strDll, LPCTSTR strFrame, LPCTSTR strView);
-	void AddClassName(CString& strDll, CString& strClassName, UINT nIndex);
+	//void AddClassName(CString& strDll, CString& strClassName, UINT nIndex);
 	BOOL IsDllAdded(CString& strDllName);
 	BOOL IsClassNameAdded(CString& strDll, CString& strClassname);
 	void ProcessFloatType(int nDllIndex);
@@ -95,7 +96,7 @@ protected:
 	//workspace info
 	list<stFloatWnd> m_listFloatWnds;
 	list<stDockWnd>  m_listDockWnds;
-	list<stChildWnd> m_listChildWnds;
+	list<stChildWndObj> m_listChildWnds;
 
 protected:
 

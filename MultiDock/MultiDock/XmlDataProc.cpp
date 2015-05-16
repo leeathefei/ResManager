@@ -35,6 +35,69 @@ void CXmlDataProc::DestroyInstance()
 }
 
 
+BOOL CXmlDataProc::Initialize()
+{
+	UINT nDllCount = AppXml()->GetAttributeInt(_T("DllCount"), 0);
+	if (nDllCount > 0)
+	{
+		//read dll names.
+		for (int i=0; i<nDllCount; i++)
+		{
+			CString strNode;
+			strNode.Format(_T("Dll_%d\\DllName"), i);
+			std::wstring strDllName = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
+			if (!strDllName.empty() && !IsDllAdded(CString(strDllName.c_str())))
+			{
+				UINT nCount = m_mapDll2Classnames.size();
+
+				//1.read class names.
+				CString strNode;
+				strNode.Format(_T("Dll_%d\\OtherPaneClass\\Count"), i);
+				int nClassCount = AppXml()->GetAttributeInt(strNode,0);
+				if (nClassCount>0)
+				{
+					ListClasses listAllClasses;
+					for (int j=0; j<nClassCount; j++)
+					{
+						strNode.Format(_T("Dll_%d\\OtherPaneClass\\Class_%d"), i, j);
+						wstring wstrClassName = AppXml()->GetAttributeText(strNode, _T(""));
+						if (!wstrClassName.empty())
+						{
+							listAllClasses.push_back(wstrClassName.c_str());
+						}
+					}
+
+					m_mapDll2Classnames.insert(make_pair(strDllName.c_str(), listAllClasses));
+				}
+
+
+				//2.read child frame+view class name
+				strNode.Format(_T("Dll_%d\\FrameWndClassName"), i);
+				std::wstring strFramename = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
+				strNode.Format(_T("Dll_%d\\ViewClassName"), i);
+				std::wstring strViewname  = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
+				if (!strFramename.empty() && !strViewname.empty())
+				{
+					AddFrameViewClassName(strDllName.c_str(),strFramename.c_str(), strViewname.c_str());
+				}
+
+				//3.Read workspace.
+				ProcessFloatType(i);
+				ProcessDockType(i);
+				ProcessChildType(i);
+
+			}
+		}
+	}
+	else
+	{
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+
 BOOL CXmlDataProc::GetDllNames(vector<CString>& vecDlls)
 {
 	vecDlls.clear();
@@ -169,7 +232,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 
 	//cache right dock panes.
 	strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\WndCount"), nDllIndex);
-	int nWndCount = AppXml()->GetAttributeInt(strNode, 0);
+	nWndCount = AppXml()->GetAttributeInt(strNode, 0);
 	if (nWndCount>0)
 	{
 		for (int i=0; i<nWndCount; i++)
@@ -199,7 +262,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 
 	//cache top dock panes.
 	strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\WndCount"), nDllIndex);
-	int nWndCount = AppXml()->GetAttributeInt(strNode, 0);
+	nWndCount = AppXml()->GetAttributeInt(strNode, 0);
 	if (nWndCount>0)
 	{
 		for (int i=0; i<nWndCount; i++)
@@ -229,7 +292,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 
 	//Cache bottom dock panes.
 	strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\WndCount"), nDllIndex);
-	int nWndCount = AppXml()->GetAttributeInt(strNode, 0);
+	nWndCount = AppXml()->GetAttributeInt(strNode, 0);
 	if (nWndCount>0)
 	{
 		for (int i=0; i<nWndCount; i++)
@@ -311,7 +374,7 @@ void CXmlDataProc::ProcessChildType(int nDllIndex)
 						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\bottom"), nDllIndex, i, j);
 						rcChild.bottom = AppXml()->GetAttributeInt(strNode, 0);
 					
-						stChildWnd oneDock;
+						stChildWndObj oneDock;
 						oneDock.strParentClass = wsParentClassname.c_str();
 						oneDock.strChildClass  = wsChildClass.c_str();
 						oneDock.rcParent = rcParentWnd;
@@ -324,26 +387,26 @@ void CXmlDataProc::ProcessChildType(int nDllIndex)
 
 	}
 }
-void CXmlDataProc::AddClassName(CString& strDll, CString& strClassName, UINT nIndex)
-{
-	////we add 'null' class type but do not show in ui. 
-	//if (strClassName.CompareNoCase(_T("NULL")) == 0)
-	//{
-	//	return;
-	//}
-
-	MapDllname2Classes::iterator itFind = m_mapDll2Classnames.find(strDll);
-	if (itFind != m_mapDll2Classnames.end())
-	{
-		ListClasses& listofClasses = itFind->second;
-		listofClasses.push_back(strClassName);
-		return;
-	}
-
-	ListClasses listofclasses;
-	listofclasses.push_back(strClassName);
-	m_mapDll2Classnames.insert(strDll, listofclasses);
-}
+//void CXmlDataProc::AddClassName(CString& strDll, CString& strClassName, UINT nIndex)
+//{
+//	////we add 'null' class type but do not show in ui. 
+//	//if (strClassName.CompareNoCase(_T("NULL")) == 0)
+//	//{
+//	//	return;
+//	//}
+//
+//	MapDllname2Classes::iterator itFind = m_mapDll2Classnames.find(strDll);
+//	if (itFind != m_mapDll2Classnames.end())
+//	{
+//		ListClasses& listofClasses = itFind->second;
+//		listofClasses.push_back(strClassName);
+//		return;
+//	}
+//
+//	ListClasses listofclasses;
+//	listofclasses.push_back(strClassName);
+//	m_mapDll2Classnames.insert(make_pair(strDll, listofclasses));
+//}
 void CXmlDataProc::AddFrameViewClassName(LPCTSTR strDll, LPCTSTR strFrame, LPCTSTR strView)
 {
 	MapDllFrameView::iterator itFind = m_mapDll2FrameView.find(strDll);
@@ -406,62 +469,4 @@ BOOL CXmlDataProc::SetFrameViewLoadFlag(CString& strClassName)
 	}
 
 	return FALSE;
-}
-
-BOOL CXmlDataProc::Initialize()
-{
-	UINT nDllCount = AppXml()->GetAttributeInt(_T("DllCount"), 0);
-	if (nDllCount > 0)
-	{
-		//read dll names.
-		for (int i=0; i<nDllCount; i++)
-		{
-			CString strNode;
-			strNode.Format(_T("Dll_%d\\DllName"), i);
-			std::wstring strDllName = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
-			if (!strDllName.empty() && !IsDllAdded(CString(strDllName.c_str())))
-			{
-				UINT nCount = m_mapDll2Classnames.size();
-
-				//1.read class names.
-				CString strNode;
-				strNode.Format(_T("Dll_%d\\OtherPaneClass\\Count"), i);
-				int nClassCount = AppXml()->GetAttributeInt(strNode,0);
-				if (nClassCount>0)
-				{
-					ListClasses listAllClasses;
-					for (int j=0; j<nClassCount; j++)
-					{
-						strNode.Format(_T("Dll_%d\\OtherPaneClass\\Class_%d"), i, j);
-						wstring wstrClassName = AppXml()->GetAttributeText(strNode, _T(""));
-						if (!wstrClassName.empty())
-						{
-							listAllClasses.push_back(wstrClassName.c_str());
-						}
-					}
-
-					m_mapDll2Classnames.insert(strDllName.c_str(), listAllClasses);
-				}
-			
-
-				//2.read child frame+view class name
-				strNode.Format(_T("Dll_%d\\FrameWndClassName"), i);
-				std::wstring strFramename = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
-				strNode.Format(_T("Dll_%d\\ViewClassName"), i);
-				std::wstring strViewname  = AppXml()->GetAttributeText(strNode.GetString(), _T(""));
-				if (!strFramename.empty() && !strViewname.empty())
-				{
-					AddFrameViewClassName(strDllName.c_str(),strFramename.c_str(), strViewname.c_str());
-				}
-
-				//3.Read workspace.
-				ProcessFloatType(i);
-				ProcessDockType(i);
-				ProcessChildType(i);
-
-			}
-		}
-	}
-
-	return TRUE;
 }
