@@ -69,6 +69,8 @@ public:
 	BOOL StartupAsWorkspace();
 	void RecalcLayoutEx();
 
+	vector<CRect> m_vecRects;
+
 	////for different createing window page wndcofigdlg.h
 	////Create pane+dialogs.
 	//void CreateFloatWnd(CString& strClass);

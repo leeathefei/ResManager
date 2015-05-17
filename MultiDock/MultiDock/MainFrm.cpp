@@ -1114,8 +1114,9 @@ BOOL CMainFrame::StartupAsWorkspace()
 							strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\bottom"), nGroupIndex,nTabIndex);
 							rcView.bottom = AppXml()->GetAttributeInt(strNode, 0);
 
-							m_pViewLastCreated->MoveWindow(&rcView);
-							AdjustClientArea();
+							m_vecRects.push_back(rcView);
+							//m_pViewLastCreated->MoveWindow(&rcView);
+							//AdjustClientArea();
 
 							//m_pViewLastCreated->SendMessage(WM_SET_WKSDATA, eTabbedView, (LPARAM)pTabNode);
 						}
@@ -1276,9 +1277,7 @@ BOOL CMainFrame::StartupAsWorkspace()
 	//CXmlConfig::Instance()->UnLock();
 
 
-	//RecalcLayoutEx();
-
-	//__super::RecalcLayout();
+	RecalcLayoutEx();
 
 	return TRUE;
 }
@@ -1297,15 +1296,16 @@ void CMainFrame::RecalcLayoutEx()
 		{
 			CMFCTabCtrl* pTabCtrl = vecTabCtrls.at(i);
 			CRect rect;
-			pTabCtrl->GetClientRect(&rect);
-			if(pClientArea->IsVertAlign())
-			{
-				rect.right = rc.right/nGroupNum;
-			}
-			else
-			{
-				rect.bottom = rc.bottom/nGroupNum;
-			}
+			rect = m_vecRects[i];
+// 			pTabCtrl->GetClientRect(&rect);
+// 			if(pClientArea->IsVertAlign())
+// 			{
+// 				rect.right = rc.right/nGroupNum;
+// 			}
+// 			else
+// 			{
+// 				rect.bottom = rc.bottom/nGroupNum;
+// 			}
 
 			pTabCtrl->MoveWindow(&rect);
 		}
