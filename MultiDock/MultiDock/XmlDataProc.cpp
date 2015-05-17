@@ -176,13 +176,13 @@ void CXmlDataProc::ProcessFloatType(int nDllIndex)
 			if (!wsClassname.empty())
 			{
 				CRect rcWnd;
-				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\left"));
+				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\left"), nDllIndex ,i);
 				rcWnd.left = AppXml()->GetAttributeInt(strnode, 0);
-				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\top"));
+				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\top"), nDllIndex,i);
 				rcWnd.top  = AppXml()->GetAttributeInt(strnode, 0);
-				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\right"));
+				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\right"), nDllIndex,i);
 				rcWnd.right  = AppXml()->GetAttributeInt(strnode, 0);
-				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\bottom"));
+				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\bottom"), nDllIndex,i);
 				rcWnd.bottom  = AppXml()->GetAttributeInt(strnode, 0);
 				
 				stFloatWnd oneItem;
@@ -354,24 +354,24 @@ void CXmlDataProc::ProcessChildType(int nDllIndex)
 
 			//read child item;
 			//所有的child的父窗口和rect相同。表示是一组的。
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildCount"), nDllIndex, i);
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\ChildCount"), nDllIndex, i);
 			int nChildCount = AppXml()->GetAttributeInt(strNode, 0);
 			if (nChildCount>0)
 			{
 				for (int j=0; j<nChildCount;j++)
 				{
-					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\ClassName"), nDllIndex, i, j);
+					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\ClassName"), nDllIndex, i, j);
 					wstring wsChildClass = AppXml()->GetAttributeText(strNode, _T(""));
 					if (!wsChildClass.empty())
 					{
 						CRect rcChild;
-						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\left"), nDllIndex, i, j);
+						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\left"), nDllIndex, i, j);
 						rcChild.left = AppXml()->GetAttributeInt(strNode, 0);
-						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\right"), nDllIndex, i, j);
+						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\right"), nDllIndex, i, j);
 						rcChild.right = AppXml()->GetAttributeInt(strNode, 0);
-						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\top"), nDllIndex, i, j);
+						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\top"), nDllIndex, i, j);
 						rcChild.top = AppXml()->GetAttributeInt(strNode, 0);
-						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\Child_%\\bottom"), nDllIndex, i, j);
+						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\bottom"), nDllIndex, i, j);
 						rcChild.bottom = AppXml()->GetAttributeInt(strNode, 0);
 					
 						stChildWndObj oneDock;

@@ -13,169 +13,99 @@
 		</OtherPaneClass>
 		<bHasView>TRUE</bHasView>
 		<FLOAT_GROUP>
-			<WndCount>2</WndCount>
+			<WndCount>1</WndCount>
 			<Wnd_0>
 				<Name>CDlgTest1InSV</Name>
 				<SIZE>
-					<left></left>
-					<top></top>
-					<right></right>
-					<bottom></bottom>
+					<left>0</left>
+					<top>0</top>
+					<right>0</right>
+					<bottom>0</bottom>
 				</SIZE>
 			</Wnd_0>
-
-			<Wnd_1>
-				<Name>CDlgTest2InSV</Name>
-				<SIZE>
-					<left></left>
-					<top></top>
-					<right></right>
-					<bottom></bottom>
-				</SIZE>
-			</Wnd_1>
 		</FLOAT_GROUP>
-		
 		<DOCK_GROUP>
 			<LEFT>
-				<WndCount>2</WndCount>
+				<WndCount>1</WndCount>
 				<Wnd_0>
 					<Name>CSamplePanelDialog</Name>
 					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 					</SIZE>
 				</Wnd_0>
-				<Wnd_1>
-					<Name>CSamplePanelDialog2</Name>
-					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					</SIZE>
-				</Wnd_1>
 			</LEFT>
-		
 			<RIGHT>
-				<WndCount>2</WndCount>
+				<WndCount>1</WndCount>
 				<Wnd_0>
 					<Name>CSamplePanelDialog</Name>
 					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 					</SIZE>
 				</Wnd_0>
-				<Wnd_1>
-					<Name>CSamplePanelDialog2</Name>
-					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					</SIZE>
-				</Wnd_1>
 			</RIGHT>
-			
 			<TOP>
-				<WndCount>2</WndCount>
+				<WndCount>1</WndCount>
 				<Wnd_0>
 					<Name>CSamplePanelDialog</Name>
 					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 					</SIZE>
 				</Wnd_0>
-				<Wnd_1>
-					<Name>CSamplePanelDialog2</Name>					
-					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					</SIZE>
-				</Wnd_1>
 			</TOP>
-			
 			<BOTTOM>
-				<WndCount>2</WndCount>
+				<WndCount>1</WndCount>
 				<Wnd_0>
 					<Name>CSamplePanelDialog</Name>
 					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 					</SIZE>
 				</Wnd_0>
-				<Wnd_1>
-					<Name>CSamplePanelDialog2</Name>
-					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					</SIZE>
-				</Wnd_1>
 			</BOTTOM>
 		</DOCK_GROUP>
-		
 		<CHILD_GROUP>
 			<GroupCount>1</GroupCount>
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSampleViewerView</ClassName>
-					<left></left>
-					<top></top>
-					<right></right>
-					<bottom></bottom>
+					<left>0</left>
+					<top>0</top>
+					<right>0</right>
+					<bottom>0</bottom>
 				</ParentWnd>
-				<ChildCount>2</ChildCount>
+				<ChildWnds>
+					<ChildCount>2</ChildCount>
 					<Child_0>
 						<ClassName>CDlgTest3InSV</ClassName>
-							<left></left>
-							<top></top>
-							<right></right>
-							<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 						<bHasChild>FALSE</bHasChild>
 					</Child_0>
 					<Child_1>
 						<ClassName>CDlgTest4InSV</ClassName>
-							<left></left>
-							<top></top>
-							<right></right>
-							<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 						<bHasChild>FALSE</bHasChild>
 					</Child_1>
-				</ChildCount>
+				</ChildWnds>
 			</Group_0>
-			<Group_1>
-				<ParentWnd>
-					<ClassName>CSamplePanelDialog</ClassName>
-					<left></left>
-					<top></top>
-					<right></right>
-					<bottom></bottom>
-				</ParentWnd>
-				<ChildCount>1</ChildCount>
-					<Child_0>
-						<ClassName>CDlgTest3InSV</ClassName>
-							<left></left>
-							<top></top>
-							<right></right>
-							<bottom></bottom>
-						<bHasChild>FALSE</bHasChild>
-					</Child_0>
-				</ChildCount>
-			</Group_1>
 		</CHILD_GROUP>
 	</Dll_0>
-	
 	<Dll_1>
 		<DllName>TestProj2.dll</DllName>
 		<FrameWndClassName>CSamplePanelFrame</FrameWndClassName>
@@ -189,154 +119,124 @@
 		</OtherPaneClass>
 		<bHasView>TRUE</bHasView>
 		<FLOAT_GROUP>
-			<WndCount>2</WndCount>
+			<WndCount>1</WndCount>
 			<Wnd_0>
 				<Name>CSamplePanelDialog</Name>
 				<SIZE>
-					<left></left>
-					<top></top>
-					<right></right>
-					<bottom></bottom>
+					<left>0</left>
+					<top>0</top>
+					<right>0</right>
+					<bottom>0</bottom>
 				</SIZE>
 			</Wnd_0>
-
-			<Wnd_1>
-				<Name>CSamplePanelDialog2</Name>
-				<SIZE>
-					<left></left>
-					<top></top>
-					<right></right>
-					<bottom></bottom>
-				</SIZE>
-			</Wnd_1>
 		</FLOAT_GROUP>
-		
 		<DOCK_GROUP>
 			<LEFT>
-				<WndCount>2</WndCount>
+				<WndCount>1</WndCount>
 				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
-					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					</SIZE>
-				</Wnd_0>
-				<Wnd_1>
 					<Name>CSamplePanelDialog2</Name>
 					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 					</SIZE>
-				</Wnd_1>
+				</Wnd_0>
 			</LEFT>
-		
 			<RIGHT>
-				<WndCount>2</WndCount>
+				<WndCount>1</WndCount>
 				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
+					<Name>CSamplePanelDialog3</Name>
 					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 					</SIZE>
 				</Wnd_0>
-				<Wnd_1>
-					<Name>CSamplePanelDialog2</Name>
-					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					</SIZE>
-				</Wnd_1>
 			</RIGHT>
-			
 			<TOP>
-				<WndCount>2</WndCount>
+				<WndCount>1</WndCount>
 				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
+					<Name>CSamplePanelDialog4</Name>
 					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 					</SIZE>
 				</Wnd_0>
-				<Wnd_1>
-					<Name>CSamplePanelDialog2</Name>					
-					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					</SIZE>
-				</Wnd_1>
 			</TOP>
-			
 			<BOTTOM>
-				<WndCount>2</WndCount>
+				<WndCount>1</WndCount>
 				<Wnd_0>
 					<Name>CSamplePanelDialog</Name>
 					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
 					</SIZE>
 				</Wnd_0>
-				<Wnd_1>
-					<Name>CSamplePanelDialog2</Name>
-					<SIZE>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					</SIZE>
-				</Wnd_1>
 			</BOTTOM>
 		</DOCK_GROUP>
-		
 		<CHILD_GROUP>
-			<ParentWnd>
-				<ClassName>CSamplePanelView</ClassName>
-				<left></left>
-				<top></top>
-				<right></right>
-				<bottom></bottom>
-			</ParentWnd>
-			<ChildCount>
-				<Child_0>
-					<ClassName>CSamplePanelDialog</ClassName>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					<bHasChild>FALSE</bHasChild>
-				</Child_0>
-				<Child_1>
-					<ClassName>CSamplePanelDialog2</ClassName>
-						<left></left>
-						<top></top>
-						<right></right>
-						<bottom></bottom>
-					<bHasChild>FALSE</bHasChild>
-				</Child_1>
-			</ChildCount>
+			<GroupCount>1</GroupCount>
+			<Group_0>
+				<ParentWnd>
+					<ClassName>CSamplePanelView</ClassName>
+					<left>0</left>
+					<top>0</top>
+					<right>0</right>
+					<bottom>0</bottom>
+				</ParentWnd>
+				<ChildWnds>
+					<ChildCount>2</ChildCount>
+					<Child_0>
+						<ClassName>CSamplePanelDialog</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
+						<bHasChild>FALSE</bHasChild>
+					</Child_0>
+					<Child_1>
+						<ClassName>CSamplePanelDialog2</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
+						<bHasChild>FALSE</bHasChild>
+					</Child_1>
+				</ChildWnds>
+			</Group_0>
 		</CHILD_GROUP>
 	</Dll_1>
 	<Workspace>
 		<TabbedView>
 			<Alignment>1</Alignment>
+			<GroupCount>2</GroupCount>
 			<Group0>
+				<TabCount>1</TabCount>
 				<Tab0 Name="TestProj1.dll">false</Tab0>
+				<Tab_0>
+					<DllName>TestProj1.dll</DllName>
+					<left>3</left>
+					<right>678</right>
+					<top>67</top>
+					<bottom>706</bottom>
+				</Tab_0>
 			</Group0>
 			<Group1>
+				<TabCount>1</TabCount>
 				<Tab0 Name="TestProj2.dll">false</Tab0>
+				<Tab_0>
+					<DllName>TestProj2.dll</DllName>
+					<left>1599</left>
+					<right>2049</right>
+					<top>134</top>
+					<bottom>773</bottom>
+				</Tab_0>
 			</Group1>
 		</TabbedView>
 		<DockablePane>false</DockablePane>

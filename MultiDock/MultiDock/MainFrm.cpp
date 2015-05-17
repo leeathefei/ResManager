@@ -48,16 +48,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_REGISTERED_MESSAGE(AFX_WM_ON_PRESS_CLOSE_BUTTON,OnClosePane)
 	ON_REGISTERED_MESSAGE(AFX_WM_CHANGE_ACTIVE_TAB, OnChangeActiveTab)
 	ON_REGISTERED_MESSAGE(AFX_WM_CHANGING_ACTIVE_TAB, OnChangingActiveTab)
-	//ON_NOTIFY_EX( TTN_NEEDTEXT, 0, OnToolTipNotify)
-	//ON_COMMAND(ID_WORKSPACE_SHOWCONFIGWINDOWATSTARTUP, OnWorkspaceShowConfigWindowAtStartup)
-	//ON_UPDATE_COMMAND_UI(ID_WORKSPACE_SHOWCONFIGWINDOWATSTARTUP, OnUpdateWorkspaceShowConfigWindowAtStartup)
-	//ON_COMMAND(ID_WORKSPACE_AUTOUPDATE, OnWorkspaceAutoUpdateAtStartup)
-	//ON_UPDATE_COMMAND_UI(ID_WORKSPACE_AUTOUPDATE, OnUpdateWorkspaceAutoUpdateAtStartup)
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_OFF_2007_BLUE, ID_VIEW_APPLOOK_OFF_2007_AQUA, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_OFF_2007_BLUE, ID_VIEW_APPLOOK_OFF_2007_AQUA, &CMainFrame::OnUpdateApplicationLook)
-	//ON_WM_SETTINGCHANGE()
-	//ON_COMMAND(ID_VIEW_CAPTION_BAR, &CMainFrame::OnViewCaptionBar)
-	//ON_UPDATE_COMMAND_UI(ID_VIEW_CAPTION_BAR, &CMainFrame::OnUpdateViewCaptionBar)
 	ON_COMMAND_RANGE(BASE_MODULES_MENU_ID, BASE_MODULES_MENU_ID+MAX_NUM_MODULES, OnModuleMenuItem)
 	ON_COMMAND_RANGE(BASE_UTILITIES_MENU_ID, BASE_UTILITIES_MENU_ID+MAX_NUM_UTILITES, OnUtilityMenuItem)
 	ON_UPDATE_COMMAND_UI_RANGE(BASE_UTILITIES_MENU_ID, BASE_UTILITIES_MENU_ID+MAX_NUM_UTILITES, OnUpdateToolbarMenu)
@@ -68,7 +60,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_MESSAGE(WM_USER+2, OnToolBarControl)
 	ON_MESSAGE(WM_USER+3, OnPaneControl)
 	ON_MESSAGE(WM_USER+4, OnUnregisterModulePane)
-	//ON_MESSAGE(WM_USER+10, OnGetLogFileName)
 	ON_MESSAGE(WM_USER+12, OnActivateTabbedView)
 	ON_MESSAGE(WM_USER+13, OnGetWndInActivePane)
 	ON_MESSAGE(WM_INIT_MODULES, OnInitModulePanes)
@@ -106,8 +97,6 @@ CMainFrame::~CMainFrame()
 
 void CMainFrame::OnClose()
 {
-	//m_exitEvent.SetEvent();
-
 	ResetWorkspaceNode();
 	EnumTabbedView();
 	EnumDockablePane();
@@ -166,7 +155,7 @@ BOOL CMainFrame::SafeCloseModules()
 		}
 	}
 
-	FreeModules();
+	//FreeModules();
 
 	return TRUE;
 }
@@ -217,12 +206,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//Lee:initialize config reader.
 	CString strModulesXml = CFileHelper::GetModuleDir()+_T("\\Config\\dllResources.xml");
 	CXmlConfig::Instance(strModulesXml);
-
-// 	CString strFrameAdd;
-// 	strFrameAdd.Format(_T("0x%08x"), this);
-// 	AppXml()->SetAttribute(_T("MainFrame\\Address"), strFrameAdd);
-// 	AppXml()->SetAttribute(_T("MainFrame\\ClassName"), _T("CMainFrame"));
-// 	AppXml()->FlushData();
 
 	CString strMainframName = _T("主框架窗口");
 	CWndManager::Instance()->AddCreatedWnd(this, _T("CMainFrame"), strMainframName);
@@ -1048,9 +1031,6 @@ LRESULT CMainFrame::OnInitModulePanes(WPARAM W, LPARAM L)
 {
 	LockWindowUpdate();
 
-	// Open Startup modules
-	OpenStartupModules();
-
 	// Open Viewers
 	OpenLastUsedModules();
 
@@ -1063,11 +1043,6 @@ LRESULT CMainFrame::OnInitModulePanes(WPARAM W, LPARAM L)
 
 	return 0;
 
-}
-
-void CMainFrame::OpenStartupModules()
-{
-	
 }
 
 void CMainFrame::OpenLastUsedModules()
@@ -1085,68 +1060,129 @@ BOOL CMainFrame::StartupAsWorkspace()
 	{
 		return FALSE;
 	}
+	//////////////////////////////////////////////////////////////////////////
+	//pXml->LockToRead();
+	CString strNode;
+	strNode.Format(_T("Workspace\\TabbedView\\Alignment"));
+	int nAlign = pXml->GetAttributeInt(strNode, 0);
+	BOOL bVert = (nAlign==1);
 
-
-	pXml->LockToRead();
-	xml_node<TCHAR>* pNodeTabbedView = pXml->FindChild(_T("Workspace\\TabbedView"));
-	if(pNodeTabbedView)
+	BOOL bNewMDITabbedGroup=FALSE;
+	strNode.Format(_T("Workspace\\TabbedView\\GroupCount"));
+	int nGroupCount = pXml->GetAttributeInt(strNode, 0);
+	if (nGroupCount>0)
 	{
-		//ParseNode<Alignment>
-		xml_node<TCHAR>* pNodeAlignment = pNodeTabbedView->first_node(_T("Alignment"));
-		int iGroupAlign = 0;
-		BOOL bVert = TRUE;
-		BOOL bNewMDITabbedGroup=FALSE;
-		if(pNodeAlignment)
+		for (int nGroupIndex = 0; nGroupIndex<nGroupCount; nGroupIndex++)
 		{
-			iGroupAlign = _ttoi((LPCTSTR)pNodeAlignment->value());
-			bVert = (iGroupAlign==1);
-		}
-
-
-		//ParseNode<Group>
-		xml_node<TCHAR>* pGroupNode = pNodeTabbedView->first_node();
-		while(pGroupNode)
-		{
-			CString strName = pGroupNode->name();
-			if(strName.Find(_T("Group"))>=0)
+			CString strNode;
+			strNode.Format(_T("Workspace\\TabbedView\\Group%d\\TabCount"), nGroupIndex);
+			int nTabCount = pXml->GetAttributeInt(strNode, 0);
+			if (nTabCount>0)
 			{
-				xml_node<TCHAR>* pTabNode = pGroupNode->first_node();
-				while(pTabNode)
+				for (int nTabIndex = 0; nTabIndex<nTabCount; nTabIndex++)
 				{
-					CString strModule;
-					xml_attribute<TCHAR>* pAttr = pTabNode->first_attribute(_T("Name"));
-					if(pAttr) 
+					strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\DllName"), nGroupIndex, nTabIndex);
+					wstring wsDllName = pXml->GetAttributeText(strNode, _T(""));
+				
+					if (!wsDllName.empty())
 					{
-						strModule = (LPCTSTR)pAttr->value();
-						if (!strModule.IsEmpty())
-						{
-							pXml->UnLock();//释放xmllock，允许其他模块写入
-							OpenModuleByName(strModule);//打开dll模块。
+						//pXml->UnLock();//释放xmllock，允许其他模块写入
+						OpenModuleByName(wsDllName.c_str());//打开dll模块。
 
-							//默认的都是一个组里面。
-							if( bNewMDITabbedGroup && iGroupAlign>0 )
-							{
-								//新建一个tab组，在里面放置tab列。
-								MDITabNewGroup(bVert);
-								bNewMDITabbedGroup = FALSE;
-							}
-							pXml->LockToRead();
-							if(m_pViewLastCreated)
-							{
-								m_pViewLastCreated->SendMessage(WM_SET_WKSDATA, eTabbedView, (LPARAM)pTabNode);
-							}
+						//默认的都是一个组里面。
+						if( bNewMDITabbedGroup && nAlign>0 )
+						{
+							//新建一个tab组，在里面放置tab列。
+							MDITabNewGroup(bVert);
+							bNewMDITabbedGroup = FALSE;
+						}
+						//pXml->LockToRead();
+						if(m_pViewLastCreated)
+						{
+							//add rect info
+							CRect rcView;
+							CString strNode;
+							strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\left"), nGroupIndex,nTabIndex);
+							rcView.left = AppXml()->GetAttributeInt(strNode, 0);
+
+							strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\right"), nGroupIndex,nTabIndex);
+							rcView.right = AppXml()->GetAttributeInt(strNode, 0);
+
+							strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\top"), nGroupIndex,nTabIndex);
+							rcView.top = AppXml()->GetAttributeInt(strNode, 0);
+
+							strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\bottom"), nGroupIndex,nTabIndex);
+							rcView.bottom = AppXml()->GetAttributeInt(strNode, 0);
+
+							m_pViewLastCreated->MoveWindow(&rcView);
+							AdjustClientArea();
+
+							//m_pViewLastCreated->SendMessage(WM_SET_WKSDATA, eTabbedView, (LPARAM)pTabNode);
 						}
 					}
-
-					pTabNode = pTabNode->next_sibling();
 				}
-
-				bNewMDITabbedGroup = TRUE;
 			}
-
-			pGroupNode = pGroupNode->next_sibling();
+		
+			bNewMDITabbedGroup = TRUE;
 		}
 	}
+
+
+
+	//////////////////////////////////////////////////////////////////////////
+
+	//pXml->LockToRead();
+	//xml_node<TCHAR>* pNodeTabbedView = pXml->FindChild(_T("Workspace\\TabbedView"));
+	//if(pNodeTabbedView)
+	//{
+	//	//ParseNode<Alignment>
+	//	xml_node<TCHAR>* pNodeAlignment = pNodeTabbedView->first_node(_T("Alignment"));
+	//	int iGroupAlign = 0;
+	//	BOOL bVert = TRUE;
+	//	BOOL bNewMDITabbedGroup=FALSE;
+	//	if(pNodeAlignment)
+	//	{
+	//		iGroupAlign = _ttoi((LPCTSTR)pNodeAlignment->value());
+	//		bVert = (iGroupAlign==1);
+	//	}
+
+
+	//	//ParseNode<Group>
+	//	xml_node<TCHAR>* pGroupNode = pNodeTabbedView->first_node();
+	//	int nGroupIndex = 0;
+	//	int nTabIndex = 0;
+	//	while(pGroupNode)
+	//	{
+	//		CString strName = pGroupNode->name();
+	//		if(strName.Find(_T("Group"))>=0)
+	//		{
+	//			xml_node<TCHAR>* pTabNode = pGroupNode->first_node();
+	//			while(pTabNode)
+	//			{
+	//				CString strModule;
+	//				xml_attribute<TCHAR>* pAttr = pTabNode->first_attribute(_T("Name"));
+	//				if(pAttr) 
+	//				{
+	//					strModule = (LPCTSTR)pAttr->value();
+	//					if (!strModule.IsEmpty())
+	//					{
+	//						
+	//					}
+	//				}
+
+	//				pTabNode = pTabNode->next_sibling();
+	//				nTabIndex++;
+	//			}
+	//
+	//			bNewMDITabbedGroup = TRUE;
+	//			nGroupIndex++;
+	//		}
+
+	//		pGroupNode = pGroupNode->next_sibling();
+
+	//		
+	//	}
+	//}
 
 
 
@@ -1166,9 +1202,9 @@ BOOL CMainFrame::StartupAsWorkspace()
 				BOOL bRet = TRUE;
 				if(theApp.GetNumOfView(strModule)==0)
 				{
-					pXml->UnLock();
+					//pXml->UnLock();
 					bRet = OpenModuleByName(strModule);
-					pXml->LockToRead();
+					//pXml->LockToRead();
 				}
 
 				if(!bRet)
@@ -1209,9 +1245,9 @@ BOOL CMainFrame::StartupAsWorkspace()
 
 					try
 					{
-						pXml->UnLock();
+						//pXml->UnLock();
 						bRet = pFunc(pNodeDashboards);
-						pXml->LockToRead();
+						//pXml->LockToRead();
 					}
 					catch (CException* e)
 					{
@@ -1237,10 +1273,12 @@ BOOL CMainFrame::StartupAsWorkspace()
 	}
 
 
-	CXmlConfig::Instance()->UnLock();
+	//CXmlConfig::Instance()->UnLock();
 
 
-	RecalcLayoutEx();
+	//RecalcLayoutEx();
+
+	//__super::RecalcLayout();
 
 	return TRUE;
 }
@@ -1353,31 +1391,49 @@ void CMainFrame::EnumTabbedView()
 	if(pXml==NULL)
 		return;
 
-	xml_document<TCHAR>* pDoc = pXml->GetDocument();
+	//xml_document<TCHAR>* pDoc = pXml->GetDocument();
 
 	//MakeNode <Workspace\\TabbedView>
-	pXml->RemoveNode(_T("Workspace\\TabbedView"));
+	/*pXml->RemoveNode(_T("Workspace\\TabbedView"));
 	pXml->SetAttributeBool(_T("Workspace\\TabbedView"), false);
-	xml_node<TCHAR>* pWksNode = pXml->FindChild(_T("Workspace\\TabbedView"));
+	xml_node<TCHAR>* pWksNode = pXml->FindChild(_T("Workspace\\TabbedView"));*/
 
 
 	//MakeNode<Alignment>
 	const CMyMDIClientAreaWnd* pClientArea = (const CMyMDIClientAreaWnd*) &m_wndClientArea;
 	int iAlign = pClientArea->IsAlign()? (pClientArea->IsVertAlign()?1:2):0;
 	strTemp.Format(_T("%d"), iAlign);
-	TCHAR* pchName = pDoc->allocate_string(_T("Alignment"));
-	TCHAR* pchValue= pDoc->allocate_string(strTemp.GetString());
-	xml_node<TCHAR>* pNodeAlign = pWksNode->set_node(pchName, pchValue);
+	//TCHAR* pchName = pDoc->allocate_string(_T("Alignment"));
+	//TCHAR* pchValue= pDoc->allocate_string(strTemp.GetString());
+	//xml_node<TCHAR>* pNodeAlign = pWksNode->set_node(pchName, pchValue);
+	CString strNode;
+	strNode.Format(_T("Workspace\\TabbedView\\Alignment"));
+	AppXml()->SetAttributeInt(strNode, iAlign);
+	pXml->FlushData();
 
 
 	//MakeNode<TabbedGroup>
 	vector<CMFCTabCtrl*> vecTabCtrls;
 	const int nGroupNum = GetMDITabCtrls(vecTabCtrls);
+	//write by lee
+	strNode.Format(_T("Workspace\\TabbedView\\GroupCount"));
+	pXml->SetAttributeInt(strNode, nGroupNum);
+	pXml->FlushData();
+
+
 	for(int i=0; i<nGroupNum; ++i)
 	{
 		vector<CWorkspaceData>& vecWksData = m_workSpace.m_mapWks[i];
 		CMFCTabCtrl* pTabCtrl = vecTabCtrls[i];
 		const int nTabsNum = pTabCtrl->GetTabsNum();
+	
+		//add by lee.
+		CString strNode;
+		strNode.Format(_T("Workspace\\TabbedView\\Group%d\\TabCount"), i);
+		pXml->SetAttributeInt(strNode, nTabsNum);
+		pXml->FlushData();
+
+
 		for(int n=0; n<nTabsNum; ++n)
 		{
 			CWnd* pWnd = pTabCtrl->GetTabWnd(n);
@@ -1403,7 +1459,13 @@ void CMainFrame::EnumTabbedView()
 				strTab.Format(_T("Workspace\\TabbedView\\Group%d\\Tab%d"), i, n);
 				pXml->SetAttributeBool(strTab.GetString(), false);
 
-				pXml->LockToWrite();
+				//modify by lee
+				CString strNode;
+				strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\DllName"), i,n);
+				pXml->SetAttribute(strNode, strViewName.GetString());
+
+
+				//pXml->LockToWrite();
 				xml_node<TCHAR>* pTabNode = pXml->FindChild(strTab);
 				xml_attribute<TCHAR>* pAttr = pTabNode->document()->allocate_attribute(_T("Name"),strViewName.GetString());
 				pTabNode->append_attribute(pAttr);
@@ -1417,7 +1479,27 @@ void CMainFrame::EnumTabbedView()
 					pXml->RemoveNode(strTab.GetString());
 				}
 
-				pXml->UnLock();
+				//pXml->UnLock();
+
+				//add rect info
+				CRect rcView;
+				pView->GetWindowRect(&rcView);
+				//CString strNode;
+				strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\left"), i,n);
+				AppXml()->SetAttributeInt(strNode, rcView.left);
+				AppXml()->FlushData();
+				
+				strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\right"), i,n);
+				AppXml()->SetAttributeInt(strNode, rcView.right);
+				AppXml()->FlushData();
+
+				strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\top"), i,n);
+				AppXml()->SetAttributeInt(strNode, rcView.top);
+				AppXml()->FlushData();
+
+				strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\bottom"), i,n);
+				AppXml()->SetAttributeInt(strNode, rcView.bottom);
+				AppXml()->FlushData();
 			}
 		}
 	}
@@ -2326,7 +2408,7 @@ void CMainFrame::EnumDockablePane()
 
 		if(pFunc)
 		{
-			pXml->LockToWrite();
+			//pXml->LockToWrite();
 			TCHAR* pchName = pDoc->allocate_string(mc.m_strTitle);
 			pNodeDockPane->set_node(pchName);
 			xml_node<TCHAR>* pNodeModule = pNodeDockPane->first_node(mc.m_strTitle);
@@ -2347,7 +2429,7 @@ void CMainFrame::EnumDockablePane()
 				AfxMessageBox(strError);
 			}
 
-			pXml->UnLock();
+			//pXml->UnLock();
 		}
 	} // for each Module
 

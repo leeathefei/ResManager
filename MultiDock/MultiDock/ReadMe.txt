@@ -63,8 +63,10 @@ TIPS:CreatenewTabGroup:µ±·ÖÆÁµÄÊ±ºò£¬¾Í»á´´½¨Ò»¸öÐÂµÄGroup£¬°ÑÍÏ×§µÄµÄtab·ÅÈëµ½Ð
 		¶ÔÓÚÐÂloadµÄtab£¬Ä¬ÈÏ·ÅÈëµ½µ±Ç°¼¤»îµÄgroupÀïÃæµÄ¡£
 TIPS:¸÷¸öÄ£¿éµÄpane¶¼Í¨¹ýutilityµÄRegistermodulePaneº¯Êý½øÐÐ×¢²á£¬ÔÚmainFrameÖÐÍê³É´´½¨ºÍcache¡£²Î¿¼£ºOnRegisterModulePane
 	 ¸÷¸öÄ£¿é¿ÉÒÔÍ¨¹ýUngisterModulePane¶¯Ì¬µÄÍê³ÉÄ£¿é×ÊÔ´µÄÏú»Ù¡£²¢ÔÚMainframeµÄÁ½¸ömapÖÐÉ¾³ý£¨´¹Ö±ºÍË®Æ½µÄ£©£»
+TIPS£ºÈç¹ûÐÞ¸ÄÁËxmlÎÄ¼þ£¬ÖØÐÂ¼ÓÔØ·¢ÏÖcrash¡£xmlÊµÀý¶ÁÈ¡Òì³££¬ËµÃ÷ÊÇxml¸ñÊ½ÓÐÎÊÌâ¡£ÇëÅÅ²éxml¸ñÊ½ÊÇ·ñÕýÈ·¡£
 
-
+TIPS:xmlÈç¹û³öÏÖÐ´Èë»òÕß¶ÁÈ¡Ê§°ÜµÄÊ±ºò£¬ºÜ´ó¿ÉÄÜµÄÔ­ÒòÊÇlock»òÕßunlockµÄÔ­Òò¡£½â³ýÕâÐ©º¯ÊýµÄµ÷ÓÃ¡£»ù±¾ÉÏ¾ÍokÁË¡£
+TIPS:½ø³ÌÍË³öÊ§°Ü£¬²»ÊÇxmlËøµÄÎÊÌâ£¬×¢ÊÍµôËùÓÐµÄxmlËø£¬ÒÀ¾É³öÏÖ½ø³ÌÍË³öÊ§°ÜµÄÎÊÌâ¡£
 
 2015Äê5ÔÂ9ÈÕ15:39:52
 todo£ºÍ¨¹ýÖ÷½çÃæ²Ëµ¥¼ÓÔØtoolbar¡£
@@ -100,3 +102,8 @@ task
 4.menu ºÍtoolbar£¬status barµÄÄÜ¶ÀÁ¢¼ÓÔØ£¬²»¸úÎÄµµÄ£°å°ó¶¨¡£
 5.bcg¿âµÄÒÀÀµ¡£
 6.ÓÃ»§¹ÜÀíµÄÂß¼­ÊµÏÖ¡£
+
+
+workspaceµÄË¼Â·£º
+ÏÈÍê³Édll¼ÓÔØºÍviewµÄ²¼¾Ö£¬¼ÇÂ¼Ã¿¸öviewµÄrect,Ê£ÏÂµÄ¾Í¿ªÊ¼¶ÁÈ¡xml cacheµÄÊý¾Ý£¬²¢¶¯Ì¬´´½¨Ê£ÏÂµÄchild ×Ó´°¿Ú + dock panes¡£
+

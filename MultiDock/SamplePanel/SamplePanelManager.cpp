@@ -236,23 +236,23 @@ void CSamplePanelManager::Terminate()
 	// ÇÐ»»µ½DLL×ÊÔ´
 	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 
-	m_pModuleManager->Terminate();
-	
- 	m_pModuleDlg1->PostMessage(WM_CLOSE);
- 	m_pModuleDlg1->DestroyWindow();
- 	delete m_pModuleDlg1;
+	/*m_pModuleManager->Terminate();
+
+	m_pModuleDlg1->PostMessage(WM_CLOSE);
+	m_pModuleDlg1->DestroyWindow();
+	delete m_pModuleDlg1;
 
 	m_pModuleDlg2->PostMessage(WM_CLOSE);
 	m_pModuleDlg2->DestroyWindow();
 	delete m_pModuleDlg2;
 
- 	m_pModuleDlg3->PostMessage(WM_CLOSE);
- 	m_pModuleDlg2->DestroyWindow();
- 	delete m_pModuleDlg3;
+	m_pModuleDlg3->PostMessage(WM_CLOSE);
+	m_pModuleDlg2->DestroyWindow();
+	delete m_pModuleDlg3;
 
 	m_pModuleDlg4->PostMessage(WM_CLOSE);
 	m_pModuleDlg3->DestroyWindow();
-	delete m_pModuleDlg4;
+	delete m_pModuleDlg4;*/
 
 	//for(int i=0; i<4; ++i)
 	//{
@@ -336,7 +336,7 @@ extern "C"
 
 	void __declspec(dllexport) LoadModulePane(WORD w)
 	{
-		CSamplePanelManager::Instance()->RegisterModulePane();
+		//CSamplePanelManager::Instance()->RegisterModulePane();
 	}
 
 };

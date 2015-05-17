@@ -65,7 +65,6 @@ public:
 
 public:
 	void LoadModuleMenuItems();
-	void OpenStartupModules();
 	void OpenLastUsedModules();
 	BOOL StartupAsWorkspace();
 	void RecalcLayoutEx();
