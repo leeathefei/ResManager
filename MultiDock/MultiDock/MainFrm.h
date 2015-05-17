@@ -68,6 +68,7 @@ public:
 	void OpenLastUsedModules();
 	BOOL StartupAsWorkspace();
 	void RecalcLayoutEx();
+	void CreateDockpanesAndChilds();
 
 	vector<CRect> m_vecRects;
 

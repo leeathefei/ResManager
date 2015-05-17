@@ -66,7 +66,8 @@ TIPS:¸÷¸öÄ£¿éµÄpane¶¼Í¨¹ýutilityµÄRegistermodulePaneº¯Êý½øÐÐ×¢²á£¬ÔÚmainFrameÖÐÍ
 TIPS£ºÈç¹ûÐÞ¸ÄÁËxmlÎÄ¼þ£¬ÖØÐÂ¼ÓÔØ·¢ÏÖcrash¡£xmlÊµÀý¶ÁÈ¡Òì³££¬ËµÃ÷ÊÇxml¸ñÊ½ÓÐÎÊÌâ¡£ÇëÅÅ²éxml¸ñÊ½ÊÇ·ñÕýÈ·¡£
 
 TIPS:xmlÈç¹û³öÏÖÐ´Èë»òÕß¶ÁÈ¡Ê§°ÜµÄÊ±ºò£¬ºÜ´ó¿ÉÄÜµÄÔ­ÒòÊÇlock»òÕßunlockµÄÔ­Òò¡£½â³ýÕâÐ©º¯ÊýµÄµ÷ÓÃ¡£»ù±¾ÉÏ¾ÍokÁË¡£
-TIPS:½ø³ÌÍË³öÊ§°Ü£¬²»ÊÇxmlËøµÄÎÊÌâ£¬×¢ÊÍµôËùÓÐµÄxmlËø£¬ÒÀ¾É³öÏÖ½ø³ÌÍË³öÊ§°ÜµÄÎÊÌâ¡£
+TIPS:½ø³ÌÍË³öÊ§°Ü£¬²»ÊÇxmlËøµÄÎÊÌâ£¬×¢ÊÍµôËùÓÐµÄxmlËø£¬ÒÀ¾É³öÏÖ½ø³ÌÍË³öÊ§°ÜµÄÎÊÌâ¡£¾­ÅÅ²éÊÇfreeLibraryµÄÊ±ºò¹Ò×¡ÁË¡£
+
 
 2015Äê5ÔÂ9ÈÕ15:39:52
 todo£ºÍ¨¹ýÖ÷½çÃæ²Ëµ¥¼ÓÔØtoolbar¡£

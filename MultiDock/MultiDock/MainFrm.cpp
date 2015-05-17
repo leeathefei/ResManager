@@ -1034,6 +1034,8 @@ LRESULT CMainFrame::OnInitModulePanes(WPARAM W, LPARAM L)
 	// Open Viewers
 	OpenLastUsedModules();
 
+	CreateDockpanesAndChilds();
+
 	//OpenAlwaysShowPane();
 
 	// Activate Pane
@@ -1312,6 +1314,11 @@ void CMainFrame::RecalcLayoutEx()
 	}
 
 	__super::RecalcLayout();
+}
+
+void CMainFrame::CreateDockpanesAndChilds()
+{
+	//读取xmlcache信息，来动态创建panes+childs。
 }
 
 BOOL CMainFrame::OpenModuleByName(CString strModuleName, bool onStartup /*=true*/)
