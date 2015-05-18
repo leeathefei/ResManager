@@ -1314,16 +1314,20 @@ void CMainFrame::RecalcLayoutEx()
 
 void CMainFrame::CreateDockpanesAndChilds()
 {
-	list<stChildWndObj>& listChildWnds = CXmlDataProc::Instance()->m_listChildWnds;
-	for (list<stChildWndObj>::iterator itchild = listChildWnds.begin(); itchild != listChildWnds.end(); ++itchild)
+	map<UINT, ListOneDllChildWnds>& mapDll2ChildWnds = CXmlDataProc::Instance()->m_mapDllIndex2Childlist;
+	for (map<UINT, ListOneDllChildWnds>::iterator it = mapDll2ChildWnds.begin(); it != mapDll2ChildWnds.end(); ++it)
 	{
-		stChildWndObj& oneChild = *itchild;
-		CWnd* pParent = CWndManager::Instance()->CreateChildWndEx(oneChild.strParentClass, oneChild.strChildClass, 
-			oneChild.rcChild, oneChild.rcParent,_T(""), oneChild.strDllname);
-
-		if (NULL != pParent && NULL != pParent->GetSafeHwnd())
+		ListOneDllChildWnds& listChildWnds = it->second;
+		for (ListOneDllChildWnds::iterator itChild = listChildWnds.begin(); itChild != listChildWnds.end(); ++itChild)
 		{
-			pParent->SendMessage(WM_SIZE);
+			stChildWndObj& oneChild = *itChild;
+			CWnd* pParent = CWndManager::Instance()->CreateChildWndEx(oneChild.strParentClass, oneChild.strChildClass, 
+				oneChild.rcChild, oneChild.rcParent,_T(""), oneChild.strDllname);
+
+			if (NULL != pParent && NULL != pParent->GetSafeHwnd())
+			{
+				pParent->SendMessage(WM_SIZE);
+			}
 		}
 	}
 

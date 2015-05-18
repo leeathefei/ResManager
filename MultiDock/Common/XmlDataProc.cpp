@@ -350,7 +350,6 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 //建议：一般只有一个group：view里面放一些二级的child子窗口，不牵扯到三级的child子窗口。
 void CXmlDataProc::ProcessChildType(int nDllIndex, CString strDllname)
 {
-	//cache left dock panes
 	CString strNode;
 	strNode.Format(_T("Dll_%d\\CHILD_GROUP\\GroupCount"), nDllIndex);
 	int nGroupCount = AppXml()->GetAttributeInt(strNode, 0);
@@ -394,13 +393,32 @@ void CXmlDataProc::ProcessChildType(int nDllIndex, CString strDllname)
 						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\bottom"), nDllIndex, i, j);
 						rcChild.bottom = AppXml()->GetAttributeInt(strNode, 0);
 					
-						stChildWndObj oneDock;
-						oneDock.strParentClass = wsParentClassname.c_str();
-						oneDock.strChildClass  = wsChildClass.c_str();
-						oneDock.rcParent = rcParentWnd;
-						oneDock.rcChild  = rcChild;
-						oneDock.strDllname = strDllname;
-						m_listChildWnds.push_back(oneDock);
+						map<UINT, ListOneDllChildWnds>::iterator itFind = m_mapDllIndex2Childlist.find(nDllIndex);
+						if (itFind != m_mapDllIndex2Childlist.end())
+						{
+							ListOneDllChildWnds& listAllChild = itFind->second;
+							
+							stChildWndObj oneChild;
+							oneChild.strParentClass = wsParentClassname.c_str();
+							oneChild.strChildClass  = wsChildClass.c_str();
+							oneChild.rcParent = rcParentWnd;
+							oneChild.rcChild  = rcChild;
+							oneChild.strDllname = strDllname;
+							listAllChild.push_back(oneChild);
+						}
+						else
+						{
+							ListOneDllChildWnds listAllChilds;
+							stChildWndObj oneChild;
+							oneChild.strParentClass = wsParentClassname.c_str();
+							oneChild.strChildClass  = wsChildClass.c_str();
+							oneChild.rcParent = rcParentWnd;
+							oneChild.rcChild  = rcChild;
+							oneChild.strDllname = strDllname;
+							listAllChilds.push_back(oneChild);
+
+							m_mapDllIndex2Childlist.insert(make_pair(nDllIndex, listAllChilds));
+						}	
 					}
 				}
 			}

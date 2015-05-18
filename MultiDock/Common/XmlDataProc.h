@@ -57,6 +57,7 @@ struct stChildWndObj
 	CRect rcChild;
 	CRect rcParent;
 };
+typedef list<stChildWndObj> ListOneDllChildWnds;
 
 class COMMON_DLLEXPORT CXmlDataProc
 {
@@ -80,7 +81,7 @@ public:
 //workspace info
 	list<stFloatWnd> m_listFloatWnds;
 	list<stDockWnd>  m_listDockWnds;
-	list<stChildWndObj> m_listChildWnds;
+	map<UINT, ListOneDllChildWnds> m_mapDllIndex2Childlist;
 
 protected:
 	CXmlDataProc();
