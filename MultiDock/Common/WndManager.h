@@ -35,7 +35,7 @@ struct stCreateWndItem
 {
 	CString strHinstance;	
 	CString strClassName;
-	CString strOwnerProj;
+	CString strDllname;
 	CWnd*   pWnd;
 	stCreateWndItem()
 	{
@@ -85,6 +85,11 @@ public:
 	BOOL GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds);
 
 	BOOL RemoveCreatedWnd(CWnd* pRemoved/*, CString strClassname*/);
+
+
+	//create with xml info.
+	CWnd* CreateChildWndEx(CString strParentClass, CString strChildClass, CRect rcChild, 
+							CRect rcParent, CString strChildWndname, CString strDllname);
 
 protected:
 	CWndManager();

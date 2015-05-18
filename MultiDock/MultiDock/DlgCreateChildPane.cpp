@@ -144,7 +144,7 @@ void CDlgCreateChildPane::RefreshCreatedWndTree()
 			stCreateWndItem& oneItem = it->second;
 			m_listPrentInCreateChild.InsertItem(index, oneItem.strClassName);
 			m_listPrentInCreateChild.SetItemText(index, 1, oneItem.strHinstance);
-			m_listPrentInCreateChild.SetItemText(index, 2, oneItem.strOwnerProj);
+			m_listPrentInCreateChild.SetItemText(index, 2, oneItem.strDllname);
 			m_listPrentInCreateChild.SetItemData(index, (DWORD_PTR)oneItem.pWnd);
 
 			index++;

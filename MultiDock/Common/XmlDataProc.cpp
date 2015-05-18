@@ -82,9 +82,9 @@ BOOL CXmlDataProc::Initialize()
 				}
 
 				//3.Read workspace.
-				ProcessFloatType(i);
-				ProcessDockType(i);
-				ProcessChildType(i);
+				ProcessFloatType(i, strDllName.c_str());
+				ProcessDockType(i, strDllName.c_str());
+				ProcessChildType(i, strDllName.c_str());
 
 			}
 		}
@@ -176,7 +176,7 @@ BOOL CXmlDataProc::IsDllAdded(CString& strDllName)
 }
 
 //一个float窗口一个stFloatWnd结构，如果classname，就在xml中写两个，他们的CRect可能不同。
-void CXmlDataProc::ProcessFloatType(int nDllIndex)
+void CXmlDataProc::ProcessFloatType(int nDllIndex, CString strDllname)
 {
 	CString strClassCountNode;
 	strClassCountNode.Format(_T("Dll_%d\\FLOAT_GROUP\\WndCount"),nDllIndex);
@@ -203,6 +203,7 @@ void CXmlDataProc::ProcessFloatType(int nDllIndex)
 				stFloatWnd oneItem;
 				oneItem.strClass = wsClassname.c_str();
 				oneItem.rcWnd = rcWnd;
+				oneItem.strDllname = strDllname;
 
 				m_listFloatWnds.push_back(oneItem);
 			}
@@ -212,7 +213,7 @@ void CXmlDataProc::ProcessFloatType(int nDllIndex)
 
 //每个dock实例在xml中写入一项。即使同类名的多个实例，也需要写多个xml项目。
 //实例化的时候，各个方向相互dock，根据rect的大小，如果相同，就是一组，不同，即表示不是一组。
-void CXmlDataProc::ProcessDockType(int nDllIndex)
+void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 {
 	//cache left dock panes
 	CString strNode;
@@ -240,6 +241,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 			oneDock.eDockType = enmDockType_Left;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
+			oneDock.strDllname = strDllname;
 			m_listDockWnds.push_back(oneDock);
 		}
 		
@@ -270,6 +272,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 			oneDock.eDockType = enmDockType_Right;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
+			oneDock.strDllname = strDllname;
 			m_listDockWnds.push_back(oneDock);
 		}
 
@@ -300,6 +303,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 			oneDock.eDockType = enmDockType_Top;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
+			oneDock.strDllname = strDllname;
 			m_listDockWnds.push_back(oneDock);
 		}
 
@@ -330,6 +334,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 			oneDock.eDockType = enmDockType_Bottom;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
+			oneDock.strDllname = strDllname;
 			m_listDockWnds.push_back(oneDock);
 		}
 
@@ -343,7 +348,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex)
 //===>通过判断该child的parent的rcWnd来判断。如果当前已经有多个改父类的实例了，那么就判断rWnd值是否一致。
 //但有个前提！这些多实例的父窗口必须是view的子窗口层次的。
 //建议：一般只有一个group：view里面放一些二级的child子窗口，不牵扯到三级的child子窗口。
-void CXmlDataProc::ProcessChildType(int nDllIndex)
+void CXmlDataProc::ProcessChildType(int nDllIndex, CString strDllname)
 {
 	//cache left dock panes
 	CString strNode;
@@ -394,6 +399,7 @@ void CXmlDataProc::ProcessChildType(int nDllIndex)
 						oneDock.strChildClass  = wsChildClass.c_str();
 						oneDock.rcParent = rcParentWnd;
 						oneDock.rcChild  = rcChild;
+						oneDock.strDllname = strDllname;
 						m_listChildWnds.push_back(oneDock);
 					}
 				}

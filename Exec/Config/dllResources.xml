@@ -79,13 +79,13 @@
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSampleViewerView</ClassName>
-					<left>3</left>
-					<top>92</top>
-					<right>978</right>
-					<bottom>988</bottom>
+					<left>-183</left>
+					<top>714</top>
+					<right>433</right>
+					<bottom>1321</bottom>
 				</ParentWnd>
 				<ChildWnds>
-					<ChildCount>2</ChildCount>
+					<ChildCount>16</ChildCount>
 					<Child_0>
 						<ClassName>CDlgTest1InSV</ClassName>
 						<left>0</left>
@@ -102,8 +102,230 @@
 						<bottom>300</bottom>
 						<bHasChild>FALSE</bHasChild>
 					</Child_1>
+					<Child_2>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_2>
+					<Child_3>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_3>
+					<Child_4>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_4>
+					<Child_5>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_5>
+					<Child_6>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_6>
+					<Child_7>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_7>
+					<Child_8>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_8>
+					<Child_9>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_9>
+					<Child_10>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_10>
+					<Child_11>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_11>
+					<Child_12>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_12>
+					<Child_13>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_13>
+					<Child_14>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_14>
+					<Child_15>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_15>
 				</ChildWnds>
 			</Group_0>
+			<Group_1>
+				<ParentWnd>
+					<ClassName>CSampleViewerView</ClassName>
+					<left>-183</left>
+					<right>433</right>
+					<top>714</top>
+					<bottom>1321</bottom>
+				</ParentWnd>
+				<ChildWnds>
+					<ChildCount>16</ChildCount>
+					<Child_0>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_0>
+					<Child_1>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_1>
+					<Child_2>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_2>
+					<Child_3>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_3>
+					<Child_4>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_4>
+					<Child_5>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_5>
+					<Child_6>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_6>
+					<Child_7>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_7>
+					<Child_8>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_8>
+					<Child_9>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_9>
+					<Child_10>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_10>
+					<Child_11>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_11>
+					<Child_12>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_12>
+					<Child_13>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_13>
+					<Child_14>
+						<ClassName>CDlgTest1InSV</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_14>
+					<Child_15>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_15>
+				</ChildWnds>
+			</Group_1>
 		</CHILD_GROUP>
 	</Dll_0>
 	<Dll_1>
@@ -185,85 +407,105 @@
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSamplePanelView</ClassName>
-					<left>0</left>
-					<top>0</top>
-					<right>0</right>
-					<bottom>0</bottom>
+					<left>441</left>
+					<top>714</top>
+					<right>1055</right>
+					<bottom>1321</bottom>
 				</ParentWnd>
 				<ChildWnds>
-					<ChildCount>2</ChildCount>
+					<ChildCount>6</ChildCount>
 					<Child_0>
-						<ClassName>CSamplePanelDialog</ClassName>
+						<ClassName>CDlgTest2InSV</ClassName>
 						<left>0</left>
 						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
+						<right>300</right>
+						<bottom>300</bottom>
 						<bHasChild>FALSE</bHasChild>
 					</Child_0>
 					<Child_1>
-						<ClassName>CSamplePanelDialog2</ClassName>
-						<left>0</left>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
 						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
+						<right>600</right>
+						<bottom>300</bottom>
 						<bHasChild>FALSE</bHasChild>
 					</Child_1>
-				</ChildWnds>
-			</Group_0>
-			<Group_1>
-				<ParentWnd>
-					<ClassName>CSamplePanelView</ClassName>
-					<left>986</left>
-					<top>92</top>
-					<right>1677</right>
-					<bottom>988</bottom>
-				</ParentWnd>
-				<ChildWnds>
-					<ChildCount>2</ChildCount>
-					<Child_0>
+					<Child_2>
+						<ClassName>CSamplePanelDialog</ClassName>
+						<left>0</left>
+						<top>300</top>
+						<right>300</right>
+						<bottom>600</bottom>
+					</Child_2>
+					<Child_3>
+						<ClassName>CSamplePanelDialog2</ClassName>
+						<left>300</left>
+						<top>300</top>
+						<right>600</right>
+						<bottom>600</bottom>
+					</Child_3>
+					<Child_4>
 						<ClassName>CSamplePanelDialog</ClassName>
 						<left>300</left>
 						<top>0</top>
 						<right>600</right>
 						<bottom>300</bottom>
-					</Child_0>
-					<Child_1>
+					</Child_4>
+					<Child_5>
 						<ClassName>CSamplePanelDialog4</ClassName>
 						<left>0</left>
 						<top>0</top>
 						<right>300</right>
 						<bottom>300</bottom>
+					</Child_5>
+				</ChildWnds>
+			</Group_0>
+			<Group_1>
+				<ParentWnd>
+					<ClassName>CSamplePanelView</ClassName>
+					<left>800</left>
+					<top>125</top>
+					<right>1274</right>
+					<bottom>732</bottom>
+				</ParentWnd>
+				<ChildWnds>
+					<ChildCount>4</ChildCount>
+					<Child_0>
+						<ClassName>CSamplePanelDialog</ClassName>
+						<left>0</left>
+						<top>300</top>
+						<right>300</right>
+						<bottom>600</bottom>
+					</Child_0>
+					<Child_1>
+						<ClassName>CSamplePanelDialog2</ClassName>
+						<left>300</left>
+						<top>300</top>
+						<right>600</right>
+						<bottom>600</bottom>
 					</Child_1>
+					<Child_2>
+						<ClassName>CSamplePanelDialog</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_2>
+					<Child_3>
+						<ClassName>CSamplePanelDialog4</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_3>
 				</ChildWnds>
 			</Group_1>
 		</CHILD_GROUP>
 	</Dll_1>
 	<Workspace>
 		<TabbedView>
-			<Alignment>1</Alignment>
-			<GroupCount>2</GroupCount>
-			<Group0>
-				<TabCount>1</TabCount>
-				<Tab0 Name="TestProj1.dll">false</Tab0>
-				<Tab_0>
-					<DllName>TestProj1.dll</DllName>
-					<left>36</left>
-					<right>793</right>
-					<top>125</top>
-					<bottom>732</bottom>
-				</Tab_0>
-			</Group0>
-			<Group1>
-				<TabCount>1</TabCount>
-				<Tab0 Name="TestProj2.dll">false</Tab0>
-				<Tab_0>
-					<DllName>TestProj2.dll</DllName>
-					<left>801</left>
-					<right>1274</right>
-					<top>125</top>
-					<bottom>732</bottom>
-				</Tab_0>
-			</Group1>
+			<Alignment>0</Alignment>
+			<GroupCount>0</GroupCount>
 		</TabbedView>
 		<DockablePane>false</DockablePane>
 	</Workspace>

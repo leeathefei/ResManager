@@ -14,6 +14,7 @@
 #include "..\Common\FileHelper.h"
 #include "..\Common\ResourceHandle.h"
 #include "..\Common\WndManager.h"
+#include "..\Common\XmlDataProc.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -1313,7 +1314,59 @@ void CMainFrame::RecalcLayoutEx()
 
 void CMainFrame::CreateDockpanesAndChilds()
 {
-	//读取xmlcache信息，来动态创建panes+childs。
+	list<stChildWndObj>& listChildWnds = CXmlDataProc::Instance()->m_listChildWnds;
+	for (list<stChildWndObj>::iterator itchild = listChildWnds.begin(); itchild != listChildWnds.end(); ++itchild)
+	{
+		stChildWndObj& oneChild = *itchild;
+		CWnd* pParent = CWndManager::Instance()->CreateChildWndEx(oneChild.strParentClass, oneChild.strChildClass, 
+			oneChild.rcChild, oneChild.rcParent,_T(""), oneChild.strDllname);
+
+		if (NULL != pParent && NULL != pParent->GetSafeHwnd())
+		{
+			pParent->SendMessage(WM_SIZE);
+		}
+	}
+
+
+	////check if it is view classname.
+	//if (!m_strClassnameInChild.IsEmpty() && CXmlDataProc::Instance()->IsFrameViewClass(m_strClassnameInChild))
+	//{
+	//	if (!CXmlDataProc::Instance()->IsFrameViewBelongToProj(strDll, m_strClassnameInChild))
+	//	{
+	//		CString str;
+	//		str.Format(_T("你选择的[%s]类是View类，不属于[%s]工程，请重新选择！"));
+	//		AfxMessageBox(str);
+	//		return;
+	//	}
+
+	//	if (CXmlDataProc::Instance()->IsFrameViewLoaded(m_strClassnameInChild))
+	//	{
+	//		CString str;
+	//		str.Format(_T("%s 是View类，实例已经创建!"));
+	//		AfxMessageBox(str);
+	//	}
+	//	else//load first 
+	//	{
+	//		pFrame->LoadDllByName(m_strDllname);
+	//	}
+	//}
+
+
+	////1.create child window.
+	//if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
+	//{
+	//	CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, 
+	//		m_strClassnameInChild, 
+	//		rcChild, 
+	//		m_strChildWndName,
+	//		strDll,
+	//		(bool)m_nRadioWithNoCaption);
+	//	m_pSelParentWnd->SendMessage(WM_SIZE);
+	//}
+	//else
+	//{
+	//	AfxMessageBox(_T("请先选择父窗口！"));
+	//}
 }
 
 BOOL CMainFrame::OpenModuleByName(CString strModuleName, bool onStartup /*=true*/)

@@ -30,6 +30,7 @@ struct stDllFrameView
 struct stFloatWnd
 {
 	CString strClass;
+	CString strDllname;
 	CRect rcWnd;
 };
 
@@ -43,6 +44,7 @@ enum EDockType
 struct stDockWnd
 {
 	CString strClass;
+	CString strDllname;
 	EDockType eDockType;
 	CRect rcWnd;
 };
@@ -51,6 +53,7 @@ struct stChildWndObj
 {
 	CString strChildClass;
 	CString strParentClass;
+	CString strDllname;
 	CRect rcChild;
 	CRect rcParent;
 };
@@ -73,6 +76,11 @@ public:
 	BOOL SetFrameViewLoadFlag(CString& strClassname);
 
 	
+public:
+//workspace info
+	list<stFloatWnd> m_listFloatWnds;
+	list<stDockWnd>  m_listDockWnds;
+	list<stChildWndObj> m_listChildWnds;
 
 protected:
 	CXmlDataProc();
@@ -82,9 +90,9 @@ protected:
 	//void AddClassName(CString& strDll, CString& strClassName, UINT nIndex);
 	BOOL IsDllAdded(CString& strDllName);
 	BOOL IsClassNameAdded(CString& strDll, CString& strClassname);
-	void ProcessFloatType(int nDllIndex);
-	void ProcessDockType(int nDllIndex);
-	void ProcessChildType(int nDllIndex);
+	void ProcessFloatType(int nDllIndex, CString strDllname);
+	void ProcessDockType(int nDllIndex, CString strDllname);
+	void ProcessChildType(int nDllIndex, CString strDllname);
 
 	typedef map<CString, stDllFrameView> MapDllFrameView;
 	MapDllFrameView	   m_mapDll2FrameView;
@@ -93,8 +101,5 @@ protected:
 	typedef map<CString, ListClasses> MapDllname2Classes;
 	MapDllname2Classes m_mapDll2Classnames;
 	
-	//workspace info
-	list<stFloatWnd> m_listFloatWnds;
-	list<stDockWnd>  m_listDockWnds;
-	list<stChildWndObj> m_listChildWnds;
+	
 };

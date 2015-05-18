@@ -123,6 +123,31 @@ void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMEN
 	}
 }
 
+CWnd* CWndManager::CreateChildWndEx(CString strParentClass, CString strChildClass, CRect rcChild, 
+									CRect rcParent, CString strChildWndname, CString strDllname )
+{
+	CWnd* pParent = NULL;
+	for(MapCreatedWnd::iterator it = m_mapCreatedWnds.begin(); it != m_mapCreatedWnds.end(); ++it)
+	{
+		stCreateWndItem& oneCreatedWnd = it->second;
+		//先找到父窗口的实例是否存在。
+		if (oneCreatedWnd.strDllname.CompareNoCase(strDllname) == 0 && 
+			oneCreatedWnd.strClassName.CompareNoCase(strParentClass) == 0)
+		{
+			pParent = oneCreatedWnd.pWnd;
+			break;
+		}
+	}
+
+	//根据父窗口来创建子窗口。
+	if (pParent != NULL)
+	{
+		CreateChildWnd(pParent, strChildClass, rcChild, CString(_T("")), strDllname, true);
+	}
+
+	return pParent;
+}
+
 void CWndManager::CreateChildWnd(CWnd* pParent, CString& strChildClass, CRect& rect,CString&strWndName,CString& strDll,bool bWithTitle)
 {
 	CWnd* pChildWnd = (CWnd*)CreateObj(strChildClass, strWndName,strDll);
@@ -141,7 +166,7 @@ void CWndManager::CreateChildWnd(CWnd* pParent, CString& strChildClass, CRect& r
 		
 		
 		pChildWnd->ShowWindow(SW_SHOW);
-		
+
 		//add child to its parent:for resize.
 		AddChild(pParent, pChildWnd, rect, strWndName, strChildClass);
 
@@ -163,7 +188,7 @@ void CWndManager::AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndNam
 		stCreateWndItem oneItem;
 		oneItem.strClassName = strClass;
 		oneItem.strHinstance = strAlias/*strHinst*/;
-		oneItem.strOwnerProj = strDll;
+		oneItem.strDllname	 = strDll;
 		oneItem.pWnd		 = pWnd;
 
 		m_mapCreatedWnds.insert(make_pair(strHinst, oneItem));
@@ -244,7 +269,7 @@ void CWndManager::RefreshChildGroup()
 		{
 			stCreateWndItem& oneParent = itFind->second;
 			strParentClassname = oneParent.strClassName;
-			nDllIndex = CXmlDataProc::Instance()->GetDllIndex(oneParent.strOwnerProj);
+			nDllIndex = CXmlDataProc::Instance()->GetDllIndex(oneParent.strDllname);
 			CString strNode;
 			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\GroupCount"), nDllIndex);
 			AppXml()->SetAttributeInt(strNode, nGroupCount);

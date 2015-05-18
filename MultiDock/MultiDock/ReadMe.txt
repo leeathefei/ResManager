@@ -110,3 +110,4 @@ task
 workspace的思路：
 先完成dll加载和view的布局，记录每个view的rect,剩下的就开始读取xml cache的数据，并动态创建剩下的child 子窗口 + dock panes。
 
+xml中的每个窗口要带上name，下次启动的时候需要带上，并且通过名称+类名来定位父子窗口之间的关联。但如有多个类名一样，实例名也一样改咋整？！
