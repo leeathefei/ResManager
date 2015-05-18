@@ -222,9 +222,9 @@
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
 					<left>3</left>
-					<right>438</right>
-					<top>67</top>
-					<bottom>706</bottom>
+					<right>1492</right>
+					<top>92</top>
+					<bottom>988</bottom>
 				</Tab_0>
 			</Group0>
 			<Group1>
@@ -232,10 +232,10 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>446</left>
-					<right>1363</right>
-					<top>67</top>
-					<bottom>706</bottom>
+					<left>1500</left>
+					<right>1677</right>
+					<top>92</top>
+					<bottom>988</bottom>
 				</Tab_0>
 			</Group1>
 		</TabbedView>

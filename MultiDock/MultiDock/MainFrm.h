@@ -70,6 +70,7 @@ public:
 	void RecalcLayoutEx();
 	void CreateDockpanesAndChilds();
 
+	map<UINT, CRect> m_mapGroupTabRects;
 	vector<CRect> m_vecRects;
 
 	////for different createing window page wndcofigdlg.h

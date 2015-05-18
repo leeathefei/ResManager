@@ -1116,7 +1116,8 @@ BOOL CMainFrame::StartupAsWorkspace()
 							strNode.Format(_T("Workspace\\TabbedView\\Group%d\\Tab_%d\\bottom"), nGroupIndex,nTabIndex);
 							rcView.bottom = AppXml()->GetAttributeInt(strNode, 0);
 
-							m_vecRects.push_back(rcView);
+							m_mapGroupTabRects.insert(make_pair(nGroupIndex, rcView));
+				
 							//m_pViewLastCreated->MoveWindow(&rcView);
 							//AdjustClientArea();
 
@@ -1298,18 +1299,12 @@ void CMainFrame::RecalcLayoutEx()
 		{
 			CMFCTabCtrl* pTabCtrl = vecTabCtrls.at(i);
 			CRect rect;
-			rect = m_vecRects[i];
-// 			pTabCtrl->GetClientRect(&rect);
-// 			if(pClientArea->IsVertAlign())
-// 			{
-// 				rect.right = rc.right/nGroupNum;
-// 			}
-// 			else
-// 			{
-// 				rect.bottom = rc.bottom/nGroupNum;
-// 			}
-
-			pTabCtrl->MoveWindow(&rect);
+			map<UINT, CRect>::iterator itFind = m_mapGroupTabRects.find(i);
+			if (itFind != m_mapGroupTabRects.end())
+			{
+				rect = itFind->second;
+				pTabCtrl->MoveWindow(&rect);
+			}
 		}
 	}
 
