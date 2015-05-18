@@ -12,9 +12,6 @@
     <Filter Include="Source Files\User Interface">
       <UniqueIdentifier>{28e203c9-bcac-4e1a-a3af-db3c2b79d227}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\configProcessor">
-      <UniqueIdentifier>{c822f3fb-0c4c-4148-ae30-e6cd35ced43d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -164,9 +161,6 @@
     <ClInclude Include="Workspace.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="WndConfigDlg.h">
-      <Filter>Source Files\configProcessor</Filter>
-    </ClInclude>
     <ClInclude Include="DlgCreateFloatPane.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -174,6 +168,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="DlgCreateDockPane.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WndConfigDlg.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -239,7 +236,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WndConfigDlg.cpp">
-      <Filter>Source Files\configProcessor</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -25,14 +25,21 @@ protected:
 	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
+	afx_msg void OnBnClickedCreatewndIndockpage();
+	afx_msg void OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult);
+
 	DECLARE_MESSAGE_MAP()
 public:
 	CButton m_dockDirection;
 	CString m_strClassname;
 	CString m_strDllname;
 	int m_nRadioDirection;
-	afx_msg void OnBnClickedCreatewndIndockpage();
+	
 	CListCtrl m_listParentsInDock;
 	CString m_strDockWndName;
 	CComboBox m_comboDockProj;
+
+	CWnd* m_pSelParentWnd;
+	int m_nParentIndex;
 };

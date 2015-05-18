@@ -27,13 +27,21 @@ protected:
 	virtual void OnObjectCreated();
 	virtual void OnWndClosed();
 
+	afx_msg void OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnBnClickedBtnCreateFloatpane();
+
+
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedBtnCreateFloatpane();
+	
 	CEdit m_editBeCreatedClassname;
 	CString m_strEditClassname;
 	CString m_strDllname;
 	CListCtrl m_listParentInFloat;
 	CString m_strFloatWndName;
 	CComboBox m_comboFloatProj;
+
+	CWnd* m_pSelParentWnd;
+	int m_nParentIndex;
 };

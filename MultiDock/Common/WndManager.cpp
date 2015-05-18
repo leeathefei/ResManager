@@ -365,43 +365,7 @@ void CWndManager::RefreshChildGroup()
 				break;
 			}
 		}
-
-		//for (int nGroupIndex = 0; nGroupIndex<nGroupCount; nGroupIndex++)
-		//{
-		//	UINT nDllIndex=0;
-		//	CString strParentClassname;
-
-		//	MapParent2ChildWnds::iterator itp = m_mapParent2Childs
-		//	//just set group count with dll index.
-		//	CWnd* pParentWnd = it->first;
-		//	CString strParent;
-		//	strParent.Format(_T("0x%08x"), pParentWnd);
-		//	MapCreatedWnd::iterator itFind = m_mapCreatedWnds.find(strParent);
-		//	if (itFind != m_mapCreatedWnds.end())
-		//	{
-		//		stCreateWndItem& oneParent = itFind->second;
-		//		strParentClassname = oneParent.strClassName;
-		//		nDllIndex = CXmlDataProc::Instance()->GetDllIndex(oneParent.strDllname);
-		//		CString strNode;
-		//		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\GroupCount"), nDllIndex);
-		//		UINT nCount = mapDll2GroupCount[oneParent.strDllname];
-		//		AppXml()->SetAttributeInt(strNode, nCount/*nGroupCount*/);
-		//	}
-
-		//	
-
-		//}
 	}
-
-	////int nGroupIndex=0;
-	//for(MapParent2ChildWnds::iterator it = m_mapParent2Childs.begin();
-	//	it != m_mapParent2Childs.end(); ++it)
-	//{
-	//
-	//	
-	//	nGroupIndex++;
-
-	//}
 }
 
 BOOL CWndManager::GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds)

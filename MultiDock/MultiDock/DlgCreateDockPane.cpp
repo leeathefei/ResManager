@@ -47,7 +47,8 @@ BOOL CDlgCreateDockPane::OnInitDialog()
 	dwStyle |= LVS_EX_GRIDLINES;    
 	m_listParentsInDock.SetExtendedStyle(dwStyle);
 	m_listParentsInDock.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 130);
-	m_listParentsInDock.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 180);
+	m_listParentsInDock.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 150);
+	m_listParentsInDock.InsertColumn(2, _T("所属工程"), LVCFMT_LEFT, 120);
 
 	vector<CString> vecDlls;
 	if(CXmlDataProc::Instance()->GetDllNames(vecDlls))
@@ -66,6 +67,8 @@ BOOL CDlgCreateDockPane::OnInitDialog()
 }
 BEGIN_MESSAGE_MAP(CDlgCreateDockPane, CDialogEx)
 	ON_BN_CLICKED(IDC_CREATEWND_INDOCKPAGE, &CDlgCreateDockPane::OnBnClickedCreatewndIndockpage)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_PARENTWNDINDOCKPANE, OnParentSelectChanged)
+	ON_NOTIFY(NM_CLICK, IDC_LIST_PARENTWNDINDOCKPANE, OnMouseClicked)
 END_MESSAGE_MAP()
 
 void CDlgCreateDockPane::UpdateClassName(CString&strDll, CString&strClass)
@@ -79,6 +82,12 @@ void CDlgCreateDockPane::UpdateClassName(CString&strDll, CString&strClass)
 void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 {
 	UpdateData(TRUE);
+
+	if (m_strClassname.IsEmpty())
+	{
+		AfxMessageBox(_T("请选择要创建对象的类名！"));
+		return;
+	}
 
 	CString strDll;
 	m_comboDockProj.GetWindowText(strDll);
@@ -119,11 +128,58 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 		}
 		else
 		{
-			CWndManager::Instance()->CreateDockWnd((CWnd*)pFrame, m_strClassname, eType, m_strDockWndName,strDll);
+			CWndManager::Instance()->CreateDockWnd((CWnd*)m_pSelParentWnd, m_strClassname, eType, m_strDockWndName,strDll);
 		}
 
 	}
 }
+
+
+void CDlgCreateDockPane::OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	int nSelectedItem = -1;
+	POSITION pos = m_listParentsInDock.GetFirstSelectedItemPosition();
+	if (NULL == pos)
+	{
+		return;
+	}
+	else
+	{
+		nSelectedItem = m_listParentsInDock.GetNextSelectedItem(pos);
+		if(nSelectedItem != -1)
+		{
+			m_nParentIndex = nSelectedItem;
+			m_pSelParentWnd = (CWnd*)m_listParentsInDock.GetItemData(nSelectedItem);
+		}
+	}
+
+	*pResult = 0;	
+}
+
+void CDlgCreateDockPane::OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	POSITION pos = m_listParentsInDock.GetFirstSelectedItemPosition();
+	DWORD dwErr = GetLastError();
+	if ( !pos )
+		return;
+
+	int nItem = m_listParentsInDock.GetNextSelectedItem(pos);
+
+	if (nItem != m_nParentIndex)
+	{
+		m_nParentIndex = nItem;
+
+		CString strClassname = m_listParentsInDock.GetItemText(nItem, 0);
+		CWnd* pWnd = (CWnd*)m_listParentsInDock.GetItemData(nItem);
+		m_pSelParentWnd = pWnd;
+
+		UpdateData(FALSE);
+	}
+
+	*pResult = 0;
+}
+
+
 void CDlgCreateDockPane::OnObjectCreated()
 {
 	RefreshCreatedWndTree();
@@ -147,6 +203,7 @@ void CDlgCreateDockPane::RefreshCreatedWndTree()
 			stCreateWndItem& oneItem = it->second;
 			m_listParentsInDock.InsertItem(index, oneItem.strClassName);
 			m_listParentsInDock.SetItemText(index, 1, oneItem.strHinstance);
+			m_listParentsInDock.SetItemText(index, 2, oneItem.strDllname);
 			m_listParentsInDock.SetItemData(index, (DWORD_PTR)oneItem.pWnd);
 
 			index++;

@@ -1335,45 +1335,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 	CWndManager::Instance()->RefreshChildGroup();
 
 
-	////check if it is view classname.
-	//if (!m_strClassnameInChild.IsEmpty() && CXmlDataProc::Instance()->IsFrameViewClass(m_strClassnameInChild))
-	//{
-	//	if (!CXmlDataProc::Instance()->IsFrameViewBelongToProj(strDll, m_strClassnameInChild))
-	//	{
-	//		CString str;
-	//		str.Format(_T("你选择的[%s]类是View类，不属于[%s]工程，请重新选择！"));
-	//		AfxMessageBox(str);
-	//		return;
-	//	}
 
-	//	if (CXmlDataProc::Instance()->IsFrameViewLoaded(m_strClassnameInChild))
-	//	{
-	//		CString str;
-	//		str.Format(_T("%s 是View类，实例已经创建!"));
-	//		AfxMessageBox(str);
-	//	}
-	//	else//load first 
-	//	{
-	//		pFrame->LoadDllByName(m_strDllname);
-	//	}
-	//}
-
-
-	////1.create child window.
-	//if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
-	//{
-	//	CWndManager::Instance()->CreateChildWnd(m_pSelParentWnd, 
-	//		m_strClassnameInChild, 
-	//		rcChild, 
-	//		m_strChildWndName,
-	//		strDll,
-	//		(bool)m_nRadioWithNoCaption);
-	//	m_pSelParentWnd->SendMessage(WM_SIZE);
-	//}
-	//else
-	//{
-	//	AfxMessageBox(_T("请先选择父窗口！"));
-	//}
 }
 
 BOOL CMainFrame::OpenModuleByName(CString strModuleName, bool onStartup /*=true*/)
@@ -1679,11 +1641,9 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	// Init Pane
 	pModulePane->InitPane(pDef);
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// Docking Pane
 	pModulePane->EnableDocking(CBRS_ALIGN_ANY/*pDef->nEnabledAlign*/);
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// Attach to existing Pane
@@ -1704,8 +1664,6 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 		DockPane((CBasePane*)pModulePane, nDockID);  
 		pModulePane->ShowPane(TRUE,FALSE,TRUE);
 	}
-	
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// Modify tab Style

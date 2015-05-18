@@ -47,8 +47,8 @@ BOOL CDlgCreateChildPane::OnInitDialog()
 	dwStyle |= LVS_EX_GRIDLINES;    
 	m_listPrentInCreateChild.SetExtendedStyle(dwStyle);
 	m_listPrentInCreateChild.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 130);
-	m_listPrentInCreateChild.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 180);
-	m_listPrentInCreateChild.InsertColumn(2, _T("所属工程"), LVCFMT_LEFT, 100);
+	m_listPrentInCreateChild.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 150);
+	m_listPrentInCreateChild.InsertColumn(2, _T("所属工程"), LVCFMT_LEFT, 120);
 
 	std::vector<CString> vecDlls;
 	if(CXmlDataProc::Instance()->GetDllNames(vecDlls))
