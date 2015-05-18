@@ -12,80 +12,18 @@
 			<Class_3>CDlgTest4InSV</Class_3>
 		</OtherPaneClass>
 		<bHasView>TRUE</bHasView>
-		<FLOAT_GROUP>
-			<WndCount>1</WndCount>
-			<Wnd_0>
-				<Name>CDlgTest1InSV</Name>
-				<SIZE>
-					<left>0</left>
-					<top>0</top>
-					<right>0</right>
-					<bottom>0</bottom>
-				</SIZE>
-			</Wnd_0>
-		</FLOAT_GROUP>
-		<DOCK_GROUP>
-			<LEFT>
-				<WndCount>1</WndCount>
-				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
-					<SIZE>
-						<left>0</left>
-						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
-					</SIZE>
-				</Wnd_0>
-			</LEFT>
-			<RIGHT>
-				<WndCount>1</WndCount>
-				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
-					<SIZE>
-						<left>0</left>
-						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
-					</SIZE>
-				</Wnd_0>
-			</RIGHT>
-			<TOP>
-				<WndCount>1</WndCount>
-				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
-					<SIZE>
-						<left>0</left>
-						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
-					</SIZE>
-				</Wnd_0>
-			</TOP>
-			<BOTTOM>
-				<WndCount>1</WndCount>
-				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
-					<SIZE>
-						<left>0</left>
-						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
-					</SIZE>
-				</Wnd_0>
-			</BOTTOM>
-		</DOCK_GROUP>
 		<CHILD_GROUP>
 			<GroupCount>1</GroupCount>
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSampleViewerView</ClassName>
-					<left>11</left>
-					<top>845</top>
-					<right>858</right>
-					<bottom>1452</bottom>
+					<left>3</left>
+					<top>92</top>
+					<right>1064</right>
+					<bottom>988</bottom>
 				</ParentWnd>
 				<ChildWnds>
-					<ChildCount>1</ChildCount>
+					<ChildCount>3</ChildCount>
 					<Child_0>
 						<ClassName>CDlgTest1InSV</ClassName>
 						<left>0</left>
@@ -94,9 +32,40 @@
 						<bottom>300</bottom>
 						<bHasChild>FALSE</bHasChild>
 					</Child_0>
+					<Child_1>
+						<ClassName>CDlgTest3InSV</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_1>
+					<Child_2>
+						<ClassName>CDlgTest4InSV</ClassName>
+						<left>600</left>
+						<top>0</top>
+						<right>900</right>
+						<bottom>300</bottom>
+					</Child_2>
 				</ChildWnds>
 			</Group_0>
 		</CHILD_GROUP>
+		<FLOAT_GROUP>
+			<WndCount>0</WndCount>
+		</FLOAT_GROUP>
+		<DOCK_GROUP>
+			<LEFT>
+				<WndCount>0</WndCount>
+			</LEFT>
+			<RIGHT>
+				<WndCount>0</WndCount>
+			</RIGHT>
+			<TOP>
+				<WndCount>0</WndCount>
+			</TOP>
+			<BOTTOM>
+				<WndCount>0</WndCount>
+			</BOTTOM>
+		</DOCK_GROUP>
 	</Dll_0>
 	<Dll_1>
 		<DllName>TestProj2.dll</DllName>
@@ -109,92 +78,60 @@
 			<Class_2>CSamplePanelDialog3</Class_2>
 			<Class_3>CSamplePanelDialog4</Class_3>
 		</OtherPaneClass>
-		<bHasView>TRUE</bHasView>
-		<FLOAT_GROUP>
-			<WndCount>1</WndCount>
-			<Wnd_0>
-				<Name>CSamplePanelDialog</Name>
-				<SIZE>
-					<left>0</left>
-					<top>0</top>
-					<right>0</right>
-					<bottom>0</bottom>
-				</SIZE>
-			</Wnd_0>
-		</FLOAT_GROUP>
-		<DOCK_GROUP>
-			<LEFT>
-				<WndCount>1</WndCount>
-				<Wnd_0>
-					<Name>CSamplePanelDialog2</Name>
-					<SIZE>
-						<left>0</left>
-						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
-					</SIZE>
-				</Wnd_0>
-			</LEFT>
-			<RIGHT>
-				<WndCount>1</WndCount>
-				<Wnd_0>
-					<Name>CSamplePanelDialog3</Name>
-					<SIZE>
-						<left>0</left>
-						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
-					</SIZE>
-				</Wnd_0>
-			</RIGHT>
-			<TOP>
-				<WndCount>1</WndCount>
-				<Wnd_0>
-					<Name>CSamplePanelDialog4</Name>
-					<SIZE>
-						<left>0</left>
-						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
-					</SIZE>
-				</Wnd_0>
-			</TOP>
-			<BOTTOM>
-				<WndCount>1</WndCount>
-				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
-					<SIZE>
-						<left>0</left>
-						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
-					</SIZE>
-				</Wnd_0>
-			</BOTTOM>
-		</DOCK_GROUP>
 		<CHILD_GROUP>
 			<GroupCount>1</GroupCount>
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSamplePanelView</ClassName>
-					<left>866</left>
-					<top>845</top>
-					<right>1249</right>
-					<bottom>1452</bottom>
+					<left>1072</left>
+					<top>92</top>
+					<right>1677</right>
+					<bottom>988</bottom>
 				</ParentWnd>
 				<ChildWnds>
-					<ChildCount>1</ChildCount>
+					<ChildCount>3</ChildCount>
 					<Child_0>
-						<ClassName>CDlgTest1InSV</ClassName>
+						<ClassName>CDlgTest2InSV</ClassName>
 						<left>0</left>
 						<top>0</top>
 						<right>300</right>
 						<bottom>300</bottom>
 						<bHasChild>FALSE</bHasChild>
 					</Child_0>
+					<Child_1>
+						<ClassName>CSamplePanelDialog2</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_1>
+					<Child_2>
+						<ClassName>CSamplePanelDialog3</ClassName>
+						<left>0</left>
+						<top>300</top>
+						<right>300</right>
+						<bottom>600</bottom>
+					</Child_2>
 				</ChildWnds>
 			</Group_0>
 		</CHILD_GROUP>
+		<FLOAT_GROUP>
+			<WndCount>0</WndCount>
+		</FLOAT_GROUP>
+		<DOCK_GROUP>
+			<LEFT>
+				<WndCount>0</WndCount>
+			</LEFT>
+			<RIGHT>
+				<WndCount>0</WndCount>
+			</RIGHT>
+			<TOP>
+				<WndCount>0</WndCount>
+			</TOP>
+			<BOTTOM>
+				<WndCount>0</WndCount>
+			</BOTTOM>
+		</DOCK_GROUP>
 	</Dll_1>
 	<Workspace>
 		<TabbedView>
@@ -205,10 +142,10 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>11</left>
-					<right>858</right>
-					<top>845</top>
-					<bottom>1452</bottom>
+					<left>3</left>
+					<right>1064</right>
+					<top>92</top>
+					<bottom>988</bottom>
 				</Tab_0>
 			</Group0>
 			<Group1>
@@ -216,10 +153,10 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>866</left>
-					<right>1249</right>
-					<top>845</top>
-					<bottom>1452</bottom>
+					<left>1072</left>
+					<right>1677</right>
+					<top>92</top>
+					<bottom>988</bottom>
 				</Tab_0>
 			</Group1>
 		</TabbedView>

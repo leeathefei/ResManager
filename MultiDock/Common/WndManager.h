@@ -91,14 +91,15 @@ public:
 	CWnd* CreateChildWndEx(CString strParentClass, CString strChildClass, CRect rcChild, 
 							CRect rcParent, CString strChildWndname, CString strDllname);
 
+
+	//xml process
+	void RefreshChildGroup();
+
 protected:
 	CWndManager();
 	void NotifyWndCreated(/*CWnd*& pWnd, CString& strClass*/);
 	void NotifyWndRemoved();
 	void AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString& strChildName, CString& strChildClass);
-
-	//xml process
-	void RefreshChildGroup();
 
 
 protected:

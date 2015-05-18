@@ -310,6 +310,8 @@ void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
 			strDll,
 			(bool)m_nRadioWithNoCaption);
 		m_pSelParentWnd->SendMessage(WM_SIZE);
+
+		CWndManager::Instance()->RefreshChildGroup();
 	}
 	else
 	{

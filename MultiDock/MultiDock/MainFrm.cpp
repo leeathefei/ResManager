@@ -1331,6 +1331,9 @@ void CMainFrame::CreateDockpanesAndChilds()
 		}
 	}
 
+	//udpate xml
+	CWndManager::Instance()->RefreshChildGroup();
+
 
 	////check if it is view classname.
 	//if (!m_strClassnameInChild.IsEmpty() && CXmlDataProc::Instance()->IsFrameViewClass(m_strClassnameInChild))

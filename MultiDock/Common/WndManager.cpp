@@ -171,7 +171,7 @@ void CWndManager::CreateChildWnd(CWnd* pParent, CString& strChildClass, CRect& r
 		AddChild(pParent, pChildWnd, rect, strWndName, strChildClass);
 
 		//Write to xml instancely.
-		RefreshChildGroup();
+		//RefreshChildGroup();
 	}
 }
 
@@ -248,90 +248,160 @@ void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString&
 
 void CWndManager::RefreshChildGroup()
 {
-	int nGroupCount = m_mapParent2Childs.size();
-
-	int nGroupIndex=0;
-	
-	BOOL bFirst = TRUE;
-	for(MapParent2ChildWnds::iterator it = m_mapParent2Childs.begin();
-		it != m_mapParent2Childs.end(); ++it)
+	map<CString, UINT> mapDll2GroupCount;
+	for (MapParent2ChildWnds::iterator itParent = m_mapParent2Childs.begin();
+		itParent != m_mapParent2Childs.end(); ++itParent)
 	{
-	
-		UINT nDllIndex=0;
-		CString strParentClassname;
-
-		//just set group count with dll index.
-		CWnd* pParentWnd = it->first;
+		CWnd* pParent = itParent->first;
 		CString strParent;
-		strParent.Format(_T("0x%08x"), pParentWnd);
-		MapCreatedWnd::iterator itFind = m_mapCreatedWnds.find(strParent);
-		if (itFind != m_mapCreatedWnds.end())
+		strParent.Format(_T("0x%08x"), pParent);
+		MapCreatedWnd::iterator it2 = m_mapCreatedWnds.find(strParent);
+		if (it2 != m_mapCreatedWnds.end())
 		{
-			stCreateWndItem& oneParent = itFind->second;
-			strParentClassname = oneParent.strClassName;
-			nDllIndex = CXmlDataProc::Instance()->GetDllIndex(oneParent.strDllname);
-			CString strNode;
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\GroupCount"), nDllIndex);
-			AppXml()->SetAttributeInt(strNode, nGroupCount);
-			bFirst = FALSE;
+			map<CString, UINT>::iterator it3 = mapDll2GroupCount.find(it2->second.strDllname);
+			if (it3 != mapDll2GroupCount.end())
+			{
+				UINT& nValue = it3->second;
+				nValue++;
+			}
+			else
+			{
+				mapDll2GroupCount.insert(make_pair(it2->second.strDllname, 1));
+			}
 		}
-		
-		//write parent name
-		CString strNode;
-		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\ClassName"), nDllIndex, nGroupIndex);
-		AppXml()->SetAttribute(strNode, strParentClassname);
-		
-		//write parent rect.
-		CRect rcParent;
-		pParentWnd->GetWindowRect(&rcParent);
-		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\left"), nDllIndex, nGroupIndex);
-		AppXml()->SetAttributeInt(strNode, rcParent.left);
-		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\top"), nDllIndex, nGroupIndex);
-		AppXml()->SetAttributeInt(strNode, rcParent.top);
-		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\right"), nDllIndex, nGroupIndex);
-		AppXml()->SetAttributeInt(strNode, rcParent.right);
-		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\bottom"), nDllIndex, nGroupIndex);
-		AppXml()->SetAttributeInt(strNode, rcParent.bottom);
-		//AppXml()->FlushData();
-
-
-		//write child info
-		ListChildWnd& allChilds = it->second;
-		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\ChildCount"), nDllIndex, nGroupIndex);
-		AppXml()->SetAttributeInt(strNode, allChilds.size());
-
-		int nChildIndex=0;
-		for (ListChildWnd::iterator itChild = allChilds.begin();
-			itChild != allChilds.end(); ++itChild)
-		{
-			stChildWnd& oneChild = *itChild;
-			
-			//set child classname.
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\ClassName"), nDllIndex, nGroupIndex, nChildIndex);
-			AppXml()->SetAttribute(strNode, oneChild.strChildClassname);
-
-			//child rect.
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\left"), nDllIndex, nGroupIndex, nChildIndex);
-			AppXml()->SetAttributeInt(strNode, oneChild.rcChild.left);
-			
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\top"), nDllIndex, nGroupIndex, nChildIndex);
-			AppXml()->SetAttributeInt(strNode, oneChild.rcChild.top);
-			
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\right"), nDllIndex, nGroupIndex, nChildIndex);
-			AppXml()->SetAttributeInt(strNode, oneChild.rcChild.right);
-			
-			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\bottom"), nDllIndex, nGroupIndex, nChildIndex);
-			AppXml()->SetAttributeInt(strNode, oneChild.rcChild.bottom);
-
-			nChildIndex++;
-		}
-
-		//write to file.
-		AppXml()->FlushData();
-
-		nGroupIndex++;
 
 	}
+	
+	//
+	MapParent2ChildWnds mapTempPert2Childs = m_mapParent2Childs;
+	for(map<CString, UINT>::iterator iterIdx = mapDll2GroupCount.begin(); iterIdx != mapDll2GroupCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nGroupCount = iterIdx->second;
+		int nGroupIndex = 0;
+		for (MapParent2ChildWnds::iterator iterP = mapTempPert2Childs.begin(); iterP != mapTempPert2Childs.end(); /*++iterP*/)
+		{
+			CWnd* pParent = iterP->first;
+			CString strParent;
+			strParent.Format(_T("0x%08x"), pParent);
+			MapCreatedWnd::iterator itFind = m_mapCreatedWnds.find(strParent);
+			if (itFind != m_mapCreatedWnds.end())
+			{
+				if (strDllname.CompareNoCase(itFind->second.strDllname) != 0)
+				{
+					++iterP;
+					continue;
+				}
+
+
+				stCreateWndItem& oneParent = itFind->second;
+				CString strParentClassname = oneParent.strClassName;
+				UINT nDllIndex = CXmlDataProc::Instance()->GetDllIndex(oneParent.strDllname);
+				CString strNode;
+				strNode.Format(_T("Dll_%d\\CHILD_GROUP\\GroupCount"), nDllIndex);
+				AppXml()->SetAttributeInt(strNode, nGroupCount);
+				AppXml()->FlushData();
+
+
+				//write parent name
+				strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\ClassName"), nDllIndex, nGroupIndex);
+				AppXml()->SetAttribute(strNode, strParentClassname);
+				AppXml()->FlushData();
+
+
+				//write parent rect.
+				CRect rcParent;
+				pParent->GetWindowRect(&rcParent);
+				strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\left"), nDllIndex, nGroupIndex);
+				AppXml()->SetAttributeInt(strNode, rcParent.left);
+				strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\top"), nDllIndex, nGroupIndex);
+				AppXml()->SetAttributeInt(strNode, rcParent.top);
+				strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\right"), nDllIndex, nGroupIndex);
+				AppXml()->SetAttributeInt(strNode, rcParent.right);
+				strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\bottom"), nDllIndex, nGroupIndex);
+				AppXml()->SetAttributeInt(strNode, rcParent.bottom);
+				AppXml()->FlushData();
+
+
+				//write child info
+				ListChildWnd& allChilds = iterP->second;
+				strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\ChildCount"), nDllIndex, nGroupIndex);
+				AppXml()->SetAttributeInt(strNode, allChilds.size());
+				AppXml()->FlushData();
+
+				int nChildIndex=0;
+				for (ListChildWnd::iterator itChild = allChilds.begin();
+					itChild != allChilds.end(); ++itChild)
+				{
+					stChildWnd& oneChild = *itChild;
+
+					//set child classname.
+					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\ClassName"), nDllIndex, nGroupIndex, nChildIndex);
+					AppXml()->SetAttribute(strNode, oneChild.strChildClassname);
+
+					//child rect.
+					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\left"), nDllIndex, nGroupIndex, nChildIndex);
+					AppXml()->SetAttributeInt(strNode, oneChild.rcChild.left);
+
+					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\top"), nDllIndex, nGroupIndex, nChildIndex);
+					AppXml()->SetAttributeInt(strNode, oneChild.rcChild.top);
+
+					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\right"), nDllIndex, nGroupIndex, nChildIndex);
+					AppXml()->SetAttributeInt(strNode, oneChild.rcChild.right);
+
+					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\bottom"), nDllIndex, nGroupIndex, nChildIndex);
+					AppXml()->SetAttributeInt(strNode, oneChild.rcChild.bottom);
+
+					AppXml()->FlushData();
+					nChildIndex++;
+				}
+				
+				iterP = mapTempPert2Childs.erase(iterP);
+			}
+
+			nGroupIndex++;
+			if (nGroupIndex>= nGroupCount)
+			{
+				break;
+			}
+		}
+
+		//for (int nGroupIndex = 0; nGroupIndex<nGroupCount; nGroupIndex++)
+		//{
+		//	UINT nDllIndex=0;
+		//	CString strParentClassname;
+
+		//	MapParent2ChildWnds::iterator itp = m_mapParent2Childs
+		//	//just set group count with dll index.
+		//	CWnd* pParentWnd = it->first;
+		//	CString strParent;
+		//	strParent.Format(_T("0x%08x"), pParentWnd);
+		//	MapCreatedWnd::iterator itFind = m_mapCreatedWnds.find(strParent);
+		//	if (itFind != m_mapCreatedWnds.end())
+		//	{
+		//		stCreateWndItem& oneParent = itFind->second;
+		//		strParentClassname = oneParent.strClassName;
+		//		nDllIndex = CXmlDataProc::Instance()->GetDllIndex(oneParent.strDllname);
+		//		CString strNode;
+		//		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\GroupCount"), nDllIndex);
+		//		UINT nCount = mapDll2GroupCount[oneParent.strDllname];
+		//		AppXml()->SetAttributeInt(strNode, nCount/*nGroupCount*/);
+		//	}
+
+		//	
+
+		//}
+	}
+
+	////int nGroupIndex=0;
+	//for(MapParent2ChildWnds::iterator it = m_mapParent2Childs.begin();
+	//	it != m_mapParent2Childs.end(); ++it)
+	//{
+	//
+	//	
+	//	nGroupIndex++;
+
+	//}
 }
 
 BOOL CWndManager::GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds)
