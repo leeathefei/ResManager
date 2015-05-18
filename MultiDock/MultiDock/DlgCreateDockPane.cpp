@@ -6,7 +6,7 @@
 #include "DlgCreateDockPane.h"
 #include "afxdialogex.h"
 #include "MainFrm.h"
-#include "XmlDataProc.h"
+#include "..\Common\XmlDataProc.h"
 
 
 // CDlgCreateDockPane dialog
@@ -34,6 +34,7 @@ void CDlgCreateDockPane::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_RADIO1, m_nRadioDirection);
 	DDX_Control(pDX, IDC_LIST_PARENTWNDINDOCKPANE, m_listParentsInDock);
 	DDX_Text(pDX, IDC_EDIT1, m_strDockWndName);
+	DDX_Control(pDX, IDC_COMBO_DOCK_OWNTO, m_comboDockProj);
 }
 
 BOOL CDlgCreateDockPane::OnInitDialog()
@@ -47,6 +48,16 @@ BOOL CDlgCreateDockPane::OnInitDialog()
 	m_listParentsInDock.SetExtendedStyle(dwStyle);
 	m_listParentsInDock.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 130);
 	m_listParentsInDock.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 180);
+
+	vector<CString> vecDlls;
+	if(CXmlDataProc::Instance()->GetDllNames(vecDlls))
+	{
+		for (int i=0; i<vecDlls.size(); i++)
+		{
+			m_comboDockProj.InsertString(i, vecDlls[i]);
+		}
+		m_comboDockProj.SetCurSel(0);
+	}
 
 	RefreshCreatedWndTree();
 
@@ -68,6 +79,9 @@ void CDlgCreateDockPane::UpdateClassName(CString&strDll, CString&strClass)
 void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 {
 	UpdateData(TRUE);
+
+	CString strDll;
+	m_comboDockProj.GetWindowText(strDll);
 
 	EPANE_ALIGNMENT eType;
 	switch(m_nRadioDirection)
@@ -105,7 +119,7 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 		}
 		else
 		{
-			CWndManager::Instance()->CreateDockWnd((CWnd*)pFrame, m_strClassname, eType, m_strDockWndName);
+			CWndManager::Instance()->CreateDockWnd((CWnd*)pFrame, m_strClassname, eType, m_strDockWndName,strDll);
 		}
 
 	}

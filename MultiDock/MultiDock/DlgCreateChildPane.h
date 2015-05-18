@@ -61,4 +61,5 @@ public:
 	CString m_strChildWndName;
 	int m_nRadioWithNoCaption;
 
+	CComboBox m_comboChildProj;
 };

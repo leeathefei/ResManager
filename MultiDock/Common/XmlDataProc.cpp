@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "XmlDataProc.h"
-#include "..\Common\FileHelper.h"
-#include "..\Common\XmlConfig.h"
+#include "FileHelper.h"
+#include "XmlConfig.h"
 
 CXmlDataProc* CXmlDataProc::m_pInstance = NULL;
 
@@ -97,6 +97,21 @@ BOOL CXmlDataProc::Initialize()
 	return TRUE;
 }
 
+UINT CXmlDataProc::GetDllIndex(CString& strDll)
+{
+	int nIndex=0;
+	for (MapDllname2Classes::iterator it = m_mapDll2Classnames.begin();
+		it != m_mapDll2Classnames.end(); ++it)
+	{
+		if (strDll.CompareNoCase(it->first) == 0)
+		{
+			break;
+		}
+		nIndex++;
+	}
+
+	return nIndex;
+}
 
 BOOL CXmlDataProc::GetDllNames(vector<CString>& vecDlls)
 {
@@ -420,6 +435,21 @@ void CXmlDataProc::AddFrameViewClassName(LPCTSTR strDll, LPCTSTR strFrame, LPCTS
 	oneItem.strViewClassName  = strView;
 
 	m_mapDll2FrameView.insert(make_pair(strDll, oneItem));
+}
+
+BOOL CXmlDataProc::IsFrameViewBelongToProj(CString& strDll, CString& strClassname)
+{
+	MapDllFrameView::iterator itFind = m_mapDll2FrameView.find(strDll);
+	if (itFind != m_mapDll2FrameView.end())
+	{
+		stDllFrameView& oneItem = itFind->second;
+		if (strClassname.CompareNoCase(oneItem.strViewClassName) == 0)
+		{
+			return TRUE;
+		}
+	}
+
+	return FALSE;
 }
 
 BOOL CXmlDataProc::IsFrameViewClass(CString& strClassName)

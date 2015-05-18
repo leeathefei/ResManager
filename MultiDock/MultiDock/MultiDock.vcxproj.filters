@@ -176,9 +176,6 @@
     <ClInclude Include="DlgCreateDockPane.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="XmlDataProc.h">
-      <Filter>Source Files\configProcessor</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -242,9 +239,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WndConfigDlg.cpp">
-      <Filter>Source Files\configProcessor</Filter>
-    </ClCompile>
-    <ClCompile Include="XmlDataProc.cpp">
       <Filter>Source Files\configProcessor</Filter>
     </ClCompile>
   </ItemGroup>

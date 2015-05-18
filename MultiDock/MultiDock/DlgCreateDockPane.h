@@ -34,4 +34,5 @@ public:
 	afx_msg void OnBnClickedCreatewndIndockpage();
 	CListCtrl m_listParentsInDock;
 	CString m_strDockWndName;
+	CComboBox m_comboDockProj;
 };

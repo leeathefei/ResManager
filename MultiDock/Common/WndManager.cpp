@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "WndManager.h"
 #include "XmlConfig.h"
+#include "XmlDataProc.h"
 
 CWndManager* CWndManager::m_pInstance = NULL;
 
@@ -46,7 +47,7 @@ void CWndManager::Register(CString lpszClassName, PFUNC_CREATEOBJ pFun)
 	m_mapClassName2Func.insert(map<CString, PFUNC_CREATEOBJ>::value_type(lpszClassName, pFun));
 }
 
-CWnd* CWndManager::CreateObj(CString strClass, CString& strWndName) 
+CWnd* CWndManager::CreateObj(CString strClass, CString& strWndName, CString&strDll) 
 {
 	CWnd* pWnd = NULL;
 
@@ -62,7 +63,7 @@ CWnd* CWndManager::CreateObj(CString strClass, CString& strWndName)
 
 	if (NULL != pWnd)
 	{
-		AddCreatedWnd(pWnd,strClass, strWndName);
+		AddCreatedWnd(pWnd,strClass, strWndName,strDll);
 	}
 
 	return pWnd;
@@ -99,10 +100,10 @@ UINT CWndManager::GetNextViewIndex()
 	return m_nViewIndex++;
 }
 
-void CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName)
+void CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName, CString&strDll)
 {
 	//create panes.
-	CWnd* pDlg = (CWnd*)CreateObj(strClass, strWndName);
+	CWnd* pDlg = (CWnd*)CreateObj(strClass, strWndName, strDll);
 	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
 	if (NULL != pBase)
 	{
@@ -111,9 +112,9 @@ void CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strW
 	}
 }
 
-void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName)
+void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName, CString&strDll)
 {
-	CWnd* pDlg = (CWnd*)CreateObj(strClass, strWndName);
+	CWnd* pDlg = (CWnd*)CreateObj(strClass, strWndName,strDll);
 	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
 	if (NULL != pBase)
 	{
@@ -122,9 +123,9 @@ void CWndManager::CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMEN
 	}
 }
 
-void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect,CString&strWndName,bool bWithTitle)
+void CWndManager::CreateChildWnd(CWnd* pParent, CString& strChildClass, CRect& rect,CString&strWndName,CString& strDll,bool bWithTitle)
 {
-	CWnd* pChildWnd = (CWnd*)CreateObj(strClass, strWndName);
+	CWnd* pChildWnd = (CWnd*)CreateObj(strChildClass, strWndName,strDll);
 	CBaseObj* pBase = dynamic_cast<CBaseObj*>(pChildWnd);
 	if (NULL != pBase)
 	{
@@ -142,11 +143,14 @@ void CWndManager::CreateChildWnd(CWnd* pParent, CString& strClass,CRect& rect,CS
 		pChildWnd->ShowWindow(SW_SHOW);
 		
 		//add child to its parent:for resize.
-		AddChild(pParent, pChildWnd, rect, strWndName);
+		AddChild(pParent, pChildWnd, rect, strWndName, strChildClass);
+
+		//Write to xml instancely.
+		RefreshChildGroup();
 	}
 }
 
-void CWndManager::AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndName)
+void CWndManager::AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndName, CString strDll)
 {
 	//cache
 	CString strHinst;
@@ -159,6 +163,7 @@ void CWndManager::AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndNam
 		stCreateWndItem oneItem;
 		oneItem.strClassName = strClass;
 		oneItem.strHinstance = strAlias/*strHinst*/;
+		oneItem.strOwnerProj = strDll;
 		oneItem.pWnd		 = pWnd;
 
 		m_mapCreatedWnds.insert(make_pair(strHinst, oneItem));
@@ -175,7 +180,7 @@ BOOL CWndManager::GetCreatedWnd(MapCreatedWnd& mapAllCreated)
 	return mapAllCreated.size() > 0;
 }
 
-void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString& strChildName)
+void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString& strChildName, CString& strChildClass)
 {
 	if (NULL != pChildWnd && pParent != NULL)
 	{
@@ -197,6 +202,7 @@ void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString&
 			oneItem.pChild = pChildWnd;
 			oneItem.rcChild = rect;
 			oneItem.strChildWndName = strChildName;
+			oneItem.strChildClassname = strChildClass;
 			listChilds.push_back(oneItem);
 		}
 		//add new parent wih its childs.
@@ -206,11 +212,100 @@ void CWndManager::AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString&
 			oneChild.pChild = pChildWnd;
 			oneChild.rcChild = rect;
 			oneChild.strChildWndName = strChildName;
+			oneChild.strChildClassname = strChildClass;
 			ListChildWnd listChilds;
 			listChilds.push_back(oneChild);
 
 			m_mapParent2Childs.insert(make_pair(pParent, listChilds));
 		}
+	}
+}
+
+void CWndManager::RefreshChildGroup()
+{
+	int nGroupCount = m_mapParent2Childs.size();
+
+	int nGroupIndex=0;
+	
+	BOOL bFirst = TRUE;
+	for(MapParent2ChildWnds::iterator it = m_mapParent2Childs.begin();
+		it != m_mapParent2Childs.end(); ++it)
+	{
+	
+		UINT nDllIndex=0;
+		CString strParentClassname;
+
+		//just set group count with dll index.
+		CWnd* pParentWnd = it->first;
+		CString strParent;
+		strParent.Format(_T("0x%08x"), pParentWnd);
+		MapCreatedWnd::iterator itFind = m_mapCreatedWnds.find(strParent);
+		if (itFind != m_mapCreatedWnds.end())
+		{
+			stCreateWndItem& oneParent = itFind->second;
+			strParentClassname = oneParent.strClassName;
+			nDllIndex = CXmlDataProc::Instance()->GetDllIndex(oneParent.strOwnerProj);
+			CString strNode;
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\GroupCount"), nDllIndex);
+			AppXml()->SetAttributeInt(strNode, nGroupCount);
+			bFirst = FALSE;
+		}
+		
+		//write parent name
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\ClassName"), nDllIndex, nGroupIndex);
+		AppXml()->SetAttribute(strNode, strParentClassname);
+		
+		//write parent rect.
+		CRect rcParent;
+		pParentWnd->GetWindowRect(&rcParent);
+		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\left"), nDllIndex, nGroupIndex);
+		AppXml()->SetAttributeInt(strNode, rcParent.left);
+		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\top"), nDllIndex, nGroupIndex);
+		AppXml()->SetAttributeInt(strNode, rcParent.top);
+		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\right"), nDllIndex, nGroupIndex);
+		AppXml()->SetAttributeInt(strNode, rcParent.right);
+		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ParentWnd\\bottom"), nDllIndex, nGroupIndex);
+		AppXml()->SetAttributeInt(strNode, rcParent.bottom);
+		//AppXml()->FlushData();
+
+
+		//write child info
+		ListChildWnd& allChilds = it->second;
+		strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\ChildCount"), nDllIndex, nGroupIndex);
+		AppXml()->SetAttributeInt(strNode, allChilds.size());
+
+		int nChildIndex=0;
+		for (ListChildWnd::iterator itChild = allChilds.begin();
+			itChild != allChilds.end(); ++itChild)
+		{
+			stChildWnd& oneChild = *itChild;
+			
+			//set child classname.
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\ClassName"), nDllIndex, nGroupIndex, nChildIndex);
+			AppXml()->SetAttribute(strNode, oneChild.strChildClassname);
+
+			//child rect.
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\left"), nDllIndex, nGroupIndex, nChildIndex);
+			AppXml()->SetAttributeInt(strNode, oneChild.rcChild.left);
+			
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\top"), nDllIndex, nGroupIndex, nChildIndex);
+			AppXml()->SetAttributeInt(strNode, oneChild.rcChild.top);
+			
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\right"), nDllIndex, nGroupIndex, nChildIndex);
+			AppXml()->SetAttributeInt(strNode, oneChild.rcChild.right);
+			
+			strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\bottom"), nDllIndex, nGroupIndex, nChildIndex);
+			AppXml()->SetAttributeInt(strNode, oneChild.rcChild.bottom);
+
+			nChildIndex++;
+		}
+
+		//write to file.
+		AppXml()->FlushData();
+
+		nGroupIndex++;
+
 	}
 }
 

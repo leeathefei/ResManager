@@ -7,6 +7,7 @@
 *********************************************************************/
 
 #pragma once
+#include "GeneralMacroDefine.h"
 #include <map>
 #include <list>
 #include <vector>
@@ -54,18 +55,19 @@ struct stChildWndObj
 	CRect rcParent;
 };
 
-class CXmlDataProc
+class COMMON_DLLEXPORT CXmlDataProc
 {
 public:
-
 	static CXmlDataProc* Instance();
 	static void DestroyInstance();
 	~CXmlDataProc();
 
 	BOOL Initialize();
 	BOOL GetDllNames(vector<CString>&);
+	UINT GetDllIndex(CString& strDll);
 	BOOL GetClassNames(CString& strDll, vector<CString>&);
 
+	BOOL IsFrameViewBelongToProj(CString& strDll, CString& strClassname);
 	BOOL IsFrameViewClass(CString& strClassName);
 	BOOL IsFrameViewLoaded(CString& strClassname);
 	BOOL SetFrameViewLoadFlag(CString& strClassname);
@@ -76,8 +78,6 @@ protected:
 	CXmlDataProc();
 	static CXmlDataProc* m_pInstance;
 
-
-protected:
 	void AddFrameViewClassName(LPCTSTR strDll, LPCTSTR strFrame, LPCTSTR strView);
 	//void AddClassName(CString& strDll, CString& strClassName, UINT nIndex);
 	BOOL IsDllAdded(CString& strDllName);
@@ -97,7 +97,4 @@ protected:
 	list<stFloatWnd> m_listFloatWnds;
 	list<stDockWnd>  m_listDockWnds;
 	list<stChildWndObj> m_listChildWnds;
-
-protected:
-
 };

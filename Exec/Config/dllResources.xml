@@ -75,31 +75,31 @@
 			</BOTTOM>
 		</DOCK_GROUP>
 		<CHILD_GROUP>
-			<GroupCount>1</GroupCount>
+			<GroupCount>2</GroupCount>
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSampleViewerView</ClassName>
-					<left>0</left>
-					<top>0</top>
-					<right>0</right>
-					<bottom>0</bottom>
+					<left>3</left>
+					<top>92</top>
+					<right>978</right>
+					<bottom>988</bottom>
 				</ParentWnd>
 				<ChildWnds>
 					<ChildCount>2</ChildCount>
 					<Child_0>
-						<ClassName>CDlgTest3InSV</ClassName>
+						<ClassName>CDlgTest1InSV</ClassName>
 						<left>0</left>
 						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
+						<right>300</right>
+						<bottom>300</bottom>
 						<bHasChild>FALSE</bHasChild>
 					</Child_0>
 					<Child_1>
-						<ClassName>CDlgTest4InSV</ClassName>
-						<left>0</left>
+						<ClassName>CDlgTest2InSV</ClassName>
+						<left>300</left>
 						<top>0</top>
-						<right>0</right>
-						<bottom>0</bottom>
+						<right>600</right>
+						<bottom>300</bottom>
 						<bHasChild>FALSE</bHasChild>
 					</Child_1>
 				</ChildWnds>
@@ -181,7 +181,7 @@
 			</BOTTOM>
 		</DOCK_GROUP>
 		<CHILD_GROUP>
-			<GroupCount>1</GroupCount>
+			<GroupCount>2</GroupCount>
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSamplePanelView</ClassName>
@@ -210,6 +210,32 @@
 					</Child_1>
 				</ChildWnds>
 			</Group_0>
+			<Group_1>
+				<ParentWnd>
+					<ClassName>CSamplePanelView</ClassName>
+					<left>986</left>
+					<top>92</top>
+					<right>1677</right>
+					<bottom>988</bottom>
+				</ParentWnd>
+				<ChildWnds>
+					<ChildCount>2</ChildCount>
+					<Child_0>
+						<ClassName>CSamplePanelDialog</ClassName>
+						<left>300</left>
+						<top>0</top>
+						<right>600</right>
+						<bottom>300</bottom>
+					</Child_0>
+					<Child_1>
+						<ClassName>CSamplePanelDialog4</ClassName>
+						<left>0</left>
+						<top>0</top>
+						<right>300</right>
+						<bottom>300</bottom>
+					</Child_1>
+				</ChildWnds>
+			</Group_1>
 		</CHILD_GROUP>
 	</Dll_1>
 	<Workspace>
@@ -221,10 +247,10 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>3</left>
-					<right>1492</right>
-					<top>92</top>
-					<bottom>988</bottom>
+					<left>36</left>
+					<right>793</right>
+					<top>125</top>
+					<bottom>732</bottom>
 				</Tab_0>
 			</Group0>
 			<Group1>
@@ -232,10 +258,10 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>1500</left>
-					<right>1677</right>
-					<top>92</top>
-					<bottom>988</bottom>
+					<left>801</left>
+					<right>1274</right>
+					<top>125</top>
+					<bottom>732</bottom>
 				</Tab_0>
 			</Group1>
 		</TabbedView>

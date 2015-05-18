@@ -35,4 +35,5 @@ public:
 	CString m_strDllname;
 	CListCtrl m_listParentInFloat;
 	CString m_strFloatWndName;
+	CComboBox m_comboFloatProj;
 };

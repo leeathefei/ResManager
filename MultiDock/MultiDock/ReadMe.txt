@@ -67,6 +67,8 @@ TIPS：如果修改了xml文件，重新加载发现crash。xml实例读取异常，说明是xml格式有问题
 
 TIPS:xml如果出现写入或者读取失败的时候，很大可能的原因是lock或者unlock的原因。解除这些函数的调用。基本上就ok了。
 TIPS:进程退出失败，不是xml锁的问题，注释掉所有的xml锁，依旧出现进程退出失败的问题。经排查是freeLibrary的时候挂住了。
+TIPS:xml配置文件中对于每个dll的模块，其内部的对话框资源的类名必须hard code预先写好，不然，不知道有哪些类。其他的信息(dockgroup/floatgroup/childgroup)这些都是在创建过程中及时生成的。
+	 并且在创建的过程中，必须要清楚改配置文件是写到那个dll_x模块的xml section，所以要指定dll名称。
 
 
 2015年5月9日15:39:52

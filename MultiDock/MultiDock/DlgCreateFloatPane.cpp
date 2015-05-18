@@ -6,7 +6,7 @@
 #include "DlgCreateFloatPane.h"
 #include "afxdialogex.h"
 #include "MainFrm.h"
-#include "XmlDataProc.h"
+#include "..\Common\XmlDataProc.h"
 
 // CDlgCreateFloatPane dialog
 
@@ -31,6 +31,7 @@ void CDlgCreateFloatPane::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT1, m_strEditClassname);
 	DDX_Control(pDX, IDC_LIST_PARENT_INFLOATPANE, m_listParentInFloat);
 	DDX_Text(pDX, IDC_EDIT_FLAOT_WND_NAME, m_strFloatWndName);
+	DDX_Control(pDX, IDC_COMBO_FLOAT_OWNTO, m_comboFloatProj);
 }
 
 BOOL CDlgCreateFloatPane::OnInitDialog()
@@ -44,6 +45,17 @@ BOOL CDlgCreateFloatPane::OnInitDialog()
 	m_listParentInFloat.SetExtendedStyle(dwStyle);
 	m_listParentInFloat.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 130);
 	m_listParentInFloat.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 180);
+
+	vector<CString> vecDlls;
+	if(CXmlDataProc::Instance()->GetDllNames(vecDlls))
+	{
+		for (int i=0; i<vecDlls.size(); i++)
+		{
+			m_comboFloatProj.InsertString(i, vecDlls[i]);
+		}
+		m_comboFloatProj.SetCurSel(0);
+	}
+	
 
 	RefreshCreatedWndTree();
 
@@ -64,6 +76,9 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 {
 	UpdateData(TRUE);
 
+	CString strdll;
+	m_comboFloatProj.GetWindowText(strdll);
+
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 	if (!m_strEditClassname.IsEmpty())
 	{
@@ -80,7 +95,7 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 		}
 		else
 		{
-			CWndManager::Instance()->CreateFloatWnd((CWnd*)pFrame, m_strEditClassname, m_strFloatWndName);
+			CWndManager::Instance()->CreateFloatWnd((CWnd*)pFrame, m_strEditClassname, m_strFloatWndName, strdll);
 		}
 	}
 	

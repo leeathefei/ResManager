@@ -110,7 +110,7 @@ int CSamplePanelView::OnCreate(LPCREATESTRUCT lpcs)
 	}
 
 	CString strName(_T("工程二View窗口"));
-	CWndManager::Instance()->AddCreatedWnd(this, _T("CSamplePanelView"), strName);
+	CWndManager::Instance()->AddCreatedWnd(this, _T("CSamplePanelView"), strName, _T("TestProj2.dll"));
 
 	return 0;
 }

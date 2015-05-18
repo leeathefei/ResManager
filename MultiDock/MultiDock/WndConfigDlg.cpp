@@ -8,7 +8,7 @@
 #include "DlgCreateFloatPane.h"
 #include "DlgCreateDockPane.h"
 #include "DlgCreateChildPane.h"
-#include "XmlDataProc.h"
+#include "..\Common\XmlDataProc.h"
 
 IMPLEMENT_DYNAMIC(CWndConfigDlg, CDialogEx)
 

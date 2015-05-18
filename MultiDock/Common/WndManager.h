@@ -35,6 +35,7 @@ struct stCreateWndItem
 {
 	CString strHinstance;	
 	CString strClassName;
+	CString strOwnerProj;
 	CWnd*   pWnd;
 	stCreateWndItem()
 	{
@@ -48,6 +49,7 @@ struct stChildWnd
 	CWnd* pChild;
 	CRect rcChild;
 	CString strChildWndName;
+	CString strChildClassname;
 	stChildWnd()
 	{
 		pChild = NULL;
@@ -68,17 +70,17 @@ public:
 public:
 	void AddEventHandler(IObjCreatedEvent* pEvent);
 	void Register(CString lpszClassName, PFUNC_CREATEOBJ pFun);
-	CWnd* CreateObj(CString lpszClassName, CString& strWndName);
+	CWnd* CreateObj(CString lpszClassName, CString& strWndName, CString&strDll);
 	UINT GetNextViewIndex();
 
 	//for different createing window page wndcofigdlg.h
 	//Create pane+dialogs.
-	void CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName);
-	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName);
-	void CreateChildWnd(CWnd* pParent, CString& strClass, CRect& rect, CString&strWndName, bool bWithTitle = false);
+	void CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName, CString&strDll);
+	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName, CString&strDll);
+	void CreateChildWnd(CWnd* pParent, CString& strChildClass, CRect& rect, CString&strWndName, CString& strDll,bool bWithTitle = false);
 	CWnd* UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, CString& strNewName);
 
-	void AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndName);
+	void AddCreatedWnd(CWnd* pWnd, CString strClass, CString& strWndName, CString strDll=_T(""));
 	BOOL GetCreatedWnd(MapCreatedWnd& mapAllCreated);
 	BOOL GetChildWnds(CWnd* pParent, ListChildWnd& mapChilds);
 
@@ -88,7 +90,11 @@ protected:
 	CWndManager();
 	void NotifyWndCreated(/*CWnd*& pWnd, CString& strClass*/);
 	void NotifyWndRemoved();
-	void AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString& strChildName);
+	void AddChild(CWnd* pParent, CWnd* pChildWnd, CRect& rect, CString& strChildName, CString& strChildClass);
+
+	//xml process
+	void RefreshChildGroup();
+
 
 protected:
 	UINT m_nViewIndex;	

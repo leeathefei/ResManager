@@ -5,6 +5,8 @@
 #include "MultiDock.h"
 #include "DlgCreateChildPane.h"
 #include "afxdialogex.h"
+#include "MainFrm.h"
+#include "..\Common\XmlDataProc.h"
 
 
 // CDlgCreateChildPane dialog
@@ -46,6 +48,17 @@ BOOL CDlgCreateChildPane::OnInitDialog()
 	m_listPrentInCreateChild.SetExtendedStyle(dwStyle);
 	m_listPrentInCreateChild.InsertColumn(0, _T("窗口类名"), LVCFMT_LEFT, 130);
 	m_listPrentInCreateChild.InsertColumn(1, _T("窗口类实例"), LVCFMT_LEFT, 180);
+	m_listPrentInCreateChild.InsertColumn(2, _T("所属工程"), LVCFMT_LEFT, 100);
+
+	std::vector<CString> vecDlls;
+	if(CXmlDataProc::Instance()->GetDllNames(vecDlls))
+	{
+		for (int i=0; i<vecDlls.size(); i++)
+		{
+			m_comboChildProj.InsertString(i, vecDlls[i]);
+		}
+		m_comboChildProj.SetCurSel(0);
+	}
 
 	RefreshCreatedWndTree();
 
@@ -84,6 +97,7 @@ void CDlgCreateChildPane::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_CHILDWIND_NAME, m_editChildWndName);
 	DDX_Text(pDX, IDC_EDIT_CHILDWIND_NAME, m_strChildWndName);
 	DDX_Radio(pDX, IDC_RADIO_WITH_NO_CAPTION, m_nRadioWithNoCaption);
+	DDX_Control(pDX, IDC_COMBO_CHILD_OWNTO, m_comboChildProj);
 }
 
 
@@ -130,6 +144,7 @@ void CDlgCreateChildPane::RefreshCreatedWndTree()
 			stCreateWndItem& oneItem = it->second;
 			m_listPrentInCreateChild.InsertItem(index, oneItem.strClassName);
 			m_listPrentInCreateChild.SetItemText(index, 1, oneItem.strHinstance);
+			m_listPrentInCreateChild.SetItemText(index, 2, oneItem.strOwnerProj);
 			m_listPrentInCreateChild.SetItemData(index, (DWORD_PTR)oneItem.pWnd);
 
 			index++;
@@ -236,11 +251,54 @@ void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
 {
 	UpdateData(TRUE);
 
+	if (m_strClassnameInChild.IsEmpty())
+	{
+		AfxMessageBox(_T("请选择要创建对象的类名！"));
+		return;
+	}
+
 	CRect rcChild;
 	rcChild.left = m_uChildLeft;
 	rcChild.right = m_uChildRight;
 	rcChild.top  = m_uChildTop;
 	rcChild.bottom = m_uChildBottom;
+
+	CString strDll;
+	m_comboChildProj.GetWindowText(strDll);
+
+	CString strProj = m_listPrentInCreateChild.GetItemText(m_nParentIndex, 2);
+	if (strProj.Compare(strDll) != 0)
+	{
+		AfxMessageBox(_T("你要创建的子窗口与父窗口不在同一模块，请重新选择！"));
+		return;
+	}
+
+
+	//check if it is view classname.
+	//其实下面的这个view的创建测试代码不需要了，因为在创建的时候，没有地方让选择view了，只列出dialog类。
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	if (!m_strClassnameInChild.IsEmpty() && CXmlDataProc::Instance()->IsFrameViewClass(m_strClassnameInChild))
+	{
+		if (!CXmlDataProc::Instance()->IsFrameViewBelongToProj(strDll, m_strClassnameInChild))
+		{
+			CString str;
+			str.Format(_T("你选择的[%s]类是View类，不属于[%s]工程，请重新选择！"));
+			AfxMessageBox(str);
+			return;
+		}
+
+		if (CXmlDataProc::Instance()->IsFrameViewLoaded(m_strClassnameInChild))
+		{
+			CString str;
+			str.Format(_T("%s 是View类，实例已经创建!"));
+			AfxMessageBox(str);
+		}
+		else//load first 
+		{
+			pFrame->LoadDllByName(m_strDllname);
+		}
+	}
+
 
 	//1.create child window.
 	if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
@@ -249,6 +307,7 @@ void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
 			m_strClassnameInChild, 
 			rcChild, 
 			m_strChildWndName,
+			strDll,
 			(bool)m_nRadioWithNoCaption);
 		m_pSelParentWnd->SendMessage(WM_SIZE);
 	}

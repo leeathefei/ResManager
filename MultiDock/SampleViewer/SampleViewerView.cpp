@@ -59,7 +59,7 @@ int CSampleViewerView::OnCreate(LPCREATESTRUCT lpcs)
 	}
 
 	CString strSampleViewName = _T("工程一View窗口");
-	CWndManager::Instance()->AddCreatedWnd(this, _T("CSampleViewerView"), strSampleViewName);
+	CWndManager::Instance()->AddCreatedWnd(this, _T("CSampleViewerView"), strSampleViewName, _T("TestProj1.dll"));
 
 	return 0;
 }
