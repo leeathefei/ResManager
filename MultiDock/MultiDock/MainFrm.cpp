@@ -1351,6 +1351,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 		if (m_FloatPaneMap.Lookup(strhist, pModulePane))
 		{
 			pModulePane->MoveWindow(oneFloat.rcWnd);
+			pModulePane->RecalcLayout();
 		}
 	}
 
@@ -1371,6 +1372,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 				if(m_LeftPaneMap.Lookup(strhist, pDockpane))
 				{
 					pDockpane->MoveWindow(oneDock.rcWnd);
+					pDockpane->RecalcLayout();
 				}
 			}
 			else if (oneDock.eDockType == ALIGN_RIGHT || oneDock.eDockType == ALIGN_RIGHT_GROUP)
@@ -1378,6 +1380,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 				if (m_RightPaneMap.Lookup(strhist, pDockpane))
 				{
 					pDockpane->MoveWindow(oneDock.rcWnd);
+					pDockpane->RecalcLayout();
 				}
 			}
 			else if (oneDock.eDockType == ALIGN_TOP || oneDock.eDockType == ALIGN_TOP_GROUP)
@@ -1385,6 +1388,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 				if (m_TopPaneMap.Lookup(strhist, pDockpane))
 				{
 					pDockpane->MoveWindow(oneDock.rcWnd);
+					pDockpane->RecalcLayout();
 				}
 			}
 			else if (oneDock.eDockType == ALIGN_BOTTON || oneDock.eDockType == ALIGN_BOTTOM_GROUP)
@@ -1392,11 +1396,11 @@ void CMainFrame::CreateDockpanesAndChilds()
 				if (m_BottomPaneMap.Lookup(strhist, pDockpane))
 				{
 					pDockpane->MoveWindow(oneDock.rcWnd);
+					pDockpane->RecalcLayout();
 				}
 			}
 		}
 	}
-
 }
 
 BOOL CMainFrame::OpenModuleByName(CString strModuleName, bool onStartup /*=true*/)

@@ -18,9 +18,9 @@
 				<ParentWnd>
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
-					<top>92</top>
-					<right>953</right>
-					<bottom>969</bottom>
+					<top>67</top>
+					<right>696</right>
+					<bottom>687</bottom>
 				</ParentWnd>
 				<ChildWnds>
 					<ChildCount>3</ChildCount>
@@ -54,28 +54,55 @@
 		</FLOAT_GROUP>
 		<DOCK_GROUP>
 			<LEFT>
-				<WndCount>2</WndCount>
+				<WndCount>3</WndCount>
 				<Wnd_0>
 					<Name>CDlgTest2InSV</Name>
 					<SIZE>
 						<left>1</left>
-						<right>273</right>
-						<top>137</top>
-						<bottom>990</bottom>
+						<right>165</right>
+						<top>135</top>
+						<bottom>708</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
 					<Name>CDlgTest1InSV</Name>
 					<SIZE>
 						<left>1</left>
-						<right>273</right>
-						<top>137</top>
-						<bottom>990</bottom>
+						<right>165</right>
+						<top>135</top>
+						<bottom>708</bottom>
 					</SIZE>
 				</Wnd_1>
+				<Wnd_2>
+					<Name>CSamplePanelDialog4</Name>
+					<SIZE>
+						<left>1</left>
+						<right>165</right>
+						<top>135</top>
+						<bottom>708</bottom>
+					</SIZE>
+				</Wnd_2>
 			</LEFT>
 			<RIGHT>
-				<WndCount>0</WndCount>
+				<WndCount>2</WndCount>
+				<Wnd_0>
+					<Name>CSamplePanelDialog4</Name>
+					<SIZE>
+						<left>1105</left>
+						<right>1365</right>
+						<top>112</top>
+						<bottom>708</bottom>
+					</SIZE>
+				</Wnd_0>
+				<Wnd_1>
+					<Name>CSamplePanelDialog4</Name>
+					<SIZE>
+						<left>1105</left>
+						<right>1365</right>
+						<top>112</top>
+						<bottom>708</bottom>
+					</SIZE>
+				</Wnd_1>
 			</RIGHT>
 			<TOP>
 				<WndCount>0</WndCount>
@@ -101,10 +128,10 @@
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSamplePanelView</ClassName>
-					<left>961</left>
-					<top>92</top>
-					<right>1677</right>
-					<bottom>969</bottom>
+					<left>704</left>
+					<top>67</top>
+					<right>1363</right>
+					<bottom>687</bottom>
 				</ParentWnd>
 				<ChildWnds>
 					<ChildCount>3</ChildCount>
@@ -134,7 +161,16 @@
 			</Group_0>
 		</CHILD_GROUP>
 		<FLOAT_GROUP>
-			<WndCount>0</WndCount>
+			<WndCount>1</WndCount>
+			<Wnd_0>
+				<Name>CSamplePanelDialog4</Name>
+				<SIZE>
+					<left>104</left>
+					<right>196</right>
+					<top>124</top>
+					<bottom>796</bottom>
+				</SIZE>
+			</Wnd_0>
 		</FLOAT_GROUP>
 		<DOCK_GROUP>
 			<LEFT>
@@ -160,10 +196,10 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>281</left>
-					<right>1092</right>
-					<top>92</top>
-					<bottom>969</bottom>
+					<left>173</left>
+					<right>650</right>
+					<top>67</top>
+					<bottom>687</bottom>
 				</Tab_0>
 			</Group0>
 			<Group1>
@@ -171,10 +207,10 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>1100</left>
-					<right>1677</right>
-					<top>92</top>
-					<bottom>969</bottom>
+					<left>658</left>
+					<right>1101</right>
+					<top>67</top>
+					<bottom>687</bottom>
 				</Tab_0>
 			</Group1>
 		</TabbedView>
