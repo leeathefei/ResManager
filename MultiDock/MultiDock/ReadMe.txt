@@ -107,8 +107,11 @@ task
 6.用户管理的逻辑实现。
 7.基于给予消息通信模块的实现。
 
-tips:创建pane之所以需要指定dll模块，是因为1：为了写入xml模块，2：为了指定模块的模板注册函数：CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, TRUE);
-tips:对于模块的注册函数的最后一个参数：m_bAutoDelete,目前都是设置为true，所以点击pane的关闭按钮都是隐藏的，如果需要关闭，就直接设置为false。
+TIPS:给pane设置标题的函数是：m_wndStatusBar.SetPaneText(0, _T("这是工程二的状态栏"));
+TIPS:创建pane之所以需要指定dll模块，是因为1：为了写入xml模块，2：为了指定模块的模板注册函数：CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, TRUE);
+TIPS:对于模块的注册函数的最后一个参数：m_bAutoDelete,目前都是设置为true，所以点击pane的关闭按钮都是隐藏的，如果需要关闭，就直接设置为false。
+
+
 workspace的思路：
 先完成dll加载和view的布局，记录每个view的rect,剩下的就开始读取xml cache的数据，并动态创建剩下的child 子窗口 + dock panes。
 
@@ -118,3 +121,4 @@ todo：CreateFlaot/Dock/ChildWnd这三个接口，对于从xml中动态创建的对象，没有window
 todo：xml中cache的只是四中方向，实际上，还有leftgroup，rightgroup，topgroup，bottomgroup这个四个字段没有写哦！~！在cachexml的函数中。对于stDockWnd.eDockType
 		默认填写都是group类型。。请查看是否需要更改：ProcessDockType{。。。}
 todo：autodelete配置在界面上，当用户选择创建dock+float的时候配置。
+todo：statusbar的加载。

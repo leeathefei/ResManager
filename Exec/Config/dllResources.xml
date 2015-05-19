@@ -19,8 +19,8 @@
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
 					<top>92</top>
-					<right>954</right>
-					<bottom>988</bottom>
+					<right>953</right>
+					<bottom>969</bottom>
 				</ParentWnd>
 				<ChildWnds>
 					<ChildCount>3</ChildCount>
@@ -56,19 +56,19 @@
 			<LEFT>
 				<WndCount>2</WndCount>
 				<Wnd_0>
-					<Name>CDlgTest1InSV</Name>
+					<Name>CDlgTest2InSV</Name>
 					<SIZE>
 						<left>1</left>
-						<right>277</right>
+						<right>273</right>
 						<top>137</top>
 						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
-					<Name>CDlgTest2InSV</Name>
+					<Name>CDlgTest1InSV</Name>
 					<SIZE>
 						<left>1</left>
-						<right>277</right>
+						<right>273</right>
 						<top>137</top>
 						<bottom>990</bottom>
 					</SIZE>
@@ -101,10 +101,10 @@
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSamplePanelView</ClassName>
-					<left>962</left>
+					<left>961</left>
 					<top>92</top>
 					<right>1677</right>
-					<bottom>988</bottom>
+					<bottom>969</bottom>
 				</ParentWnd>
 				<ChildWnds>
 					<ChildCount>3</ChildCount>
@@ -160,10 +160,10 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>9</left>
-					<right>957</right>
+					<left>281</left>
+					<right>1092</right>
 					<top>92</top>
-					<bottom>988</bottom>
+					<bottom>969</bottom>
 				</Tab_0>
 			</Group0>
 			<Group1>
@@ -171,10 +171,10 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>965</left>
+					<left>1100</left>
 					<right>1677</right>
 					<top>92</top>
-					<bottom>988</bottom>
+					<bottom>969</bottom>
 				</Tab_0>
 			</Group1>
 		</TabbedView>

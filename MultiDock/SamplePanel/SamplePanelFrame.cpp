@@ -23,6 +23,12 @@
 #define new DEBUG_NEW
 #endif
 
+
+static UINT indicators[] =
+{
+	ID_SEPARATOR       // status line indicator
+};
+
 // CSamplePanelFrame
 
 IMPLEMENT_DYNCREATE(CSamplePanelFrame, CMDIChildWndEx)
@@ -82,8 +88,17 @@ void CSamplePanelFrame::PostNcDestroy()
 
 int CSamplePanelFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
+	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 	if (CMDIChildWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
+
+	if (!m_wndStatusBar.Create(this))
+	{
+		return -1;
+	}
+	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
+
+	m_wndStatusBar.SetPaneText(0, _T("这是工程二的状态栏"));
 
 	return 0;
 }
