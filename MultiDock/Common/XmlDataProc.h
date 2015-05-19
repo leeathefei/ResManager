@@ -32,6 +32,7 @@ struct stFloatWnd
 {
 	CString strClass;
 	CString strDllname;
+	CString strWndName;
 	CRect rcWnd;
 };
 

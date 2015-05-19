@@ -1344,7 +1344,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 	for (list<stFloatWnd>::iterator itFloat = listFloatWnds.begin(); itFloat != listFloatWnds.end(); ++itFloat)
 	{
 		stFloatWnd& oneFloat = *itFloat;
-		CWnd* pFloat = CWndManager::Instance()->CreateFloatWnd((CWnd*)AfxGetMainWnd(), oneFloat.strClass, CString(_T("")), oneFloat.strDllname);
+		CWnd* pFloat = CWndManager::Instance()->CreateFloatWnd((CWnd*)AfxGetMainWnd(), oneFloat.strClass, oneFloat.strWndName, oneFloat.strDllname);
 		CModulePane* pModulePane = NULL;
 		CString strhist;
 		strhist.Format(_T("0x%08x"), pFloat);
@@ -2357,6 +2357,7 @@ void CMainFrame::RefreshFloatNodeXml()
 		strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\WndCount"), nDllIndex);
 		AppXml()->SetAttributeInt(strNode, nPaneCount);
 		AppXml()->FlushData();
+		
 
 		//写入所有的工程名是strDllname的，写入的都擦出掉
 		POSITION pos = tempPaneMap.GetStartPosition();
@@ -2385,6 +2386,12 @@ void CMainFrame::RefreshFloatNodeXml()
 					//write pane class name;
 					strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
 					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+					//Write pane name
+					CString strPanename;
+					pModulePane->GetPaneName(strPanename);
+					strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\WndName"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, strPanename);
 
 					//write pane rect
 					strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);

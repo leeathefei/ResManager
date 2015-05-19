@@ -190,6 +190,9 @@ void CXmlDataProc::ProcessFloatType(int nDllIndex, CString strDllname)
 			wstring wsClassname = AppXml()->GetAttributeText(strnode, _T(""));
 			if (!wsClassname.empty())
 			{
+				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\WndName"), nDllIndex, i);
+				wstring wsWndName = AppXml()->GetAttributeText(strnode, _T(""));
+
 				CRect rcWnd;
 				strnode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\left"), nDllIndex ,i);
 				rcWnd.left = AppXml()->GetAttributeInt(strnode, 0);
@@ -202,6 +205,7 @@ void CXmlDataProc::ProcessFloatType(int nDllIndex, CString strDllname)
 				
 				stFloatWnd oneItem;
 				oneItem.strClass = wsClassname.c_str();
+				oneItem.strWndName = wsWndName.c_str();
 				oneItem.rcWnd = rcWnd;
 				oneItem.strDllname = strDllname;
 

@@ -19,7 +19,7 @@
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
 					<top>67</top>
-					<right>696</right>
+					<right>689</right>
 					<bottom>687</bottom>
 				</ParentWnd>
 				<ChildWnds>
@@ -50,34 +50,65 @@
 			</Group_0>
 		</CHILD_GROUP>
 		<FLOAT_GROUP>
-			<WndCount>0</WndCount>
+			<WndCount>3</WndCount>
+			<Wnd_0>
+				<Name>CDlgTest1InSV</Name>
+				<WndName>中文名可以吗</WndName>
+				<SIZE>
+					<left>104</left>
+					<right>196</right>
+					<top>124</top>
+					<bottom>796</bottom>
+				</SIZE>
+				<WndName/>
+			</Wnd_0>
+			<Wnd_1>
+				<Name>CDlgTest4InSV</Name>
+				<WndName>5656565</WndName>
+				<SIZE>
+					<left>104</left>
+					<right>196</right>
+					<top>124</top>
+					<bottom>796</bottom>
+				</SIZE>
+			</Wnd_1>
+			<Wnd_2>
+				<Name>CDlgTest1InSV</Name>
+				<WndName>test</WndName>
+				<SIZE>
+					<left>104</left>
+					<right>196</right>
+					<top>124</top>
+					<bottom>796</bottom>
+				</SIZE>
+			</Wnd_2>
 		</FLOAT_GROUP>
 		<DOCK_GROUP>
 			<LEFT>
 				<WndCount>3</WndCount>
 				<Wnd_0>
-					<Name>CDlgTest2InSV</Name>
+					<Name>CDlgTest1InSV</Name>
 					<SIZE>
 						<left>1</left>
-						<right>165</right>
+						<right>151</right>
 						<top>135</top>
 						<bottom>708</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
-					<Name>CDlgTest1InSV</Name>
+					<Name>CSamplePanelDialog4</Name>
 					<SIZE>
 						<left>1</left>
-						<right>165</right>
+						<right>151</right>
 						<top>135</top>
 						<bottom>708</bottom>
 					</SIZE>
 				</Wnd_1>
 				<Wnd_2>
-					<Name>CSamplePanelDialog4</Name>
+					<Name>CDlgTest2InSV</Name>
 					<SIZE>
 						<left>1</left>
-						<right>165</right>
+						<right>151</right>
 						<top>135</top>
 						<bottom>708</bottom>
 					</SIZE>
@@ -88,7 +119,7 @@
 				<Wnd_0>
 					<Name>CSamplePanelDialog4</Name>
 					<SIZE>
-						<left>1105</left>
+						<left>1119</left>
 						<right>1365</right>
 						<top>112</top>
 						<bottom>708</bottom>
@@ -97,7 +128,7 @@
 				<Wnd_1>
 					<Name>CSamplePanelDialog4</Name>
 					<SIZE>
-						<left>1105</left>
+						<left>1119</left>
 						<right>1365</right>
 						<top>112</top>
 						<bottom>708</bottom>
@@ -128,7 +159,7 @@
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSamplePanelView</ClassName>
-					<left>704</left>
+					<left>697</left>
 					<top>67</top>
 					<right>1363</right>
 					<bottom>687</bottom>
@@ -161,16 +192,7 @@
 			</Group_0>
 		</CHILD_GROUP>
 		<FLOAT_GROUP>
-			<WndCount>1</WndCount>
-			<Wnd_0>
-				<Name>CSamplePanelDialog4</Name>
-				<SIZE>
-					<left>104</left>
-					<right>196</right>
-					<top>124</top>
-					<bottom>796</bottom>
-				</SIZE>
-			</Wnd_0>
+			<WndCount>0</WndCount>
 		</FLOAT_GROUP>
 		<DOCK_GROUP>
 			<LEFT>
@@ -196,8 +218,8 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>173</left>
-					<right>650</right>
+					<left>159</left>
+					<right>641</right>
 					<top>67</top>
 					<bottom>687</bottom>
 				</Tab_0>
@@ -207,8 +229,8 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>658</left>
-					<right>1101</right>
+					<left>649</left>
+					<right>1111</right>
 					<top>67</top>
 					<bottom>687</bottom>
 				</Tab_0>
