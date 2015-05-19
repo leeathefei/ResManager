@@ -117,8 +117,9 @@ workspace的思路：
 
 xml中的每个窗口要带上name，下次启动的时候需要带上，并且通过名称+类名来定位父子窗口之间的关联。但如有多个类名一样，实例名也一样改咋整？！
 
-todo-8：CreateFlaot/Dock/ChildWnd这三个接口，对于从xml中动态创建的对象，没有window name，还有，float，dock动态创建的时候父窗口默认是CMainFrame的。
+todo-8：CreateFlaot/Dock/ChildWnd这三个接口，对于从xml中动态创建的对象，没有window name，还有，float，dock动态创建的时候父窗口默认是CMainFrame的。===>done
 todo-9：xml中cache的只是四中方向，实际上，还有leftgroup，rightgroup，topgroup，bottomgroup这个四个字段没有写哦！~！在cachexml的函数中。对于stDockWnd.eDockType
 		默认填写都是group类型。。请查看是否需要更改：ProcessDockType{。。。}
 todo-10：autodelete配置在界面上，当用户选择创建dock+float的时候配置。==>done
 todo-11：statusbar的加载。==>done
+todo-12：退出时候，没有enumDockpane的信息(布局信息，大小信息等)，需要重新写入都xml，以便于下次启动时候加载。

@@ -28,7 +28,7 @@ CDlgCreateChildPane::CDlgCreateChildPane(CWnd* pParent /*=NULL*/)
 	, m_uChildBottom(0)
 	, m_pSelParentWnd(NULL)
 	, m_strChildWndName(_T(""))
-	, m_nRadioWithNoCaption(0)
+	, m_nRadioWithNoCaption(1)
 {
 	CWndManager::Instance()->AddEventHandler(this);
 }

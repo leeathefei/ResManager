@@ -19,7 +19,7 @@
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
 					<top>67</top>
-					<right>977</right>
+					<right>976</right>
 					<bottom>687</bottom>
 				</ParentWnd>
 				<ChildWnds>
@@ -61,21 +61,21 @@
 			<LEFT>
 				<WndCount>2</WndCount>
 				<Wnd_0>
-					<Name>CDlgTest2InSV</Name>
-					<WndName>左边组合二</WndName>
+					<Name>CDlgTest1InSV</Name>
+					<WndName>左边组合一</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>267</right>
+						<right>265</right>
 						<top>112</top>
 						<bottom>708</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
-					<Name>CDlgTest1InSV</Name>
-					<WndName>左边组合一</WndName>
+					<Name>CDlgTest2InSV</Name>
+					<WndName>左边组合二</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>267</right>
+						<right>265</right>
 						<top>112</top>
 						<bottom>708</bottom>
 					</SIZE>
@@ -117,9 +117,9 @@
 				<WndCount>2</WndCount>
 				<Wnd_0>
 					<Name>CSamplePanelDialog</Name>
-					<WndName>右边组合一</WndName>
+					<WndName>右边组合二</WndName>
 					<SIZE>
-						<left>1099</left>
+						<left>1101</left>
 						<right>1365</right>
 						<top>112</top>
 						<bottom>708</bottom>
@@ -127,9 +127,9 @@
 				</Wnd_0>
 				<Wnd_1>
 					<Name>CSamplePanelDialog</Name>
-					<WndName>右边组合二</WndName>
+					<WndName>右边组合一</WndName>
 					<SIZE>
-						<left>1099</left>
+						<left>1101</left>
 						<right>1365</right>
 						<top>112</top>
 						<bottom>708</bottom>
@@ -153,8 +153,8 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>216</left>
-					<right>997</right>
+					<left>269</left>
+					<right>1015</right>
 					<top>67</top>
 					<bottom>687</bottom>
 				</Tab_0>
@@ -164,8 +164,8 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>1005</left>
-					<right>1190</right>
+					<left>1023</left>
+					<right>1175</right>
 					<top>67</top>
 					<bottom>687</bottom>
 				</Tab_0>
