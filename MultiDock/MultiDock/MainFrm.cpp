@@ -1781,6 +1781,10 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	{
 		m_BottomPaneMap.SetAt(/*pDef->strWindowName*/strPane, pModulePane);
 	}
+	if (pDef->nEnabledAlign == ALIGN_FLOAT)
+	{
+		m_FloatPaneMap.SetAt(strPane, pModulePane);
+	}
 
 // 	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT||pDef->nEnabledAlign == ALIGN_VERTICAL )
 // 	{
@@ -1803,11 +1807,11 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 
 	RecalcLayout();
 
-	RefreshDockXmlNodes(Align);
+	RefreshPanesXmlNodes(Align);
 	return 0;
 }
 
-void CMainFrame::RefreshDockXmlNodes(EPANE_ALIGNMENT eAlign)
+void CMainFrame::RefreshPanesXmlNodes(EPANE_ALIGNMENT eAlign)
 {
 	switch(eAlign)
 	{
@@ -1834,6 +1838,11 @@ void CMainFrame::RefreshDockXmlNodes(EPANE_ALIGNMENT eAlign)
 	case ALIGN_BOTTOM_GROUP:
 		{
 			RefreshDockBottomNodeXml();
+		}
+		break;
+	case ALIGN_FLOAT:
+		{
+			RefreshFloatNodeXml();
 		}
 		break;
 	default:
@@ -2059,7 +2068,6 @@ void CMainFrame::RefreshDockRightNodeXml()
 					nWndIndex++;
 					if (nWndIndex >= nPaneCount)
 					{
-						//当前数据strDllname的pane已经写完了，写下一个dll name的xml文件。
 						break;
 					}
 				}
@@ -2103,7 +2111,7 @@ void CMainFrame::RefreshDockTopNodeXml()
 	}
 
 	//copy.
-	CModulePaneMap tempPaneMap;// = m_TopPaneMap;
+	CModulePaneMap tempPaneMap;
 	POSITION pos = m_TopPaneMap.GetStartPosition();
 	while(pos)
 	{
@@ -2172,7 +2180,6 @@ void CMainFrame::RefreshDockTopNodeXml()
 					nWndIndex++;
 					if (nWndIndex >= nPaneCount)
 					{
-						//当前数据strDllname的pane已经写完了，写下一个dll name的xml文件。
 						break;
 					}
 				}
@@ -2216,7 +2223,7 @@ void CMainFrame::RefreshDockBottomNodeXml()
 	}
 
 	//copy.
-	CModulePaneMap tempPaneMap;// = m_LeftPaneMap;
+	CModulePaneMap tempPaneMap;
 	POSITION pos = m_BottomPaneMap.GetStartPosition();
 	while(pos)
 	{
@@ -2285,7 +2292,119 @@ void CMainFrame::RefreshDockBottomNodeXml()
 					nWndIndex++;
 					if (nWndIndex >= nPaneCount)
 					{
-						//当前数据strDllname的pane已经写完了，写下一个dll name的xml文件。
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+void CMainFrame::RefreshFloatNodeXml()
+{
+	//[dllname,count]
+	map<CString, UINT> mapDll2PaneCount;
+	MapCreatedWnd mapCreatedWnds;
+	if(CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds))
+	{
+		POSITION pos = m_FloatPaneMap.GetStartPosition();
+		while (pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			m_FloatPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+				if (it2 != mapCreatedWnds.end())
+				{
+					map<CString, UINT>::iterator it3 = mapDll2PaneCount.find(it2->second.strDllname);
+					if (it3 != mapDll2PaneCount.end())
+					{
+						UINT& nValue = it3->second;
+						nValue++;
+					}
+					else
+					{
+						mapDll2PaneCount.insert(make_pair(it2->second.strDllname, 1));
+					}
+				}
+			}
+		}
+	}
+
+	//copy.
+	CModulePaneMap tempPaneMap;
+	POSITION pos = m_FloatPaneMap.GetStartPosition();
+	while(pos)
+	{
+		CString strname;
+		CModulePane* pPane = NULL;
+		m_FloatPaneMap.GetNextAssoc(pos, strname, pPane);
+		tempPaneMap.SetAt(strname, pPane);
+	}
+
+	for(map<CString, UINT>::iterator iterIdx = mapDll2PaneCount.begin(); 
+		iterIdx != mapDll2PaneCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nPaneCount = iterIdx->second;
+		int nDllIndex = CXmlDataProc::Instance()->GetDllIndex(strDllname);
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\WndCount"), nDllIndex);
+		AppXml()->SetAttributeInt(strNode, nPaneCount);
+		AppXml()->FlushData();
+
+		//写入所有的工程名是strDllname的，写入的都擦出掉
+		POSITION pos = tempPaneMap.GetStartPosition();
+		int nWndIndex=0;
+		while(pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			tempPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CRect rcPane;
+				pModulePane->GetWindowRect(&rcPane);
+
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator itFind = mapCreatedWnds.find(strPane);
+				if (itFind != mapCreatedWnds.end())
+				{
+					stCreateWndItem& oneCreated = itFind->second;
+					if (strDllname.CompareNoCase(oneCreated.strDllname) != 0)
+					{
+						continue;
+					}
+
+					//write pane class name;
+					strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+					//write pane rect
+					strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.left);
+
+					strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\right"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.right);
+
+					strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\top"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.top);
+
+					strNode.Format(_T("Dll_%d\\FLOAT_GROUP\\Wnd_%d\\SIZE\\bottom"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.bottom);
+
+					AppXml()->FlushData();
+
+
+					tempPaneMap.RemoveKey(strWndname);
+					nWndIndex++;
+					if (nWndIndex >= nPaneCount)
+					{
 						break;
 					}
 				}
@@ -2330,30 +2449,40 @@ LRESULT CMainFrame::OnUnregisterModulePane( WPARAM, LPARAM lp)
 BOOL CMainFrame::RemovePaneFromMap( CModulePane* pPane, BOOL& bVertical )
 {
 	ASSERT(pPane);
-	if( m_LeftPaneMap.Lookup(pPane->m_strWndName, pPane) )
+	CString strWnd;
+	strWnd.Format(_T("0x%08x"), pPane->m_pWnd);
+
+	if( m_LeftPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
 	{
-		m_LeftPaneMap.RemoveKey(pPane->m_strWndName);
+		m_LeftPaneMap.RemoveKey(strWnd);
 		bVertical = TRUE;
 		return TRUE;
 	}
-	if( m_RightPaneMap.Lookup(pPane->m_strWndName, pPane) )
+	if( m_RightPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
 	{
-		m_RightPaneMap.RemoveKey(pPane->m_strWndName);
+		m_RightPaneMap.RemoveKey(strWnd);
 		bVertical = TRUE;
 		return TRUE;
 	}
-	if( m_TopPaneMap.Lookup(pPane->m_strWndName, pPane) )
+	if( m_TopPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
 	{
-		m_TopPaneMap.RemoveKey(pPane->m_strWndName);
+		m_TopPaneMap.RemoveKey(strWnd);
 		bVertical = FALSE;
 		return TRUE;
 	}
-	if( m_BottomPaneMap.Lookup(pPane->m_strWndName, pPane) )
+	if( m_BottomPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
 	{
-		m_BottomPaneMap.RemoveKey(pPane->m_strWndName);
+		m_BottomPaneMap.RemoveKey(strWnd);
 		bVertical = FALSE;
 		return TRUE;
 	}
+	if (m_FloatPaneMap.Lookup(strWnd, pPane))
+	{
+		m_BottomPaneMap.RemoveKey(strWnd);
+		bVertical = FALSE;
+		return TRUE;
+	}
+
 
 	/*if( m_VertPaneMap.Lookup(pPane->m_strWndName, pPane) )
 	{

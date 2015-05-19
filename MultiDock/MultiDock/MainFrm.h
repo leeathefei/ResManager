@@ -212,11 +212,12 @@ protected:
 	BOOL CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, int nInitialWidth);
 	BOOL CreateFileView();
 	void SetDockingWindowIcons(BOOL bHiColorIcons);
-	void RefreshDockXmlNodes(EPANE_ALIGNMENT eAlign);
+	void RefreshPanesXmlNodes(EPANE_ALIGNMENT eAlign);
 	void RefreshDockLeftNodeXml();
 	void RefreshDockRightNodeXml();
 	void RefreshDockTopNodeXml();
 	void RefreshDockBottomNodeXml();
+	void RefreshFloatNodeXml();
 
 	DECLARE_MESSAGE_MAP()
 };
