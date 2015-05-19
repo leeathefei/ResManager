@@ -57,6 +57,7 @@ struct stChildWndObj
 	CString strChildClass;
 	CString strParentClass;
 	CString strDllname;
+	CString strWndName;
 	CRect rcChild;
 	CRect rcParent;
 };

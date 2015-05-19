@@ -404,6 +404,11 @@ void CXmlDataProc::ProcessChildType(int nDllIndex, CString strDllname)
 					wstring wsChildClass = AppXml()->GetAttributeText(strNode, _T(""));
 					if (!wsChildClass.empty())
 					{
+						//wnd name
+						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\WndName"), nDllIndex, i, j);
+						wstring wsWndName = AppXml()->GetAttributeText(strNode, _T(""));
+
+
 						CRect rcChild;
 						strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\left"), nDllIndex, i, j);
 						rcChild.left = AppXml()->GetAttributeInt(strNode, 0);
@@ -422,6 +427,7 @@ void CXmlDataProc::ProcessChildType(int nDllIndex, CString strDllname)
 							stChildWndObj oneChild;
 							oneChild.strParentClass = wsParentClassname.c_str();
 							oneChild.strChildClass  = wsChildClass.c_str();
+							oneChild.strWndName     = wsWndName.c_str();
 							oneChild.rcParent = rcParentWnd;
 							oneChild.rcChild  = rcChild;
 							oneChild.strDllname = strDllname;
@@ -433,6 +439,7 @@ void CXmlDataProc::ProcessChildType(int nDllIndex, CString strDllname)
 							stChildWndObj oneChild;
 							oneChild.strParentClass = wsParentClassname.c_str();
 							oneChild.strChildClass  = wsChildClass.c_str();
+							oneChild.strWndName     = wsWndName.c_str();
 							oneChild.rcParent = rcParentWnd;
 							oneChild.rcChild  = rcChild;
 							oneChild.strDllname = strDllname;

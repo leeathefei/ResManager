@@ -150,7 +150,7 @@ CWnd* CWndManager::CreateChildWndEx(CString strParentClass, CString strChildClas
 	//根据父窗口来创建子窗口。
 	if (pParent != NULL)
 	{
-		CreateChildWnd(pParent, strChildClass, rcChild, CString(_T("")), strDllname, true);
+		CreateChildWnd(pParent, strChildClass, rcChild, strChildWndname, strDllname, true);
 	}
 
 	return pParent;
@@ -346,6 +346,12 @@ void CWndManager::RefreshChildGroup()
 					//set child classname.
 					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\ClassName"), nDllIndex, nGroupIndex, nChildIndex);
 					AppXml()->SetAttribute(strNode, oneChild.strChildClassname);
+
+					//set child window name.
+					CString strWndName;
+					((CWnd*)(oneChild.pChild))->GetWindowText(strWndName);
+					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\WndName"), nDllIndex, nGroupIndex, nChildIndex);
+					AppXml()->SetAttribute(strNode, strWndName);
 
 					//child rect.
 					strNode.Format(_T("Dll_%d\\CHILD_GROUP\\Group_%d\\ChildWnds\\Child_%d\\left"), nDllIndex, nGroupIndex, nChildIndex);

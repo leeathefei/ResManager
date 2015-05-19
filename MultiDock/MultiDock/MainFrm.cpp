@@ -1327,7 +1327,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 		{
 			stChildWndObj& oneChild = *itChild;
 			CWnd* pParent = CWndManager::Instance()->CreateChildWndEx(oneChild.strParentClass, oneChild.strChildClass, 
-				oneChild.rcChild, oneChild.rcParent,_T(""), oneChild.strDllname);
+				oneChild.rcChild, oneChild.rcParent,oneChild.strWndName, oneChild.strDllname);
 
 			if (NULL != pParent && NULL != pParent->GetSafeHwnd())
 			{
