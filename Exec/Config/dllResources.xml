@@ -19,7 +19,7 @@
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
 					<top>92</top>
-					<right>955</right>
+					<right>954</right>
 					<bottom>988</bottom>
 				</ParentWnd>
 				<ChildWnds>
@@ -58,19 +58,19 @@
 				<Wnd_0>
 					<Name>CDlgTest2InSV</Name>
 					<SIZE>
-						<left>284</left>
-						<right>564</right>
-						<top>70</top>
-						<bottom>991</bottom>
+						<left>1</left>
+						<right>279</right>
+						<top>137</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
 					<Name>CDlgTest1InSV</Name>
 					<SIZE>
-						<left>0</left>
-						<right>280</right>
-						<top>70</top>
-						<bottom>991</bottom>
+						<left>1</left>
+						<right>279</right>
+						<top>137</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_1>
 			</LEFT>
@@ -101,7 +101,7 @@
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSamplePanelView</ClassName>
-					<left>963</left>
+					<left>962</left>
 					<top>92</top>
 					<right>1677</right>
 					<bottom>988</bottom>

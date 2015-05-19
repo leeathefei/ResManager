@@ -75,8 +75,8 @@ public:
 
 	//for different createing window page wndcofigdlg.h
 	//Create pane+dialogs.
-	void CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName, CString&strDll);
-	void CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName, CString&strDll);
+	CWnd* CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName, CString&strDll);
+	CWnd* CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName, CString&strDll);
 	void CreateChildWnd(CWnd* pParent, CString& strChildClass, CRect& rect, CString&strWndName, CString& strDll,bool bWithTitle = false);
 	CWnd* UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, CString& strNewName);
 

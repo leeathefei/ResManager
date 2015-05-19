@@ -111,3 +111,7 @@ workspace的思路：
 先完成dll加载和view的布局，记录每个view的rect,剩下的就开始读取xml cache的数据，并动态创建剩下的child 子窗口 + dock panes。
 
 xml中的每个窗口要带上name，下次启动的时候需要带上，并且通过名称+类名来定位父子窗口之间的关联。但如有多个类名一样，实例名也一样改咋整？！
+
+todo：CreateFlaot/Dock/ChildWnd这三个接口，对于从xml中动态创建的对象，没有window name，还有，float，dock动态创建的时候父窗口默认是CMainFrame的。
+todo：xml中cache的只是四中方向，实际上，还有leftgroup，rightgroup，topgroup，bottomgroup这个四个字段没有写哦！~！在cachexml的函数中。对于stDockWnd.eDockType
+		默认填写都是group类型。。请查看是否需要更改：ProcessDockType{。。。}

@@ -8,6 +8,7 @@
 
 #pragma once
 #include "GeneralMacroDefine.h"
+#include "ModuleDefs.h"
 #include <map>
 #include <list>
 #include <vector>
@@ -34,18 +35,18 @@ struct stFloatWnd
 	CRect rcWnd;
 };
 
-enum EDockType
-{
-	enmDockType_Left = 0,
-	enmDockType_Right = 1,
-	enmDockType_Top   = 2,
-	enmDockType_Bottom = 3,
-};
+// enum EDockType
+// {
+// 	enmDockType_Left = 0,
+// 	enmDockType_Right = 1,
+// 	enmDockType_Top   = 2,
+// 	enmDockType_Bottom = 3,
+// };
 struct stDockWnd
 {
 	CString strClass;
 	CString strDllname;
-	EDockType eDockType;
+	EPANE_ALIGNMENT eDockType;
 	CRect rcWnd;
 };
 

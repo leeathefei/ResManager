@@ -1196,65 +1196,6 @@ BOOL CMainFrame::StartupAsWorkspace()
 		}
 	}
 
-
-
-	//////////////////////////////////////////////////////////////////////////
-
-	//pXml->LockToRead();
-	//xml_node<TCHAR>* pNodeTabbedView = pXml->FindChild(_T("Workspace\\TabbedView"));
-	//if(pNodeTabbedView)
-	//{
-	//	//ParseNode<Alignment>
-	//	xml_node<TCHAR>* pNodeAlignment = pNodeTabbedView->first_node(_T("Alignment"));
-	//	int iGroupAlign = 0;
-	//	BOOL bVert = TRUE;
-	//	BOOL bNewMDITabbedGroup=FALSE;
-	//	if(pNodeAlignment)
-	//	{
-	//		iGroupAlign = _ttoi((LPCTSTR)pNodeAlignment->value());
-	//		bVert = (iGroupAlign==1);
-	//	}
-
-
-	//	//ParseNode<Group>
-	//	xml_node<TCHAR>* pGroupNode = pNodeTabbedView->first_node();
-	//	int nGroupIndex = 0;
-	//	int nTabIndex = 0;
-	//	while(pGroupNode)
-	//	{
-	//		CString strName = pGroupNode->name();
-	//		if(strName.Find(_T("Group"))>=0)
-	//		{
-	//			xml_node<TCHAR>* pTabNode = pGroupNode->first_node();
-	//			while(pTabNode)
-	//			{
-	//				CString strModule;
-	//				xml_attribute<TCHAR>* pAttr = pTabNode->first_attribute(_T("Name"));
-	//				if(pAttr) 
-	//				{
-	//					strModule = (LPCTSTR)pAttr->value();
-	//					if (!strModule.IsEmpty())
-	//					{
-	//						
-	//					}
-	//				}
-
-	//				pTabNode = pTabNode->next_sibling();
-	//				nTabIndex++;
-	//			}
-	//
-	//			bNewMDITabbedGroup = TRUE;
-	//			nGroupIndex++;
-	//		}
-
-	//		pGroupNode = pGroupNode->next_sibling();
-
-	//		
-	//	}
-	//}
-
-
-
 	//DockablePane
 	typedef xml_node<TCHAR> NodeT;
 	typedef NodeT* NodePtrT;
@@ -1398,7 +1339,63 @@ void CMainFrame::CreateDockpanesAndChilds()
 	//udpate xml
 	CWndManager::Instance()->RefreshChildGroup();
 
+	//create float panes.
+	list<stFloatWnd>& listFloatWnds = CXmlDataProc::Instance()->m_listFloatWnds;
+	for (list<stFloatWnd>::iterator itFloat = listFloatWnds.begin(); itFloat != listFloatWnds.end(); ++itFloat)
+	{
+		stFloatWnd& oneFloat = *itFloat;
+		CWnd* pFloat = CWndManager::Instance()->CreateFloatWnd((CWnd*)AfxGetMainWnd(), oneFloat.strClass, CString(_T("")), oneFloat.strDllname);
+		CModulePane* pModulePane = NULL;
+		CString strhist;
+		strhist.Format(_T("0x%08x"), pFloat);
+		if (m_FloatPaneMap.Lookup(strhist, pModulePane))
+		{
+			pModulePane->MoveWindow(oneFloat.rcWnd);
+		}
+	}
 
+	//create dock panes.
+	list<stDockWnd>& listDockWnds = CXmlDataProc::Instance()->m_listDockWnds;
+	for(list<stDockWnd>::iterator itDock = listDockWnds.begin(); itDock != listDockWnds.end(); ++itDock)
+	{
+		stDockWnd& oneDock = *itDock;
+		CWnd* pDockDlg = CWndManager::Instance()->CreateDockWnd((CWnd*)AfxGetMainWnd(), oneDock.strClass, 
+																oneDock.eDockType, CString(_T("")), oneDock.strDllname);
+		if (pDockDlg != NULL)
+		{
+			CModulePane* pDockpane = NULL;
+			CString strhist;
+			strhist.Format(_T("0x%08x"), pDockDlg);
+			if (oneDock.eDockType == ALIGN_LEFT ||oneDock.eDockType == ALIGN_LEFT_GROUP)
+			{
+				if(m_LeftPaneMap.Lookup(strhist, pDockpane))
+				{
+					pDockpane->MoveWindow(oneDock.rcWnd);
+				}
+			}
+			else if (oneDock.eDockType == ALIGN_RIGHT || oneDock.eDockType == ALIGN_RIGHT_GROUP)
+			{
+				if (m_RightPaneMap.Lookup(strhist, pDockpane))
+				{
+					pDockpane->MoveWindow(oneDock.rcWnd);
+				}
+			}
+			else if (oneDock.eDockType == ALIGN_TOP || oneDock.eDockType == ALIGN_TOP_GROUP)
+			{
+				if (m_TopPaneMap.Lookup(strhist, pDockpane))
+				{
+					pDockpane->MoveWindow(oneDock.rcWnd);
+				}
+			}
+			else if (oneDock.eDockType == ALIGN_BOTTON || oneDock.eDockType == ALIGN_BOTTOM_GROUP)
+			{
+				if (m_BottomPaneMap.Lookup(strhist, pDockpane))
+				{
+					pDockpane->MoveWindow(oneDock.rcWnd);
+				}
+			}
+		}
+	}
 
 }
 

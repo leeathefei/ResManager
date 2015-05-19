@@ -238,7 +238,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 		
 
 			stDockWnd oneDock;
-			oneDock.eDockType = enmDockType_Left;
+			oneDock.eDockType = ALIGN_LEFT_GROUP;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
 			oneDock.strDllname = strDllname;
@@ -269,7 +269,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 
 
 			stDockWnd oneDock;
-			oneDock.eDockType = enmDockType_Right;
+			oneDock.eDockType = ALIGN_RIGHT_GROUP;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
 			oneDock.strDllname = strDllname;
@@ -300,7 +300,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 
 
 			stDockWnd oneDock;
-			oneDock.eDockType = enmDockType_Top;
+			oneDock.eDockType = ALIGN_TOP_GROUP;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
 			oneDock.strDllname = strDllname;
@@ -331,7 +331,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 
 
 			stDockWnd oneDock;
-			oneDock.eDockType = enmDockType_Bottom;
+			oneDock.eDockType = ALIGN_BOTTOM_GROUP;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
 			oneDock.strDllname = strDllname;
