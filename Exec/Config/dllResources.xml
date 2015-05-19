@@ -19,7 +19,7 @@
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
 					<top>92</top>
-					<right>960</right>
+					<right>955</right>
 					<bottom>988</bottom>
 				</ParentWnd>
 				<ChildWnds>
@@ -54,7 +54,25 @@
 		</FLOAT_GROUP>
 		<DOCK_GROUP>
 			<LEFT>
-				<WndCount>0</WndCount>
+				<WndCount>2</WndCount>
+				<Wnd_0>
+					<Name>CDlgTest2InSV</Name>
+					<SIZE>
+						<left>284</left>
+						<right>564</right>
+						<top>70</top>
+						<bottom>991</bottom>
+					</SIZE>
+				</Wnd_0>
+				<Wnd_1>
+					<Name>CDlgTest1InSV</Name>
+					<SIZE>
+						<left>0</left>
+						<right>280</right>
+						<top>70</top>
+						<bottom>991</bottom>
+					</SIZE>
+				</Wnd_1>
 			</LEFT>
 			<RIGHT>
 				<WndCount>0</WndCount>
@@ -83,7 +101,7 @@
 			<Group_0>
 				<ParentWnd>
 					<ClassName>CSamplePanelView</ClassName>
-					<left>968</left>
+					<left>963</left>
 					<top>92</top>
 					<right>1677</right>
 					<bottom>988</bottom>
@@ -142,8 +160,8 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>3</left>
-					<right>960</right>
+					<left>571</left>
+					<right>1239</right>
 					<top>92</top>
 					<bottom>988</bottom>
 				</Tab_0>
@@ -153,7 +171,7 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>968</left>
+					<left>1247</left>
 					<right>1677</right>
 					<top>92</top>
 					<bottom>988</bottom>

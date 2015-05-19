@@ -699,7 +699,6 @@ void CMainFrame::OnApplicationLook(UINT id)
 // 	}
 
 	POSITION pos = m_LeftPaneMap.GetStartPosition();
-	pos = m_LeftPaneMap.GetStartPosition();
 	if( pModulePane==NULL && pos )
 	{
 		m_LeftPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
@@ -1761,24 +1760,26 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 
 	//////////////////////////////////////////////////////////////////////////
 	//AddToMap
+	CString strPane;
+	strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
 	if (pDef->nEnabledAlign == ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_LEFT_GROUP)
 	{
-		m_LeftPaneMap.SetAt(pDef->strWindowName, pModulePane);
+		m_LeftPaneMap.SetAt(/*pDef->strWindowName*/strPane, pModulePane);
 	}
 
 	if (pDef->nEnabledAlign == ALIGN_RIGHT || pDef->nEnabledAlign == ALIGN_RIGHT_GROUP)
 	{
-		m_RightPaneMap.SetAt(pDef->strWindowName, pModulePane);
+		m_RightPaneMap.SetAt(/*pDef->strWindowName*/strPane, pModulePane);
 	}
 
 	if (pDef->nEnabledAlign == ALIGN_TOP || pDef->nEnabledAlign == ALIGN_TOP_GROUP)
 	{
-		m_TopPaneMap.SetAt(pDef->strWindowName, pModulePane);
+		m_TopPaneMap.SetAt(/*pDef->strWindowName*/strPane, pModulePane);
 	}
 
 	if (pDef->nEnabledAlign == ALIGN_BOTTON || pDef->nEnabledAlign == ALIGN_BOTTOM_GROUP)
 	{
-		m_BottomPaneMap.SetAt(pDef->strWindowName, pModulePane);
+		m_BottomPaneMap.SetAt(/*pDef->strWindowName*/strPane, pModulePane);
 	}
 
 // 	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT||pDef->nEnabledAlign == ALIGN_VERTICAL )
@@ -1794,9 +1795,503 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	{
 		pModulePane->FloatPane(CRect(100,100,200,800));
 	}
+// 	else
+// 	{
+// 		CRect rc(400,0,600,800);//移动dock的窗口，貌似，只关心width + Height
+// 		pModulePane->MoveWindow(rc);
+// 	}
 
 	RecalcLayout();
+
+	RefreshDockXmlNodes(Align);
 	return 0;
+}
+
+void CMainFrame::RefreshDockXmlNodes(EPANE_ALIGNMENT eAlign)
+{
+	switch(eAlign)
+	{
+	case ALIGN_LEFT:
+	case ALIGN_LEFT_GROUP:
+		{
+			RefreshDockLeftNodeXml();
+		}
+		break;
+
+	case ALIGN_RIGHT:
+	case ALIGN_RIGHT_GROUP:
+		{
+			RefreshDockRightNodeXml();
+		}
+		break;
+	case ALIGN_TOP:
+	case ALIGN_TOP_GROUP:
+		{
+			RefreshDockTopNodeXml();
+		}
+		break;
+	case ALIGN_BOTTON:
+	case ALIGN_BOTTOM_GROUP:
+		{
+			RefreshDockBottomNodeXml();
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void CMainFrame::RefreshDockLeftNodeXml()
+{
+	//[dllname,count]
+	map<CString, UINT> mapDll2PaneCount;
+	MapCreatedWnd mapCreatedWnds;
+	if(CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds))
+	{
+		POSITION pos = m_LeftPaneMap.GetStartPosition();
+		while (pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			m_LeftPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+				if (it2 != mapCreatedWnds.end())
+				{
+					map<CString, UINT>::iterator it3 = mapDll2PaneCount.find(it2->second.strDllname);
+					if (it3 != mapDll2PaneCount.end())
+					{
+						UINT& nValue = it3->second;
+						nValue++;
+					}
+					else
+					{
+						mapDll2PaneCount.insert(make_pair(it2->second.strDllname, 1));
+					}
+				}
+			}
+		}
+	}
+
+	//copy.
+	CModulePaneMap tempPaneMap;// = m_LeftPaneMap;
+	POSITION pos = m_LeftPaneMap.GetStartPosition();
+	while(pos)
+	{
+		CString strname;
+		CModulePane* pPane = NULL;
+		m_LeftPaneMap.GetNextAssoc(pos, strname, pPane);
+		tempPaneMap.SetAt(strname, pPane);
+	}
+
+	for(map<CString, UINT>::iterator iterIdx = mapDll2PaneCount.begin(); 
+		iterIdx != mapDll2PaneCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nPaneCount = iterIdx->second;
+		int nDllIndex = CXmlDataProc::Instance()->GetDllIndex(strDllname);
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\WndCount"), nDllIndex);
+		AppXml()->SetAttributeInt(strNode, nPaneCount);
+		AppXml()->FlushData();
+
+		//写入所有的工程名是strDllname的，写入的都擦出掉
+		POSITION pos = tempPaneMap.GetStartPosition();
+		int nWndIndex=0;
+		while(pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			tempPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CRect rcPane;
+				pModulePane->GetWindowRect(&rcPane);
+
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator itFind = mapCreatedWnds.find(strPane);
+				if (itFind != mapCreatedWnds.end())
+				{
+					stCreateWndItem& oneCreated = itFind->second;
+					if (strDllname.CompareNoCase(oneCreated.strDllname) != 0)
+					{
+						continue;
+					}
+
+					//write pane class name;
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+					//write pane rect
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.left);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\SIZE\\right"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.right);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\SIZE\\top"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.top);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\SIZE\\bottom"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.bottom);
+
+					AppXml()->FlushData();
+
+
+					tempPaneMap.RemoveKey(strWndname);
+					nWndIndex++;
+					if (nWndIndex >= nPaneCount)
+					{
+						//当前数据strDllname的pane已经写完了，写下一个dll name的xml文件。
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+void CMainFrame::RefreshDockRightNodeXml()
+{
+	//[dllname,count]
+	map<CString, UINT> mapDll2PaneCount;
+	MapCreatedWnd mapCreatedWnds;
+	if(CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds))
+	{
+		POSITION pos = m_RightPaneMap.GetStartPosition();
+		while (pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			m_RightPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+				if (it2 != mapCreatedWnds.end())
+				{
+					map<CString, UINT>::iterator it3 = mapDll2PaneCount.find(it2->second.strDllname);
+					if (it3 != mapDll2PaneCount.end())
+					{
+						UINT& nValue = it3->second;
+						nValue++;
+					}
+					else
+					{
+						mapDll2PaneCount.insert(make_pair(it2->second.strDllname, 1));
+					}
+				}
+			}
+		}
+	}
+
+	//copy.
+	CModulePaneMap tempPaneMap;
+	POSITION pos = m_RightPaneMap.GetStartPosition();
+	while(pos)
+	{
+		CString strname;
+		CModulePane* pPane = NULL;
+		m_RightPaneMap.GetNextAssoc(pos, strname, pPane);
+		tempPaneMap.SetAt(strname, pPane);
+	}
+
+	for(map<CString, UINT>::iterator iterIdx = mapDll2PaneCount.begin(); 
+		iterIdx != mapDll2PaneCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nPaneCount = iterIdx->second;
+		int nDllIndex = CXmlDataProc::Instance()->GetDllIndex(strDllname);
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\WndCount"), nDllIndex);
+		AppXml()->SetAttributeInt(strNode, nPaneCount);
+		AppXml()->FlushData();
+
+		//写入所有的工程名是strDllname的，写入的都擦出掉
+		POSITION pos = tempPaneMap.GetStartPosition();
+		int nWndIndex=0;
+		while(pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			tempPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CRect rcPane;
+				pModulePane->GetWindowRect(&rcPane);
+
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator itFind = mapCreatedWnds.find(strPane);
+				if (itFind != mapCreatedWnds.end())
+				{
+					stCreateWndItem& oneCreated = itFind->second;
+					if (strDllname.CompareNoCase(oneCreated.strDllname) != 0)
+					{
+						continue;
+					}
+
+					//write pane class name;
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+					//write pane rect
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.left);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\SIZE\\right"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.right);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\SIZE\\top"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.top);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\SIZE\\bottom"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.bottom);
+
+					AppXml()->FlushData();
+
+
+					tempPaneMap.RemoveKey(strWndname);
+					nWndIndex++;
+					if (nWndIndex >= nPaneCount)
+					{
+						//当前数据strDllname的pane已经写完了，写下一个dll name的xml文件。
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+void CMainFrame::RefreshDockTopNodeXml()
+{
+	//[dllname,count]
+	map<CString, UINT> mapDll2PaneCount;
+	MapCreatedWnd mapCreatedWnds;
+	if(CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds))
+	{
+		POSITION pos = m_TopPaneMap.GetStartPosition();
+		while (pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			m_TopPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+				if (it2 != mapCreatedWnds.end())
+				{
+					map<CString, UINT>::iterator it3 = mapDll2PaneCount.find(it2->second.strDllname);
+					if (it3 != mapDll2PaneCount.end())
+					{
+						UINT& nValue = it3->second;
+						nValue++;
+					}
+					else
+					{
+						mapDll2PaneCount.insert(make_pair(it2->second.strDllname, 1));
+					}
+				}
+			}
+		}
+	}
+
+	//copy.
+	CModulePaneMap tempPaneMap;// = m_TopPaneMap;
+	POSITION pos = m_TopPaneMap.GetStartPosition();
+	while(pos)
+	{
+		CString strname;
+		CModulePane* pPane = NULL;
+		m_TopPaneMap.GetNextAssoc(pos, strname, pPane);
+		tempPaneMap.SetAt(strname, pPane);
+	}
+
+	for(map<CString, UINT>::iterator iterIdx = mapDll2PaneCount.begin(); 
+		iterIdx != mapDll2PaneCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nPaneCount = iterIdx->second;
+		int nDllIndex = CXmlDataProc::Instance()->GetDllIndex(strDllname);
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\WndCount"), nDllIndex);
+		AppXml()->SetAttributeInt(strNode, nPaneCount);
+		AppXml()->FlushData();
+
+		//写入所有的工程名是strDllname的，写入的都擦出掉
+		POSITION pos = tempPaneMap.GetStartPosition();
+		int nWndIndex=0;
+		while(pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			tempPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CRect rcPane;
+				pModulePane->GetWindowRect(&rcPane);
+
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator itFind = mapCreatedWnds.find(strPane);
+				if (itFind != mapCreatedWnds.end())
+				{
+					stCreateWndItem& oneCreated = itFind->second;
+					if (strDllname.CompareNoCase(oneCreated.strDllname) != 0)
+					{
+						continue;
+					}
+
+					//write pane class name;
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+					//write pane rect
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.left);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\SIZE\\right"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.right);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\SIZE\\top"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.top);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\SIZE\\bottom"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.bottom);
+
+					AppXml()->FlushData();
+
+
+					tempPaneMap.RemoveKey(strWndname);
+					nWndIndex++;
+					if (nWndIndex >= nPaneCount)
+					{
+						//当前数据strDllname的pane已经写完了，写下一个dll name的xml文件。
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+void CMainFrame::RefreshDockBottomNodeXml()
+{
+	//[dllname,count]
+	map<CString, UINT> mapDll2PaneCount;
+	MapCreatedWnd mapCreatedWnds;
+	if(CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds))
+	{
+		POSITION pos = m_BottomPaneMap.GetStartPosition();
+		while (pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			m_BottomPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+				if (it2 != mapCreatedWnds.end())
+				{
+					map<CString, UINT>::iterator it3 = mapDll2PaneCount.find(it2->second.strDllname);
+					if (it3 != mapDll2PaneCount.end())
+					{
+						UINT& nValue = it3->second;
+						nValue++;
+					}
+					else
+					{
+						mapDll2PaneCount.insert(make_pair(it2->second.strDllname, 1));
+					}
+				}
+			}
+		}
+	}
+
+	//copy.
+	CModulePaneMap tempPaneMap;// = m_LeftPaneMap;
+	POSITION pos = m_BottomPaneMap.GetStartPosition();
+	while(pos)
+	{
+		CString strname;
+		CModulePane* pPane = NULL;
+		m_BottomPaneMap.GetNextAssoc(pos, strname, pPane);
+		tempPaneMap.SetAt(strname, pPane);
+	}
+
+	for(map<CString, UINT>::iterator iterIdx = mapDll2PaneCount.begin(); 
+		iterIdx != mapDll2PaneCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nPaneCount = iterIdx->second;
+		int nDllIndex = CXmlDataProc::Instance()->GetDllIndex(strDllname);
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\WndCount"), nDllIndex);
+		AppXml()->SetAttributeInt(strNode, nPaneCount);
+		AppXml()->FlushData();
+
+		//写入所有的工程名是strDllname的，写入的都擦出掉
+		POSITION pos = tempPaneMap.GetStartPosition();
+		int nWndIndex=0;
+		while(pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			tempPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CRect rcPane;
+				pModulePane->GetWindowRect(&rcPane);
+
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator itFind = mapCreatedWnds.find(strPane);
+				if (itFind != mapCreatedWnds.end())
+				{
+					stCreateWndItem& oneCreated = itFind->second;
+					if (strDllname.CompareNoCase(oneCreated.strDllname) != 0)
+					{
+						continue;
+					}
+
+					//write pane class name;
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+					//write pane rect
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.left);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\SIZE\\right"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.right);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\SIZE\\top"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.top);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\SIZE\\bottom"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.bottom);
+
+					AppXml()->FlushData();
+
+
+					tempPaneMap.RemoveKey(strWndname);
+					nWndIndex++;
+					if (nWndIndex >= nPaneCount)
+					{
+						//当前数据strDllname的pane已经写完了，写下一个dll name的xml文件。
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
 CModulePane* pPrevPane=NULL;

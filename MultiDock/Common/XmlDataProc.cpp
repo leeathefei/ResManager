@@ -478,6 +478,12 @@ BOOL CXmlDataProc::IsFrameViewBelongToProj(CString& strDll, CString& strClassnam
 
 BOOL CXmlDataProc::IsFrameViewClass(CString& strClassName)
 {
+	////hard code for mainframe class check.
+	//if (strClassName.CompareNoCase(_T("CMainFrame")) == 0)
+	//{
+	//	return TRUE;
+	//}
+
 	for (MapDllFrameView::iterator it = m_mapDll2FrameView.begin();
 		it != m_mapDll2FrameView.end(); ++it)
 	{

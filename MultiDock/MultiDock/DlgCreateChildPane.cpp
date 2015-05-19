@@ -267,7 +267,7 @@ void CDlgCreateChildPane::OnBnClickedBtnCreateChildpane()
 	m_comboChildProj.GetWindowText(strDll);
 
 	CString strProj = m_listPrentInCreateChild.GetItemText(m_nParentIndex, 2);
-	if (strProj.Compare(strDll) != 0)
+	if (strProj.CompareNoCase(strDll) != 0)
 	{
 		AfxMessageBox(_T("你要创建的子窗口与父窗口不在同一模块，请重新选择！"));
 		return;

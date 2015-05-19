@@ -91,7 +91,7 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 	m_comboFloatProj.GetWindowText(strdll);
 
 	CString strProj = m_listParentInFloat.GetItemText(m_nParentIndex, 2);
-	if (strProj.Compare(strdll) != 0)
+	if (strProj.CompareNoCase(strdll) != 0)
 	{
 		AfxMessageBox(_T("你要创建的子窗口与父窗口不在同一模块，请重新选择！"));
 		return;
@@ -192,12 +192,15 @@ void CDlgCreateFloatPane::RefreshCreatedWndTree()
 			it != mapAllCreatedWnd.end(); ++it)
 		{
 			stCreateWndItem& oneItem = it->second;
-			m_listParentInFloat.InsertItem(index, oneItem.strClassName);
-			m_listParentInFloat.SetItemText(index, 1, oneItem.strHinstance);
-			m_listParentInFloat.SetItemText(index, 2, oneItem.strDllname);
-			m_listParentInFloat.SetItemData(index, (DWORD_PTR)oneItem.pWnd);
+			if (CXmlDataProc::Instance()->IsFrameViewClass(oneItem.strClassName))
+			{
+				m_listParentInFloat.InsertItem(index, oneItem.strClassName);
+				m_listParentInFloat.SetItemText(index, 1, oneItem.strHinstance);
+				m_listParentInFloat.SetItemText(index, 2, oneItem.strDllname);
+				m_listParentInFloat.SetItemData(index, (DWORD_PTR)oneItem.pWnd);
 
-			index++;
+				index++;
+			}
 		}
 	}
 

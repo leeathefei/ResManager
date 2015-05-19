@@ -91,6 +91,12 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 
 	CString strDll;
 	m_comboDockProj.GetWindowText(strDll);
+	CString strProj = m_listParentsInDock.GetItemText(m_nParentIndex, 2);
+	if (strProj.CompareNoCase(strDll) != 0)
+	{
+		AfxMessageBox(_T("你要创建的子窗口与父窗口不在同一模块，请重新选择！"));
+		return;
+	}
 
 	EPANE_ALIGNMENT eType;
 	switch(m_nRadioDirection)
@@ -213,12 +219,15 @@ void CDlgCreateDockPane::RefreshCreatedWndTree()
 			it != mapAllCreatedWnd.end(); ++it)
 		{
 			stCreateWndItem& oneItem = it->second;
-			m_listParentsInDock.InsertItem(index, oneItem.strClassName);
-			m_listParentsInDock.SetItemText(index, 1, oneItem.strHinstance);
-			m_listParentsInDock.SetItemText(index, 2, oneItem.strDllname);
-			m_listParentsInDock.SetItemData(index, (DWORD_PTR)oneItem.pWnd);
+			if (CXmlDataProc::Instance()->IsFrameViewClass(oneItem.strClassName))
+			{
+				m_listParentsInDock.InsertItem(index, oneItem.strClassName);
+				m_listParentsInDock.SetItemText(index, 1, oneItem.strHinstance);
+				m_listParentsInDock.SetItemText(index, 2, oneItem.strDllname);
+				m_listParentsInDock.SetItemData(index, (DWORD_PTR)oneItem.pWnd);
 
-			index++;
+				index++;
+			}
 		}
 	}
 }

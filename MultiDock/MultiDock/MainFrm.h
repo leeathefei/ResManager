@@ -53,6 +53,7 @@ class COutlookBar : public CMFCOutlookBar
 
 class CModulePane;
 class CWndConfigDlg;
+
 typedef CMap<CString, LPCTSTR, CModulePane*, CModulePane*> CModulePaneMap;
 typedef CList<CMFCToolBar*, CMFCToolBar*>  CToolBarList;
 
@@ -211,6 +212,11 @@ protected:
 	BOOL CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, int nInitialWidth);
 	BOOL CreateFileView();
 	void SetDockingWindowIcons(BOOL bHiColorIcons);
+	void RefreshDockXmlNodes(EPANE_ALIGNMENT eAlign);
+	void RefreshDockLeftNodeXml();
+	void RefreshDockRightNodeXml();
+	void RefreshDockTopNodeXml();
+	void RefreshDockBottomNodeXml();
 
 	DECLARE_MESSAGE_MAP()
 };
