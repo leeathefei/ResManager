@@ -30,12 +30,13 @@ public:
 		}
 	};
 
-	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName,BOOL bAutoDelete = TRUE);
 	static  CWnd* CreateDlgObj();
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	afx_msg void OnClose();
+	afx_msg void OnDestroy();
 
 	DECLARE_MESSAGE_MAP()
 public:

@@ -18,6 +18,7 @@ CDlgCreateDockPane::CDlgCreateDockPane(CWnd* pParent /*=NULL*/)
 	, m_strClassname(_T(""))
 	, m_nRadioDirection(0)
 	, m_strDockWndName(_T(""))
+	, m_nDockAutoDel(0)
 {
 	CWndManager::Instance()->AddEventHandler(this);
 }
@@ -35,6 +36,7 @@ void CDlgCreateDockPane::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST_PARENTWNDINDOCKPANE, m_listParentsInDock);
 	DDX_Text(pDX, IDC_EDIT1, m_strDockWndName);
 	DDX_Control(pDX, IDC_COMBO_DOCK_OWNTO, m_comboDockProj);
+	DDX_Radio(pDX, IDC_RADIO_DOCK_BEAUTODEL, m_nDockAutoDel);
 }
 
 BOOL CDlgCreateDockPane::OnInitDialog()
@@ -69,6 +71,8 @@ BEGIN_MESSAGE_MAP(CDlgCreateDockPane, CDialogEx)
 	ON_BN_CLICKED(IDC_CREATEWND_INDOCKPAGE, &CDlgCreateDockPane::OnBnClickedCreatewndIndockpage)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_PARENTWNDINDOCKPANE, OnParentSelectChanged)
 	ON_NOTIFY(NM_CLICK, IDC_LIST_PARENTWNDINDOCKPANE, OnMouseClicked)
+	ON_BN_CLICKED(IDC_RADIO_DOCK_BEAUTODEL, &CDlgCreateDockPane::OnBnClickedRadioDockBeautodel)
+	ON_BN_CLICKED(IDC_RADIO_DOCK_UNAUTODEL, &CDlgCreateDockPane::OnBnClickedRadioDockUnautodel)
 END_MESSAGE_MAP()
 
 void CDlgCreateDockPane::UpdateClassName(CString&strDll, CString&strClass)
@@ -130,6 +134,7 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 		break;
 	}
 
+	BOOL bAutoDelete = m_nDockAutoDel == 0? TRUE : FALSE;
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 	if (!m_strClassname.IsEmpty())
 	{
@@ -146,7 +151,7 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 		}
 		else
 		{
-			CWndManager::Instance()->CreateDockWnd((CWnd*)pFrame/*m_pSelParentWnd*/, m_strClassname, eType, m_strDockWndName,strDll);
+			CWndManager::Instance()->CreateDockWnd((CWnd*)pFrame/*m_pSelParentWnd*/, m_strClassname, eType, m_strDockWndName,strDll, bAutoDelete);
 		}
 
 	}
@@ -230,4 +235,19 @@ void CDlgCreateDockPane::RefreshCreatedWndTree()
 			}
 		}
 	}
+}
+
+void CDlgCreateDockPane::OnBnClickedRadioDockBeautodel()
+{
+	m_nDockAutoDel = 0;
+	UpdateData(FALSE);
+	// TODO: Add your control notification handler code here
+}
+
+
+void CDlgCreateDockPane::OnBnClickedRadioDockUnautodel()
+{
+	m_nDockAutoDel = 1;
+	UpdateData(FALSE);
+	// TODO: Add your control notification handler code here
 }

@@ -33,7 +33,7 @@ public:
 	};
 
 	static CWnd* CreateDlgObj( );
-	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName,BOOL bAutoDelete=TRUE);
 
    bool m_bPaneClosed;
  

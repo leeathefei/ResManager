@@ -44,4 +44,7 @@ public:
 
 	CWnd* m_pSelParentWnd;
 	int m_nParentIndex;
+	int m_nBeAutoDelete;
+	afx_msg void OnBnClickedRadioBeAutodel();
+	afx_msg void OnBnClickedRadioUnautodel();
 };

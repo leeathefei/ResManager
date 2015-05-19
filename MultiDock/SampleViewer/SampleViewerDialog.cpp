@@ -139,7 +139,7 @@ CWnd* CSampleViewerDialog::CreateDlgObj()
 	return new CSampleViewerDialog;
 }
 
-BOOL CSampleViewerDialog::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName)
+BOOL CSampleViewerDialog::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName,BOOL bAutoDelete)
 {
 	USE_CUSTOM_RESOURCE(_T("SampleViewer.dll"));
 	__super::Create(IDD, pParent);
@@ -150,6 +150,6 @@ BOOL CSampleViewerDialog::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CS
 	else
 	{
 		ModifyStyle(WS_BORDER|WS_CAPTION|WS_SIZEBOX,0);
-		return CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, TRUE);
+		return CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, bAutoDelete);
 	}
 }

@@ -50,10 +50,15 @@ BOOL CDlgTest1InSV::OnInitDialog()
 
 }
 
+void CDlgTest1InSV::OnDestroy()
+{
+	CDialogEx::OnDestroy();
+}
 
 
 BEGIN_MESSAGE_MAP(CDlgTest1InSV, CDialogEx)
 	ON_WM_CLOSE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -62,7 +67,7 @@ CWnd* CDlgTest1InSV::CreateDlgObj()
 	return new CDlgTest1InSV;
 }
 
-BOOL CDlgTest1InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName)
+BOOL CDlgTest1InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName, BOOL bAutoDelete)
 {
 	USE_CUSTOM_RESOURCE(_T("SampleViewer.dll"));
 	__super::Create(IDD, pParent);
@@ -78,6 +83,6 @@ BOOL CDlgTest1InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString 
 	else 
 	{
 		ModifyStyle(WS_CAPTION|WS_BORDER|WS_SIZEBOX,0);
-		return CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, TRUE);
+		return CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, bAutoDelete);
 	}
 }

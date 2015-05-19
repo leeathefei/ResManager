@@ -42,4 +42,7 @@ public:
 
 	CWnd* m_pSelParentWnd;
 	int m_nParentIndex;
+	int m_nDockAutoDel;
+	afx_msg void OnBnClickedRadioDockBeautodel();
+	afx_msg void OnBnClickedRadioDockUnautodel();
 };

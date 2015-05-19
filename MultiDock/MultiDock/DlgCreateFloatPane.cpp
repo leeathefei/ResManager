@@ -18,6 +18,7 @@ CDlgCreateFloatPane::CDlgCreateFloatPane(CWnd* pParent /*=NULL*/)
 	, m_strFloatWndName(_T(""))
 	, m_pSelParentWnd(NULL)
 	, m_nParentIndex(0)
+	, m_nBeAutoDelete(0)
 {
 	CWndManager::Instance()->AddEventHandler(this);
 }
@@ -34,6 +35,7 @@ void CDlgCreateFloatPane::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST_PARENT_INFLOATPANE, m_listParentInFloat);
 	DDX_Text(pDX, IDC_EDIT_FLAOT_WND_NAME, m_strFloatWndName);
 	DDX_Control(pDX, IDC_COMBO_FLOAT_OWNTO, m_comboFloatProj);
+	DDX_Radio(pDX, IDC_RADIO_BE_AUTODEL, m_nBeAutoDelete);
 }
 
 BOOL CDlgCreateFloatPane::OnInitDialog()
@@ -71,6 +73,8 @@ BEGIN_MESSAGE_MAP(CDlgCreateFloatPane, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_CREATE_FLOATPANE, &CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_PARENT_INFLOATPANE, OnParentSelectChanged)
 	ON_NOTIFY(NM_CLICK, IDC_LIST_PARENT_INFLOATPANE, OnMouseClicked)
+	ON_BN_CLICKED(IDC_RADIO_BE_AUTODEL, &CDlgCreateFloatPane::OnBnClickedRadioBeAutodel)
+	ON_BN_CLICKED(IDC_RADIO_UNAUTODEL, &CDlgCreateFloatPane::OnBnClickedRadioUnautodel)
 END_MESSAGE_MAP()
 
 
@@ -97,6 +101,8 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 		return;
 	}
 
+	BOOL bAutoDelete = m_nBeAutoDelete == 0 ? TRUE : FALSE;
+
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 	if (!m_strEditClassname.IsEmpty())
 	{
@@ -113,7 +119,7 @@ void CDlgCreateFloatPane::OnBnClickedBtnCreateFloatpane()
 		}
 		else
 		{
-			CWndManager::Instance()->CreateFloatWnd((CWnd*)pFrame, m_strEditClassname, m_strFloatWndName, strdll);
+			CWndManager::Instance()->CreateFloatWnd((CWnd*)pFrame, m_strEditClassname, m_strFloatWndName, strdll, bAutoDelete);
 		}
 	}
 	
@@ -204,4 +210,19 @@ void CDlgCreateFloatPane::RefreshCreatedWndTree()
 		}
 	}
 
+}
+
+void CDlgCreateFloatPane::OnBnClickedRadioBeAutodel()
+{
+	m_nBeAutoDelete = 0;
+	UpdateData(FALSE);
+	// TODO: Add your control notification handler code here
+}
+
+
+void CDlgCreateFloatPane::OnBnClickedRadioUnautodel()
+{
+	m_nBeAutoDelete = 1;
+	UpdateData(FALSE);
+	// TODO: Add your control notification handler code here
 }

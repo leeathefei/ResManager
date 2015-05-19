@@ -56,19 +56,19 @@
 			<LEFT>
 				<WndCount>2</WndCount>
 				<Wnd_0>
-					<Name>CDlgTest2InSV</Name>
+					<Name>CDlgTest1InSV</Name>
 					<SIZE>
 						<left>1</left>
-						<right>279</right>
+						<right>277</right>
 						<top>137</top>
 						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
-					<Name>CDlgTest1InSV</Name>
+					<Name>CDlgTest2InSV</Name>
 					<SIZE>
 						<left>1</left>
-						<right>279</right>
+						<right>277</right>
 						<top>137</top>
 						<bottom>990</bottom>
 					</SIZE>
@@ -160,8 +160,8 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>571</left>
-					<right>1239</right>
+					<left>9</left>
+					<right>957</right>
 					<top>92</top>
 					<bottom>988</bottom>
 				</Tab_0>
@@ -171,7 +171,7 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>1247</left>
+					<left>965</left>
 					<right>1677</right>
 					<top>92</top>
 					<bottom>988</bottom>

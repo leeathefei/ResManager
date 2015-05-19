@@ -61,7 +61,7 @@ CWnd* CDlgTest2InSV::CreateDlgObj()
 {
 	return new CDlgTest2InSV;
 }
-BOOL CDlgTest2InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName)
+BOOL CDlgTest2InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName ,BOOL bAutoDelete)
 {
 	USE_CUSTOM_RESOURCE(_T("SampleViewer.dll"));
 	__super::Create(IDD, pParent);
@@ -77,6 +77,6 @@ BOOL CDlgTest2InSV::CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString 
 	else
 	{
 		ModifyStyle(WS_BORDER|WS_CAPTION|WS_SIZEBOX,0);
-		return CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, TRUE);
+		return CSampleViewerManager::Instance()->RegisterDockPane(this, strWndName.GetString(),eDockType, bAutoDelete);
 	}
 }
