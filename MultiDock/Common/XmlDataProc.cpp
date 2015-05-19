@@ -229,7 +229,10 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 		{
 			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\Name"), nDllIndex, i);
 			wstring wsClassname = AppXml()->GetAttributeText(strNode, _T(""));
-			
+
+			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\WndName"), nDllIndex, i);
+			wstring wsWndName = AppXml()->GetAttributeText(strNode, _T(""));
+
 			CRect rcWnd;
 			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\SIZE\\left"), nDllIndex, i);
 			rcWnd.left = AppXml()->GetAttributeInt(strNode, 0);
@@ -245,6 +248,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 			oneDock.eDockType = ALIGN_LEFT_GROUP;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
+			oneDock.strWndName = wsWndName.c_str();
 			oneDock.strDllname = strDllname;
 			m_listDockWnds.push_back(oneDock);
 		}
@@ -261,6 +265,9 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\Name"), nDllIndex, i);
 			wstring wsClassname = AppXml()->GetAttributeText(strNode, _T(""));
 
+			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\WndName"), nDllIndex, i);
+			wstring wsWndName = AppXml()->GetAttributeText(strNode, _T(""));
+
 			CRect rcWnd;
 			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\SIZE\\left"), nDllIndex, i);
 			rcWnd.left = AppXml()->GetAttributeInt(strNode, 0);
@@ -276,6 +283,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 			oneDock.eDockType = ALIGN_RIGHT_GROUP;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
+			oneDock.strWndName = wsWndName.c_str();
 			oneDock.strDllname = strDllname;
 			m_listDockWnds.push_back(oneDock);
 		}
@@ -292,6 +300,10 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\Name"), nDllIndex, i);
 			wstring wsClassname = AppXml()->GetAttributeText(strNode, _T(""));
 
+			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\WndName"), nDllIndex, i);
+			wstring wsWndName = AppXml()->GetAttributeText(strNode, _T(""));
+
+
 			CRect rcWnd;
 			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\SIZE\\left"), nDllIndex, i);
 			rcWnd.left = AppXml()->GetAttributeInt(strNode, 0);
@@ -307,6 +319,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 			oneDock.eDockType = ALIGN_TOP_GROUP;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
+			oneDock.strWndName = wsWndName.c_str();
 			oneDock.strDllname = strDllname;
 			m_listDockWnds.push_back(oneDock);
 		}
@@ -323,6 +336,9 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\Name"), nDllIndex, i);
 			wstring wsClassname = AppXml()->GetAttributeText(strNode, _T(""));
 
+			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\WndName"), nDllIndex, i);
+			wstring wsWndName = AppXml()->GetAttributeText(strNode, _T(""));
+
 			CRect rcWnd;
 			strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\SIZE\\left"), nDllIndex, i);
 			rcWnd.left = AppXml()->GetAttributeInt(strNode, 0);
@@ -338,6 +354,7 @@ void CXmlDataProc::ProcessDockType(int nDllIndex, CString strDllname)
 			oneDock.eDockType = ALIGN_BOTTOM_GROUP;
 			oneDock.rcWnd = rcWnd;
 			oneDock.strClass = wsClassname.c_str();
+			oneDock.strWndName = wsWndName.c_str();
 			oneDock.strDllname = strDllname;
 			m_listDockWnds.push_back(oneDock);
 		}

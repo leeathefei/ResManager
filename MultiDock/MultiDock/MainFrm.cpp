@@ -1361,7 +1361,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 	{
 		stDockWnd& oneDock = *itDock;
 		CWnd* pDockDlg = CWndManager::Instance()->CreateDockWnd((CWnd*)AfxGetMainWnd(), oneDock.strClass, 
-																oneDock.eDockType, CString(_T("")), oneDock.strDllname);
+																oneDock.eDockType, oneDock.strWndName, oneDock.strDllname);
 		if (pDockDlg != NULL)
 		{
 			CModulePane* pDockpane = NULL;
@@ -1936,6 +1936,12 @@ void CMainFrame::RefreshDockLeftNodeXml()
 					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
 					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
 
+					//write pane name
+					CString strPaneName;
+					pModulePane->GetPaneName(strPaneName);
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\WndName"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, strPaneName);
+					
 					//write pane rect
 					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
 					AppXml()->SetAttributeInt(strNode, rcPane.left);
@@ -2049,6 +2055,13 @@ void CMainFrame::RefreshDockRightNodeXml()
 					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
 					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
 
+					//write pane name;
+					CString strPaneName;
+					pModulePane->GetPaneName(strPaneName);
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\WndName"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, strPaneName);
+					
+
 					//write pane rect
 					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
 					AppXml()->SetAttributeInt(strNode, rcPane.left);
@@ -2161,6 +2174,12 @@ void CMainFrame::RefreshDockTopNodeXml()
 					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
 					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
 
+					//write pane name.
+					CString strPaneName;
+					pModulePane->GetPaneName(strPaneName);
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\WndName"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, strPaneName);
+
 					//write pane rect
 					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
 					AppXml()->SetAttributeInt(strNode, rcPane.left);
@@ -2272,6 +2291,12 @@ void CMainFrame::RefreshDockBottomNodeXml()
 					//write pane class name;
 					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
 					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+
+					CString strPaneName;
+					pModulePane->GetPaneName(strPaneName);
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\WndName"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, strPaneName);
 
 					//write pane rect
 					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);

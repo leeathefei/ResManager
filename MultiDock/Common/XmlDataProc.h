@@ -47,6 +47,7 @@ struct stDockWnd
 {
 	CString strClass;
 	CString strDllname;
+	CString strWndName;
 	EPANE_ALIGNMENT eDockType;
 	CRect rcWnd;
 };
