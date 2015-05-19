@@ -29,10 +29,10 @@ CSampleViewerManager::CSampleViewerManager(void)
       m_pModuleDlg[i] = NULL;
    }
    
-   m_dwAlign[0] = ALIGN_VERTICAL;
-   m_dwAlign[1] = ALIGN_VERTICAL;
-   m_dwAlign[2] = ALIGN_HORIZONTAL;
-   m_dwAlign[3] = ALIGN_HORIZONTAL;
+   m_dwAlign[0] = ALIGN_RIGHT_GROUP;
+   m_dwAlign[1] = ALIGN_RIGHT_GROUP;
+   m_dwAlign[2] = ALIGN_BOTTOM_GROUP;
+   m_dwAlign[3] = ALIGN_BOTTOM_GROUP;
 
 
    m_strModuleName[0] = _T("工程一的垂直自动删除面板1");

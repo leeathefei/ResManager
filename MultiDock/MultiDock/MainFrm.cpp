@@ -666,10 +666,43 @@ void CMainFrame::OnApplicationLook(UINT id)
 
 	CString strTemp;
 	CModulePane* pModulePane=NULL;
-	POSITION pos = m_HoriPaneMap.GetStartPosition();
-	if( pos )
+//	POSITION pos = m_HoriPaneMap.GetStartPosition();
+// 	if( pos )
+// 	{
+// 		m_HoriPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+// 
+// 		HWND hWndTab;
+// 		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
+// 		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
+// 		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
+// 		{
+// 			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
+// 			pTabCtrl->EnableAutoColor();
+// 			pTabCtrl->RecalcLayout();
+// 		}
+// 	}
+// 
+// 	pos = m_VertPaneMap.GetStartPosition();
+// 	if( pModulePane==NULL && pos )
+// 	{
+// 		m_VertPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+// 
+// 		HWND hWndTab;
+// 		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
+// 		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
+// 		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
+// 		{
+// 			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
+// 			pTabCtrl->EnableAutoColor();
+// 			pTabCtrl->RecalcLayout();
+// 		}
+// 	}
+
+	POSITION pos = m_LeftPaneMap.GetStartPosition();
+	pos = m_LeftPaneMap.GetStartPosition();
+	if( pModulePane==NULL && pos )
 	{
-		m_HoriPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		m_LeftPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
 
 		HWND hWndTab;
 		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
@@ -682,10 +715,42 @@ void CMainFrame::OnApplicationLook(UINT id)
 		}
 	}
 
-	pos = m_VertPaneMap.GetStartPosition();
+	pos = m_RightPaneMap.GetStartPosition();
 	if( pModulePane==NULL && pos )
 	{
-		m_VertPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		m_RightPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+
+		HWND hWndTab;
+		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
+		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
+		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
+		{
+			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
+			pTabCtrl->EnableAutoColor();
+			pTabCtrl->RecalcLayout();
+		}
+	}
+
+	pos = m_TopPaneMap.GetStartPosition();
+	if( pModulePane==NULL && pos )
+	{
+		m_TopPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+
+		HWND hWndTab;
+		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
+		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
+		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
+		{
+			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
+			pTabCtrl->EnableAutoColor();
+			pTabCtrl->RecalcLayout();
+		}
+	}
+
+	pos = m_BottomPaneMap.GetStartPosition();
+	if( pModulePane==NULL && pos )
+	{
+		m_BottomPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
 
 		HWND hWndTab;
 		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
@@ -1574,34 +1639,34 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	// Create Pane
 	EPANE_ALIGNMENT Align = pDef->nEnabledAlign;
 	UINT nDockID;//= (Align==ALIGN_HORIZONTAL)? AFX_IDW_DOCKBAR_BOTTOM:(Align==ALIGN_VERTICAL?AFX_IDW_DOCKBAR_RIGHT:AFX_IDW_DOCKBAR_FLOAT);
-	if (Align == ALIGN_LEFT)
+	if (Align == ALIGN_LEFT || Align == ALIGN_LEFT_GROUP)
 	{
 		nDockID = AFX_IDW_DOCKBAR_LEFT;
 	}
-	else if (Align == ALIGN_RIGHT)
+	else if (Align == ALIGN_RIGHT || Align == ALIGN_RIGHT_GROUP)
 	{
 		nDockID = AFX_IDW_DOCKBAR_RIGHT;
 	}
-	else if (Align == ALIGN_TOP)
+	else if (Align == ALIGN_TOP || Align == ALIGN_TOP_GROUP)
 	{
 		nDockID = AFX_IDW_DOCKBAR_TOP;
 	}
-	else if (Align == ALIGN_BOTTON)
+	else if (Align == ALIGN_BOTTON || Align == ALIGN_BOTTOM_GROUP)
 	{
 		nDockID = AFX_IDW_DOCKBAR_BOTTOM;
 	}
-	else if (Align == ALIGN_NON)
+	else if (Align == ALIGN_FLOAT)
 	{
 		nDockID = AFX_IDW_DOCKBAR_FLOAT;
 	}
-	else if (Align == ALIGN_HORIZONTAL)
-	{
-		nDockID = AFX_IDW_DOCKBAR_BOTTOM;
-	}
-	else if (Align == ALIGN_VERTICAL)
-	{
-		nDockID = AFX_IDW_DOCKBAR_RIGHT;
-	}
+// 	else if (Align == ALIGN_HORIZONTAL)
+// 	{
+// 		nDockID = AFX_IDW_DOCKBAR_BOTTOM;
+// 	}
+// 	else if (Align == ALIGN_VERTICAL)
+// 	{
+// 		nDockID = AFX_IDW_DOCKBAR_RIGHT;
+// 	}
 
 	BOOL bVertical=FALSE;
 	CModulePane* pModulePane;
@@ -1627,8 +1692,18 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	int nNewID = BASE_MODULES_MENU_ID+MAX_NUM_VIEW_TYPES+counter++;
 	pModulePane = new CModulePane;
 	UINT style = WS_CHILD | CBRS_RIGHT |CBRS_FLOAT_MULTI|CBRS_HIDE_INPLACE;
-	DWORD tabbedStyle = (pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT || pDef->nEnabledAlign == ALIGN_VERTICAL)/**/? AFX_CBRS_OUTLOOK_TABS: AFX_CBRS_REGULAR_TABS;
-	if (!pModulePane->Create(pDef->strWindowName, this, CRect(0, 0, 280, 220), TRUE,
+	DWORD tabbedStyle;
+	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT || 
+		pDef->nEnabledAlign == ALIGN_LEFT_GROUP||pDef->nEnabledAlign == ALIGN_RIGHT_GROUP)	
+	{
+		tabbedStyle = AFX_CBRS_OUTLOOK_TABS;
+	}
+	else
+	{
+		tabbedStyle = AFX_CBRS_REGULAR_TABS;
+	}
+
+	if (!pModulePane->Create(pDef->strWindowName, this, CRect(0, 0, 280, 900), TRUE,
 		nNewID, style, tabbedStyle))
 	{
 		ASSERT(FALSE);
@@ -1648,8 +1723,10 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	//////////////////////////////////////////////////////////////////////////
 	// Attach to existing Pane
 	CDockablePane* pTabbedBar = NULL;
-	//lee:对于float，默认忘tab上加，成为一组。
-	if (pDef->nEnabledAlign == ALIGN_VERTICAL||pDef->nEnabledAlign == ALIGN_HORIZONTAL)
+	if (pDef->nEnabledAlign == ALIGN_LEFT_GROUP||
+		pDef->nEnabledAlign == ALIGN_RIGHT_GROUP||
+		pDef->nEnabledAlign == ALIGN_TOP_GROUP||
+		pDef->nEnabledAlign == ALIGN_BOTTOM_GROUP)
 	{
 		//当前是否存在Pane，如果有就往响应的pane组上靠。
 		if( !AttachPane(pModulePane, pDef->nEnabledAlign, TRUE, &pTabbedBar) )
@@ -1682,18 +1759,41 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	}
 
 
-
 	//////////////////////////////////////////////////////////////////////////
 	//AddToMap
-	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT||pDef->nEnabledAlign == ALIGN_VERTICAL )
+	if (pDef->nEnabledAlign == ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_LEFT_GROUP)
 	{
-		m_VertPaneMap.SetAt(pDef->strWindowName, pModulePane);
-	}
-	if(pDef->nEnabledAlign== ALIGN_TOP||pDef->nEnabledAlign == ALIGN_BOTTON||pDef->nEnabledAlign == ALIGN_HORIZONTAL )
-	{
-		m_HoriPaneMap.SetAt(pDef->strWindowName, pModulePane);
+		m_LeftPaneMap.SetAt(pDef->strWindowName, pModulePane);
 	}
 
+	if (pDef->nEnabledAlign == ALIGN_RIGHT || pDef->nEnabledAlign == ALIGN_RIGHT_GROUP)
+	{
+		m_RightPaneMap.SetAt(pDef->strWindowName, pModulePane);
+	}
+
+	if (pDef->nEnabledAlign == ALIGN_TOP || pDef->nEnabledAlign == ALIGN_TOP_GROUP)
+	{
+		m_TopPaneMap.SetAt(pDef->strWindowName, pModulePane);
+	}
+
+	if (pDef->nEnabledAlign == ALIGN_BOTTON || pDef->nEnabledAlign == ALIGN_BOTTOM_GROUP)
+	{
+		m_BottomPaneMap.SetAt(pDef->strWindowName, pModulePane);
+	}
+
+// 	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT||pDef->nEnabledAlign == ALIGN_VERTICAL )
+// 	{
+// 		m_VertPaneMap.SetAt(pDef->strWindowName, pModulePane);
+// 	}
+// 	if(pDef->nEnabledAlign== ALIGN_TOP||pDef->nEnabledAlign == ALIGN_BOTTON||pDef->nEnabledAlign == ALIGN_HORIZONTAL )
+// 	{
+// 		m_HoriPaneMap.SetAt(pDef->strWindowName, pModulePane);
+// 	}
+
+	if (Align == ALIGN_FLOAT)
+	{
+		pModulePane->FloatPane(CRect(100,100,200,800));
+	}
 
 	RecalcLayout();
 	return 0;
@@ -1735,20 +1835,44 @@ LRESULT CMainFrame::OnUnregisterModulePane( WPARAM, LPARAM lp)
 BOOL CMainFrame::RemovePaneFromMap( CModulePane* pPane, BOOL& bVertical )
 {
 	ASSERT(pPane);
-
-	if( m_VertPaneMap.Lookup(pPane->m_strWndName, pPane) )
+	if( m_LeftPaneMap.Lookup(pPane->m_strWndName, pPane) )
 	{
-		m_VertPaneMap.RemoveKey(pPane->m_strWndName);
+		m_LeftPaneMap.RemoveKey(pPane->m_strWndName);
 		bVertical = TRUE;
 		return TRUE;
+	}
+	if( m_RightPaneMap.Lookup(pPane->m_strWndName, pPane) )
+	{
+		m_RightPaneMap.RemoveKey(pPane->m_strWndName);
+		bVertical = TRUE;
+		return TRUE;
+	}
+	if( m_TopPaneMap.Lookup(pPane->m_strWndName, pPane) )
+	{
+		m_TopPaneMap.RemoveKey(pPane->m_strWndName);
+		bVertical = FALSE;
+		return TRUE;
+	}
+	if( m_BottomPaneMap.Lookup(pPane->m_strWndName, pPane) )
+	{
+		m_BottomPaneMap.RemoveKey(pPane->m_strWndName);
+		bVertical = FALSE;
+		return TRUE;
+	}
+
+	/*if( m_VertPaneMap.Lookup(pPane->m_strWndName, pPane) )
+	{
+	m_VertPaneMap.RemoveKey(pPane->m_strWndName);
+	bVertical = TRUE;
+	return TRUE;
 	}
 
 	if( m_HoriPaneMap.Lookup(pPane->m_strWndName, pPane) )
 	{
-		m_HoriPaneMap.RemoveKey(pPane->m_strWndName);
-		bVertical = FALSE;
-		return TRUE;
-	}
+	m_HoriPaneMap.RemoveKey(pPane->m_strWndName);
+	bVertical = FALSE;
+	return TRUE;
+	}*/
 
 	return FALSE;
 }
@@ -1788,28 +1912,55 @@ BOOL CMainFrame::FindModulePane(CString strWndname, CModulePane*& pModulePane, B
 	CString strTemp;
 
 	pModulePane=NULL;
-	POSITION pos = m_VertPaneMap.GetStartPosition();
+	POSITION pos = m_LeftPaneMap.GetStartPosition();
 	while( pos )
 	{
-		m_VertPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		m_LeftPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
 		if(strTemp.Compare(strWndname)==0)
 		{
 			bVertical = TRUE;
 			return TRUE;
 		}
 	}
-
-
-	pos = m_HoriPaneMap.GetStartPosition();
 	while( pos )
 	{
-		m_HoriPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		m_RightPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		if(strTemp.Compare(strWndname)==0)
+		{
+			bVertical = TRUE;
+			return TRUE;
+		}
+	}
+	while( pos )
+	{
+		m_TopPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
 		if(strTemp.Compare(strWndname)==0)
 		{
 			bVertical = FALSE;
 			return TRUE;
 		}
 	}
+	while( pos )
+	{
+		m_BottomPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		if(strTemp.Compare(strWndname)==0)
+		{
+			bVertical = FALSE;
+			return TRUE;
+		}
+	}
+
+
+// 	pos = m_HoriPaneMap.GetStartPosition();
+// 	while( pos )
+// 	{
+// 		m_HoriPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+// 		if(strTemp.Compare(strWndname)==0)
+// 		{
+// 			bVertical = FALSE;
+// 			return TRUE;
+// 		}
+// 	}
 
 	pModulePane = NULL;
 	return FALSE;
@@ -1820,23 +1971,56 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 	CString strWindowName;
 	CModulePane* pPrevPane= NULL;
 
-	if( dwAlignment==ALIGN_LEFT || dwAlignment == ALIGN_RIGHT ||dwAlignment == ALIGN_VERTICAL/**/ )
+	if (dwAlignment==ALIGN_LEFT || dwAlignment == ALIGN_LEFT_GROUP)
 	{
-		POSITION pos = m_VertPaneMap.GetStartPosition();
-		while( pos )
+		POSITION pos = m_LeftPaneMap.GetStartPosition();
+		while(pos)
 		{
-			m_VertPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+			m_LeftPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+		}
+	}
+	if (dwAlignment==ALIGN_RIGHT || dwAlignment == ALIGN_RIGHT_GROUP)
+	{
+		POSITION pos = m_RightPaneMap.GetStartPosition();
+		while(pos)
+		{
+			m_RightPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+		}
+	}
+	if (dwAlignment==ALIGN_TOP || dwAlignment == ALIGN_TOP_GROUP)
+	{
+		POSITION pos = m_TopPaneMap.GetStartPosition();
+		while(pos)
+		{
+			m_TopPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+		}
+	}
+	if (dwAlignment==ALIGN_BOTTON || dwAlignment == ALIGN_BOTTOM_GROUP)
+	{
+		POSITION pos = m_BottomPaneMap.GetStartPosition();
+		while(pos)
+		{
+			m_BottomPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
 		}
 	}
 
-	if(pPrevPane==NULL && (dwAlignment==ALIGN_TOP || dwAlignment == ALIGN_BOTTON) ||dwAlignment == ALIGN_HORIZONTAL)
-	{
-		POSITION pos = m_HoriPaneMap.GetStartPosition();
-		while( pos )
-		{
-			m_HoriPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
-		}
-	}
+	//if( dwAlignment==ALIGN_LEFT || dwAlignment == ALIGN_RIGHT ||dwAlignment == ALIGN_VERTICAL/**/ )
+	//{
+	//	POSITION pos = m_VertPaneMap.GetStartPosition();
+	//	while( pos )
+	//	{
+	//		m_VertPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+	//	}
+	//}
+
+	//if(pPrevPane==NULL && (dwAlignment==ALIGN_TOP || dwAlignment == ALIGN_BOTTON) ||dwAlignment == ALIGN_HORIZONTAL)
+	//{
+	//	POSITION pos = m_HoriPaneMap.GetStartPosition();
+	//	while( pos )
+	//	{
+	//		m_HoriPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+	//	}
+	//}
 
 	//当前是否有Pane跟当前待靠的pane是否是一个停靠类型，有就停靠到一组。
 	if( pPrevPane && pPrevPane->GetSafeHwnd() )

@@ -146,10 +146,16 @@ public:
 	 CView*            m_pActiveView;
 	map<CView*, CString> m_mapViewRegister;
 	CWorkspace        m_workSpace;
-	CModulePaneMap    m_HoriPaneMap;
-	CModulePaneMap    m_VertPaneMap;
-	CToolBarList      m_ToolbarList;
 
+	//CModulePaneMap    m_HoriPaneMap;
+	//CModulePaneMap    m_VertPaneMap;
+	CModulePaneMap    m_LeftPaneMap;
+	CModulePaneMap    m_RightPaneMap;
+	CModulePaneMap	  m_TopPaneMap;
+	CModulePaneMap	  m_BottomPaneMap;
+	CModulePaneMap    m_FloatPaneMap;
+	
+	CToolBarList      m_ToolbarList;
 	CWndConfigDlg*    m_pDlgConfigWnd;
 	static UINT s_ViewerIndex;
 

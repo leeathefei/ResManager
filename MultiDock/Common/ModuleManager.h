@@ -20,7 +20,7 @@ public:
 
 
    // For modules which contain dialog pane.
-   virtual BOOL RegisterModulePane(CWnd* pWnd=NULL, LPCTSTR lpszWndName=NULL, HICON hIcon=NULL, EPANE_ALIGNMENT align=ALIGN_VERTICAL, bool bAttachToPrev=true, bool bAutoDelete=true);
+   virtual BOOL RegisterModulePane(CWnd* pWnd=NULL, LPCTSTR lpszWndName=NULL, HICON hIcon=NULL, EPANE_ALIGNMENT align=ALIGN_RIGHT_GROUP, bool bAttachToPrev=true, bool bAutoDelete=true);
    virtual void ActivatePane(CString strWndName);
    virtual BOOL UnregisterModulePane(LPCTSTR lpszWndName);
    virtual void ActivateFrame(CMDIChildWnd* pFrame);

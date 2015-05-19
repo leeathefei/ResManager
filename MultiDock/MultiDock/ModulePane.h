@@ -12,15 +12,17 @@ class CModulePane : public CDockablePane
 public:
 	CModulePane();
 	virtual ~CModulePane();
-   enum PANE_ALIGNMENT{
-      ALIGN_NONE,
-	  ALIGN_LEFT,
-	  ALIGN_RIGHT,
-	  ALIGN_TOP,
-	  ALIGN_BOTTON,
-      ALIGN_HORIZONTAL,
-      ALIGN_VERTICAL
-   };
+	/* enum PANE_ALIGNMENT{
+	ALIGN_NONE,
+	ALIGN_LEFT,
+	ALIGN_RIGHT,
+	ALIGN_TOP,
+	ALIGN_BOTTON,
+	ALIGN_LEFT_GROUP,
+	ALIGN_RIGHT_GROUP,
+	ALIGN_TOP_GROUP,
+	ALIGN_BOTTOM_GROUP
+	};*/
    
    CString  m_strWndName;
 
@@ -39,7 +41,7 @@ public:
    CWnd*    m_pWnd;
    bool     m_bInitialized;
    bool     m_bAutoDelete;
-   PANE_ALIGNMENT m_Alignment;
+  // EPANE_ALIGNMENT m_Alignment;
    static  CModulePane* ms_pActivePane;
 public:
    afx_msg void OnSize(UINT nType, int cx, int cy);

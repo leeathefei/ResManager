@@ -107,6 +107,18 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 	case 3:
 		eType = ALIGN_BOTTON;
 		break;
+	case 4:
+		eType = ALIGN_LEFT_GROUP;
+		break;
+	case 5:
+		eType = ALIGN_RIGHT_GROUP;
+		break;
+	case 6:
+		eType = ALIGN_TOP_GROUP;
+		break;
+	case 7:
+		eType = ALIGN_BOTTOM_GROUP;
+		break;
 
 	default:
 		break;
@@ -128,7 +140,7 @@ void CDlgCreateDockPane::OnBnClickedCreatewndIndockpage()
 		}
 		else
 		{
-			CWndManager::Instance()->CreateDockWnd((CWnd*)m_pSelParentWnd, m_strClassname, eType, m_strDockWndName,strDll);
+			CWndManager::Instance()->CreateDockWnd((CWnd*)pFrame/*m_pSelParentWnd*/, m_strClassname, eType, m_strDockWndName,strDll);
 		}
 
 	}
