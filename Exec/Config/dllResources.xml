@@ -19,7 +19,7 @@
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
 					<top>67</top>
-					<right>919</right>
+					<right>893</right>
 					<bottom>687</bottom>
 				</ParentWnd>
 				<ChildWnds>
@@ -49,10 +49,10 @@
 				<Name>CDlgTest1InSV</Name>
 				<WndName>中文名可以吗</WndName>
 				<SIZE>
-					<left>217</left>
-					<right>794</right>
-					<top>395</top>
-					<bottom>681</bottom>
+					<left>184</left>
+					<right>784</right>
+					<top>370</top>
+					<bottom>686</bottom>
 				</SIZE>
 				<WndName/>
 			</Wnd_0>
@@ -61,21 +61,21 @@
 			<LEFT>
 				<WndCount>2</WndCount>
 				<Wnd_0>
-					<Name>CDlgTest2InSV</Name>
-					<WndName>左边组合二</WndName>
+					<Name>CDlgTest1InSV</Name>
+					<WndName>左边组合一</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>204</right>
+						<right>172</right>
 						<top>112</top>
 						<bottom>708</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
-					<Name>CDlgTest1InSV</Name>
-					<WndName>左边组合一</WndName>
+					<Name>CDlgTest2InSV</Name>
+					<WndName>左边组合二</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>204</right>
+						<right>180</right>
 						<top>112</top>
 						<bottom>708</bottom>
 					</SIZE>
@@ -119,8 +119,8 @@
 					<Name>CSamplePanelDialog</Name>
 					<WndName>右边组合二</WndName>
 					<SIZE>
-						<left>1310</left>
-						<right>1369</right>
+						<left>1239</left>
+						<right>1365</right>
 						<top>112</top>
 						<bottom>708</bottom>
 					</SIZE>
@@ -129,7 +129,7 @@
 					<Name>CSamplePanelDialog2</Name>
 					<WndName>右边组合一</WndName>
 					<SIZE>
-						<left>1310</left>
+						<left>1239</left>
 						<right>1365</right>
 						<top>112</top>
 						<bottom>708</bottom>
@@ -153,8 +153,8 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>212</left>
-					<right>994</right>
+					<left>180</left>
+					<right>916</right>
 					<top>67</top>
 					<bottom>687</bottom>
 				</Tab_0>
@@ -164,8 +164,8 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>1002</left>
-					<right>1302</right>
+					<left>924</left>
+					<right>1231</right>
 					<top>67</top>
 					<bottom>687</bottom>
 				</Tab_0>

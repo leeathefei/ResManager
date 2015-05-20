@@ -2404,6 +2404,13 @@ void CMainFrame::RefreshFloatNodeXml()
 			{
 				CRect rcPane;
 				pModulePane->GetWindowRect(&rcPane);
+				int nCapHeight = pModulePane->GetCaptionHeight();
+				rcPane.left-=3;
+				rcPane.top-=24;
+				rcPane.right+=5;
+				rcPane.bottom+=4;
+
+
 
 				CString strPane;
 				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
