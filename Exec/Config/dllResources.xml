@@ -19,7 +19,7 @@
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
 					<top>92</top>
-					<right>1117</right>
+					<right>1095</right>
 					<bottom>969</bottom>
 				</ParentWnd>
 				<ChildWnds>
@@ -116,8 +116,8 @@
 			<RIGHT>
 				<WndCount>2</WndCount>
 				<Wnd_0>
-					<Name>CSamplePanelDialog2</Name>
-					<WndName>右边组合一</WndName>
+					<Name>CSamplePanelDialog</Name>
+					<WndName>右边组合二</WndName>
 					<SIZE>
 						<left>1401</left>
 						<right>1679</right>
@@ -126,8 +126,8 @@
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
-					<Name>CSamplePanelDialog</Name>
-					<WndName>右边组合二</WndName>
+					<Name>CSamplePanelDialog2</Name>
+					<WndName>右边组合一</WndName>
 					<SIZE>
 						<left>1401</left>
 						<right>1679</right>
@@ -154,7 +154,7 @@
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
 					<left>287</left>
-					<right>1117</right>
+					<right>1095</right>
 					<top>92</top>
 					<bottom>969</bottom>
 				</Tab_0>
@@ -164,14 +164,13 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>1125</left>
+					<left>1103</left>
 					<right>1393</right>
 					<top>92</top>
 					<bottom>969</bottom>
 				</Tab_0>
 			</Group1>
 		</TabbedView>
-		<DockablePane>false</DockablePane>
 	</Workspace>
 </config>
 

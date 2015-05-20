@@ -219,6 +219,8 @@ protected:
 	void RefreshDockBottomNodeXml();
 	void RefreshFloatNodeXml();
 
+	void UpdatePanesXmlWhenClosed();
+
 	DECLARE_MESSAGE_MAP()
 };
 

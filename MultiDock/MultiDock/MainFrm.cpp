@@ -100,8 +100,8 @@ void CMainFrame::OnClose()
 {
 	ResetWorkspaceNode();
 	EnumTabbedView();
-	EnumDockablePane();
-
+	//EnumDockablePane();
+	UpdatePanesXmlWhenClosed();
 	CMDIFrameWndEx::OnClose();
 }
 
@@ -1700,7 +1700,7 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	//为pane分配ID，并创建Pane。
 	int nNewID = BASE_MODULES_MENU_ID+MAX_NUM_VIEW_TYPES+counter++;
 	pModulePane = new CModulePane;
-	UINT style = WS_CHILD | CBRS_RIGHT |CBRS_FLOAT_MULTI|CBRS_HIDE_INPLACE;
+	UINT style = WS_CHILD | CBRS_NOALIGN |CBRS_FLOAT_MULTI|CBRS_HIDE_INPLACE;
 	DWORD tabbedStyle;
 	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT || 
 		pDef->nEnabledAlign == ALIGN_LEFT_GROUP||pDef->nEnabledAlign == ALIGN_RIGHT_GROUP)	
@@ -2670,24 +2670,6 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 		}
 	}
 
-	//if( dwAlignment==ALIGN_LEFT || dwAlignment == ALIGN_RIGHT ||dwAlignment == ALIGN_VERTICAL/**/ )
-	//{
-	//	POSITION pos = m_VertPaneMap.GetStartPosition();
-	//	while( pos )
-	//	{
-	//		m_VertPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
-	//	}
-	//}
-
-	//if(pPrevPane==NULL && (dwAlignment==ALIGN_TOP || dwAlignment == ALIGN_BOTTON) ||dwAlignment == ALIGN_HORIZONTAL)
-	//{
-	//	POSITION pos = m_HoriPaneMap.GetStartPosition();
-	//	while( pos )
-	//	{
-	//		m_HoriPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
-	//	}
-	//}
-
 	//当前是否有Pane跟当前待靠的pane是否是一个停靠类型，有就停靠到一组。
 	if( pPrevPane && pPrevPane->GetSafeHwnd() )
 	{
@@ -2699,7 +2681,11 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 		}
 
 		pPane->AttachToTabWnd(pPrevPane, DM_SHOW, bActivate, pTabbedBar);
-
+		DWORD dwPrevAlign  = pPrevPane->GetPaneStyle();
+		DWORD dwCurrent = pPane->GetPaneStyle();
+		dwCurrent |= dwPrevAlign;
+		pPane->SetPaneStyle(dwCurrent);
+		
 		if(bIsAutoHide && pTabbedBar && *pTabbedBar)
 		{
 			(*pTabbedBar)->SetAutoHideMode(TRUE, (*pTabbedBar)->GetCurrentAlignment());
@@ -3350,4 +3336,214 @@ void CMainFrame::LoadDllByName(CString& strDllname)
 	
 	//MDITabNewGroup();
 }
-		
+	
+//遍历当前所有的存活的panes(visible+unvisible)，5个map，对于其中的每个pane，
+//拿到name+size(目前看貌似对于dock的只关心width(left+right)和height(top+bottom)),
+//从wndManager中找到改实例对象所对应的类名。写入xml。
+void CMainFrame::UpdatePanesXmlWhenClosed()
+{
+	CModulePaneMap tempLeft, tempRight,tempTop,tempBottom,tempFloat;
+	MapCreatedWnd mapCreatedWnds;
+	CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds);
+	if (mapCreatedWnds.size()==0)
+	{
+		return;
+	}
+
+	int nType = 0;
+	//1.遍历left
+	POSITION pos = m_LeftPaneMap.GetStartPosition();
+	while (pos)
+	{
+		CString strWndname;
+		CModulePane* pModulePane = NULL;
+		CRect rcWndRect;
+		m_LeftPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+		{
+			if (pModulePane->IsVisible())
+			{
+				pModulePane->GetWindowRect(&rcWndRect);
+				BOOL bFloat = pModulePane->IsFloating();
+
+				DWORD dwStyle = pModulePane->GetPaneStyle();
+				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
+
+				if (dwStyle & CBRS_ALIGN_LEFT)
+				{
+					nType = 1;
+				}
+				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
+				{
+					nType = 2;
+				}
+				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
+				{
+					nType = 3;
+				}
+				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
+				{
+					nType = 4;
+				}
+				if (dwStyle & CBRS_NOALIGN)
+				{
+					nType = 5;
+				}
+			}
+			
+			CString strPane;
+			strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+			MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+			if (it2 != mapCreatedWnds.end())
+			{
+				
+			}
+		}
+	}
+
+	//right
+	pos = m_RightPaneMap.GetStartPosition();
+	while (pos)
+	{
+		CString strWndname;
+		CModulePane* pModulePane = NULL;
+		CRect rcWndRect;
+		m_RightPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+		{
+			if (pModulePane->IsVisible())
+			{
+				pModulePane->GetWindowRect(&rcWndRect);
+				BOOL bFloat = pModulePane->IsFloating();
+
+				DWORD dwStyle = pModulePane->GetPaneStyle();
+				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
+
+				if (dwStyle & CBRS_ALIGN_LEFT)
+				{
+					nType = 1;
+				}
+				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
+				{
+					nType = 2;
+				}
+				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
+				{
+					nType = 3;
+				}
+				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
+				{
+					nType = 4;
+				}
+				if (dwStyle & CBRS_NOALIGN)
+				{
+					nType = 5;
+				}
+			}
+		}
+	}
+
+
+	//top
+	pos = m_TopPaneMap.GetStartPosition();
+	while (pos)
+	{
+		CString strWndname;
+		CModulePane* pModulePane = NULL;
+		CRect rcWndRect;
+		m_TopPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+		{
+			if (pModulePane->IsVisible())
+			{
+				pModulePane->GetWindowRect(&rcWndRect);
+				BOOL bFloat = pModulePane->IsFloating();
+
+				DWORD dwStyle = pModulePane->GetPaneStyle();
+				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
+
+				if (dwStyle & CBRS_ALIGN_LEFT)
+				{
+					nType = 1;
+				}
+				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
+				{
+					nType = 2;
+				}
+				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
+				{
+					nType = 3;
+				}
+				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
+				{
+					nType = 4;
+				}
+				if (dwStyle & CBRS_NOALIGN)
+				{
+					nType = 5;
+				}
+			}
+		}
+	}
+
+	//bottom
+	pos = m_BottomPaneMap.GetStartPosition();
+	while (pos)
+	{
+		CString strWndname;
+		CModulePane* pModulePane = NULL;
+		CRect rcWndRect;
+		m_BottomPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+		{
+			if (pModulePane->IsVisible())
+			{
+				pModulePane->GetWindowRect(&rcWndRect);
+				BOOL bFloat = pModulePane->IsFloating();
+
+				DWORD dwStyle = pModulePane->GetPaneStyle();
+				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
+
+				if (dwStyle & CBRS_ALIGN_LEFT)
+				{
+					nType = 1;
+				}
+				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
+				{
+					nType = 2;
+				}
+				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
+				{
+					nType = 3;
+				}
+				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
+				{
+					nType = 4;
+				}
+				if (dwStyle & CBRS_NOALIGN)
+				{
+					nType = 5;
+				}
+			}
+		}
+	}
+
+	//float
+	pos = m_FloatPaneMap.GetStartPosition();
+	while (pos)
+	{
+		CString strWndname;
+		CModulePane* pModulePane = NULL;
+		CRect rcWndRect;
+		m_FloatPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+		{
+			if (pModulePane->IsVisible())
+			{
+				pModulePane->GetWindowRect(&rcWndRect);
+				BOOL bFloat = pModulePane->IsFloating();
+
+			}
+		}
+	}
+}
