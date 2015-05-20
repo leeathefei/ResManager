@@ -1350,7 +1350,8 @@ void CMainFrame::CreateDockpanesAndChilds()
 		strhist.Format(_T("0x%08x"), pFloat);
 		if (m_FloatPaneMap.Lookup(strhist, pModulePane))
 		{
-			pModulePane->MoveWindow(oneFloat.rcWnd);
+			pModulePane->SetWindowPos(NULL, oneFloat.rcWnd.left, oneFloat.rcWnd.right, oneFloat.rcWnd.Width(), 
+				oneFloat.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);
 			pModulePane->RecalcLayout();
 		}
 	}
@@ -1371,23 +1372,28 @@ void CMainFrame::CreateDockpanesAndChilds()
 			{
 				if(m_LeftPaneMap.Lookup(strhist, pDockpane))
 				{
-					pDockpane->MoveWindow(oneDock.rcWnd);
+					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);//MoveWindow(oneFloat.rcWnd);
+					//pDockpane->MoveWindow(oneDock.rcWnd);
 					pDockpane->RecalcLayout();
+					//GetDockingManager()->RecalcLayout();
 				}
 			}
 			else if (oneDock.eDockType == ALIGN_RIGHT || oneDock.eDockType == ALIGN_RIGHT_GROUP)
 			{
 				if (m_RightPaneMap.Lookup(strhist, pDockpane))
 				{
-					pDockpane->MoveWindow(oneDock.rcWnd);
-					pDockpane->RecalcLayout();
+					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);
+					GetDockingManager()->RecalcLayout();
 				}
 			}
 			else if (oneDock.eDockType == ALIGN_TOP || oneDock.eDockType == ALIGN_TOP_GROUP)
 			{
 				if (m_TopPaneMap.Lookup(strhist, pDockpane))
 				{
-					pDockpane->MoveWindow(oneDock.rcWnd);
+					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);
 					pDockpane->RecalcLayout();
 				}
 			}
@@ -1395,12 +1401,15 @@ void CMainFrame::CreateDockpanesAndChilds()
 			{
 				if (m_BottomPaneMap.Lookup(strhist, pDockpane))
 				{
-					pDockpane->MoveWindow(oneDock.rcWnd);
+					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);
 					pDockpane->RecalcLayout();
 				}
 			}
 		}
 	}
+
+	RecalcLayout();
 }
 
 BOOL CMainFrame::OpenModuleByName(CString strModuleName, bool onStartup /*=true*/)
@@ -2724,6 +2733,25 @@ LRESULT CMainFrame::OnClosePane(WPARAM, LPARAM lp)
 		pDockablePane = dynamic_cast<CDockablePane*>(pTabCtrl->GetTabWnd(iTab));
 	}
 
+	/*UINT nTabsCount = pTabCtrl->GetTabsNum();
+	UINT nVisiCount = pTabCtrl->GetVisibleTabsNum();
+	UINT nVaiCount = pTabCtrl->GetFirstVisibleTabNum();
+	for (int i=0; i<nTabsCount; i++)
+	{
+	CString strWndName;
+	CDockablePane* pPane = dynamic_cast<CDockablePane*>(pTabCtrl->GetTabWnd(i));
+	CRect rcClient;
+	pPane->GetWindowRect(&rcClient);
+	pPane->GetWindowText(strWndName);
+	CRect rcTop,rcBottom,rcTab,rcTabs;
+	pTabCtrl->GetTabArea(rcTop, rcBottom);
+	UINT nWidth = pTabCtrl->GetTabFullWidth(i);
+	UINT nTabID = pTabCtrl->GetTabID(i);
+	int nActivieTab = pTabCtrl->GetActiveTab();
+	pTabCtrl->GetTabRect(i, rcTab);
+	pTabCtrl->GetTabsRect(rcTabs);
+	int abc=100;
+	}*/
 
 
 	CBaseTabbedPane* pTabbedBar = dynamic_cast<CBaseTabbedPane*>(pDockablePane);
@@ -2772,6 +2800,11 @@ LRESULT CMainFrame::OnClosePane(WPARAM, LPARAM lp)
 	// Remove From DockingManager
 	pDockablePane->UndockPane();
 
+
+	/*nTabsCount = pTabCtrl->GetTabsNum();
+	nVisiCount = pTabCtrl->GetVisibleTabsNum();
+	nVaiCount = pTabCtrl->GetFirstVisibleTabNum();
+	*/
 
 	// Remove From Map
 	BOOL bVertical;

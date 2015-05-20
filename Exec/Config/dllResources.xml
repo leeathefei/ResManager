@@ -18,9 +18,9 @@
 				<ParentWnd>
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
-					<top>67</top>
-					<right>976</right>
-					<bottom>687</bottom>
+					<top>92</top>
+					<right>1117</right>
+					<bottom>969</bottom>
 				</ParentWnd>
 				<ChildWnds>
 					<ChildCount>2</ChildCount>
@@ -51,7 +51,7 @@
 				<SIZE>
 					<left>104</left>
 					<right>196</right>
-					<top>124</top>
+					<top>122</top>
 					<bottom>796</bottom>
 				</SIZE>
 				<WndName/>
@@ -65,9 +65,9 @@
 					<WndName>左边组合一</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>265</right>
-						<top>112</top>
-						<bottom>708</bottom>
+						<right>279</right>
+						<top>137</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
@@ -75,9 +75,9 @@
 					<WndName>左边组合二</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>265</right>
-						<top>112</top>
-						<bottom>708</bottom>
+						<right>279</right>
+						<top>137</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_1>
 			</LEFT>
@@ -116,23 +116,23 @@
 			<RIGHT>
 				<WndCount>2</WndCount>
 				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
-					<WndName>右边组合二</WndName>
+					<Name>CSamplePanelDialog2</Name>
+					<WndName>右边组合一</WndName>
 					<SIZE>
-						<left>1101</left>
-						<right>1365</right>
-						<top>112</top>
-						<bottom>708</bottom>
+						<left>1401</left>
+						<right>1679</right>
+						<top>137</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
 					<Name>CSamplePanelDialog</Name>
-					<WndName>右边组合一</WndName>
+					<WndName>右边组合二</WndName>
 					<SIZE>
-						<left>1101</left>
-						<right>1365</right>
-						<top>112</top>
-						<bottom>708</bottom>
+						<left>1401</left>
+						<right>1679</right>
+						<top>137</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_1>
 			</RIGHT>
@@ -153,10 +153,10 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>269</left>
-					<right>1015</right>
-					<top>67</top>
-					<bottom>687</bottom>
+					<left>287</left>
+					<right>1117</right>
+					<top>92</top>
+					<bottom>969</bottom>
 				</Tab_0>
 			</Group0>
 			<Group1>
@@ -164,10 +164,10 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>1023</left>
-					<right>1175</right>
-					<top>67</top>
-					<bottom>687</bottom>
+					<left>1125</left>
+					<right>1393</right>
+					<top>92</top>
+					<bottom>969</bottom>
 				</Tab_0>
 			</Group1>
 		</TabbedView>

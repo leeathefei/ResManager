@@ -97,7 +97,7 @@ void CModulePane::OnSize(UINT nType, int cx, int cy)
     case WM_NCMBUTTONUP:
        if(pMsg->hwnd==GetSafeHwnd())
        {
-          SetActivePane(this);  
+          SetActivePane(this); 
        }
     }
 
