@@ -28,7 +28,8 @@ public:
 	BOOL RegisterDockPane(CWnd* pAttachWnd, 
 							LPCTSTR lpszWndName,
 							EPANE_ALIGNMENT eDockDir,
-							BOOL bAutoDelete);
+							BOOL bAutoDelete,
+							CRect rect);
 
 	BOOL UnregisterModulePane(LPCTSTR);
 	BOOL CanClose(CString& strMessage);

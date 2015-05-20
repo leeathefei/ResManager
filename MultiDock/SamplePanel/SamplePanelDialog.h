@@ -30,7 +30,7 @@ public:
 	};
 
 	static CWnd* CreateDlgObj();
-	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName,BOOL bAutoDelete=TRUE);
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName,BOOL bAutoDelete=TRUE,CRect rect=CRect(0,0,0,0));
 
 // Dialog Data
 	enum { IDD = IDD_SAMPLE_PANEDIALOG_1 };

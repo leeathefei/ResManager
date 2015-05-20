@@ -1349,7 +1349,8 @@ void CMainFrame::CreateDockpanesAndChilds()
 	for (list<stFloatWnd>::iterator itFloat = listFloatWnds.begin(); itFloat != listFloatWnds.end(); ++itFloat)
 	{
 		stFloatWnd& oneFloat = *itFloat;
-		CWnd* pFloat = CWndManager::Instance()->CreateFloatWnd((CWnd*)AfxGetMainWnd(), oneFloat.strClass, oneFloat.strWndName, oneFloat.strDllname);
+		CWnd* pFloat = CWndManager::Instance()->CreateFloatWnd((CWnd*)AfxGetMainWnd(), oneFloat.strClass, 
+			oneFloat.strWndName, oneFloat.strDllname,FALSE,oneFloat.rcWnd);
 		CModulePane* pModulePane = NULL;
 		CString strhist;
 		strhist.Format(_T("0x%08x"), pFloat);
@@ -1805,7 +1806,7 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 
 	if (Align == ALIGN_FLOAT)
 	{
-		pModulePane->FloatPane(CRect(100,100,400,600), DM_STANDARD);
+		pModulePane->FloatPane(pDef->rcWnd, DM_STANDARD);
 	}
 // 	else
 // 	{

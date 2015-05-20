@@ -109,7 +109,8 @@ void CSamplePanelManager::ShowToolBar(BOOL bShow)
 BOOL CSamplePanelManager::RegisterDockPane(CWnd* pAttachWnd, 
 											LPCTSTR lpszWndName,
 											EPANE_ALIGNMENT eDockDir,
-											BOOL bAutoDelete)
+											BOOL bAutoDelete,
+											CRect rect)
 {	
 	USE_CUSTOM_RESOURCE(_T("SamplePanel.dll"));
 
@@ -123,7 +124,8 @@ BOOL CSamplePanelManager::RegisterDockPane(CWnd* pAttachWnd,
 		hIcon, 
 		eDockDir, 
 		true, 
-		bAutoDelete);
+		bAutoDelete,
+		rect);
 
 	return TRUE;
 }

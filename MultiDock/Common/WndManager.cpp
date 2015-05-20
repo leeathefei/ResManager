@@ -100,14 +100,14 @@ UINT CWndManager::GetNextViewIndex()
 	return m_nViewIndex++;
 }
 
-CWnd* CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName, CString&strDll, BOOL bAutoDelete)
+CWnd* CWndManager::CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName, CString&strDll, BOOL bAutoDelete,CRect rect)
 {
 	//create panes.
 	CWnd* pDlg = (CWnd*)CreateObj(strClass, strWndName, strDll);
 	CBaseObj*pBase = dynamic_cast<CBaseObj*>(pDlg);
 	if (NULL != pBase)
 	{
-		pBase->CreateWnd(pParent, ALIGN_FLOAT, strWndName, bAutoDelete);//默认float的parent是mainframe！
+		pBase->CreateWnd(pParent, ALIGN_FLOAT, strWndName, bAutoDelete,rect);//默认float的parent是mainframe！
 		pDlg->ShowWindow(SW_SHOW);
 
 		return pDlg;

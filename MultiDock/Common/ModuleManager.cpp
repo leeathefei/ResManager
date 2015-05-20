@@ -79,7 +79,8 @@ void CModuleManager::RemoveToolBar(CMFCToolBar* pToolbar)
    SendMainWndMessage(WM_USER+2, (LPARAM)pToolbar, (WPARAM)TOOLBAR_DEF::TOOLBAR_REMOVE);
 }
 
-BOOL CModuleManager::RegisterModulePane( CWnd* pWnd/*=NULL*/, LPCTSTR lpszWndName/*=NULL*/, HICON hIcon/*=NULL*/, EPANE_ALIGNMENT align/*=ALIGN_VERTICAL*/, bool bAttachToPrev/*=true*/, bool bAutoDelete/*=true*/)
+BOOL CModuleManager::RegisterModulePane( CWnd* pWnd/*=NULL*/, LPCTSTR lpszWndName/*=NULL*/, HICON hIcon/*=NULL*/,
+	EPANE_ALIGNMENT align/*=ALIGN_VERTICAL*/, bool bAttachToPrev/*=true*/, bool bAutoDelete/*=true*/,CRect rect)
 {
    MODULE_WINDOW_DEF moduleDef;
    moduleDef.pWnd = pWnd;
@@ -88,6 +89,7 @@ BOOL CModuleManager::RegisterModulePane( CWnd* pWnd/*=NULL*/, LPCTSTR lpszWndNam
    moduleDef.bAutoDelete = bAutoDelete;
    moduleDef.nEnabledAlign = align;
    moduleDef.hIcon = hIcon;
+   moduleDef.rcWnd = rect;
    LRESULT lErrCode = SendMainWndMessage(WM_USER+1, (WPARAM)&moduleDef, 0);
    
    return lErrCode==0? TRUE:FALSE;

@@ -28,7 +28,7 @@ typedef CWnd* (*PFUNC_CREATEOBJ)();
 class COMMON_DLLEXPORT CBaseObj
 {
 public:
-	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName, BOOL bAutoDelete=TRUE)	{	return TRUE;	}
+	virtual BOOL CreateWnd(CWnd* pParent, EPANE_ALIGNMENT eDockType, CString strWndName, BOOL bAutoDelete=TRUE,CRect rect=CRect(0,0,0,0))	{	return TRUE;	}
 };
 
 struct stCreateWndItem
@@ -75,7 +75,7 @@ public:
 
 	//for different createing window page wndcofigdlg.h
 	//Create pane+dialogs.
-	CWnd* CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName, CString&strDll, BOOL bAutoDelete=TRUE);
+	CWnd* CreateFloatWnd(CWnd* pParent, CString& strClass, CString& strWndName, CString&strDll, BOOL bAutoDelete=TRUE,CRect rect=CRect(0,0,0,0));
 	CWnd* CreateDockWnd(CWnd* pParent, CString& strClass, EPANE_ALIGNMENT etype, CString& strWndName, CString&strDll,BOOL bAutoDelete=TRUE);
 	void CreateChildWnd(CWnd* pParent, CString& strChildClass, CRect& rect, CString&strWndName, CString& strDll,bool bWithTitle = false);
 	CWnd* UpdateChildWndSizeAndName(CWnd* pSelChildWnd, CRect& rcNew, CString& strNewName);

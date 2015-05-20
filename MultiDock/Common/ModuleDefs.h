@@ -27,6 +27,7 @@ struct MODULE_WINDOW_DEF {
    bool     bAutoDelete;
    bool     bAttachToPrev;
    EPANE_ALIGNMENT    nEnabledAlign;
+   CRect rcWnd;
 
 
    MODULE_WINDOW_DEF() {
