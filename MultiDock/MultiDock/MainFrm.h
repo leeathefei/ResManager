@@ -53,6 +53,7 @@ class COutlookBar : public CMFCOutlookBar
 
 class CModulePane;
 class CWndConfigDlg;
+class CDlgWndManage;
 
 typedef CMap<CString, LPCTSTR, CModulePane*, CModulePane*> CModulePaneMap;
 typedef CList<CMFCToolBar*, CMFCToolBar*>  CToolBarList;
@@ -158,6 +159,7 @@ public:
 	
 	CToolBarList      m_ToolbarList;
 	CWndConfigDlg*    m_pDlgConfigWnd;
+	CDlgWndManage*    m_pDlgManagement;
 	static UINT s_ViewerIndex;
 
 protected:
@@ -174,6 +176,7 @@ protected:
 	afx_msg void OnRibbonPane2Cmd4();
 	//Menu handlers
 	afx_msg void OnShowWndConfigDlg();
+	afx_msg void OnWndManagement();
 
 	afx_msg void OnWindowManager();
 	afx_msg void OnViewCustomize();
@@ -222,6 +225,7 @@ protected:
 	void UpdatePanesXmlWhenClosed();
 
 	DECLARE_MESSAGE_MAP()
+
 };
 
 

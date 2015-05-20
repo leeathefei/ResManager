@@ -19,7 +19,7 @@
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
 					<top>67</top>
-					<right>893</right>
+					<right>864</right>
 					<bottom>687</bottom>
 				</ParentWnd>
 				<ChildWnds>
@@ -40,6 +40,9 @@
 						<right>600</right>
 						<bottom>300</bottom>
 					</Child_1>
+					<Child_2>
+						<ClassName/>
+					</Child_2>
 				</ChildWnds>
 			</Group_0>
 		</CHILD_GROUP>
@@ -49,24 +52,24 @@
 				<Name>CDlgTest1InSV</Name>
 				<WndName>中文名可以吗</WndName>
 				<SIZE>
-					<left>184</left>
-					<right>784</right>
-					<top>370</top>
-					<bottom>686</bottom>
+					<left>251</left>
+					<right>851</right>
+					<top>371</top>
+					<bottom>687</bottom>
 				</SIZE>
 				<WndName/>
 			</Wnd_0>
 		</FLOAT_GROUP>
 		<DOCK_GROUP>
 			<LEFT>
-				<WndCount>2</WndCount>
+				<WndCount>3</WndCount>
 				<Wnd_0>
 					<Name>CDlgTest1InSV</Name>
 					<WndName>左边组合一</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>172</right>
-						<top>112</top>
+						<right>236</right>
+						<top>135</top>
 						<bottom>708</bottom>
 					</SIZE>
 				</Wnd_0>
@@ -75,11 +78,21 @@
 					<WndName>左边组合二</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>180</right>
-						<top>112</top>
+						<right>234</right>
+						<top>135</top>
 						<bottom>708</bottom>
 					</SIZE>
 				</Wnd_1>
+				<Wnd_2>
+					<Name>CDlgTest1InSV</Name>
+					<WndName>nihao </WndName>
+					<SIZE>
+						<left>1</left>
+						<right>234</right>
+						<top>135</top>
+						<bottom>708</bottom>
+					</SIZE>
+				</Wnd_2>
 			</LEFT>
 			<RIGHT>
 				<WndCount>0</WndCount>
@@ -119,7 +132,7 @@
 					<Name>CSamplePanelDialog</Name>
 					<WndName>右边组合二</WndName>
 					<SIZE>
-						<left>1239</left>
+						<left>1190</left>
 						<right>1365</right>
 						<top>112</top>
 						<bottom>708</bottom>
@@ -129,7 +142,7 @@
 					<Name>CSamplePanelDialog2</Name>
 					<WndName>右边组合一</WndName>
 					<SIZE>
-						<left>1239</left>
+						<left>1190</left>
 						<right>1365</right>
 						<top>112</top>
 						<bottom>708</bottom>
@@ -153,8 +166,8 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>180</left>
-					<right>916</right>
+					<left>242</left>
+					<right>894</right>
 					<top>67</top>
 					<bottom>687</bottom>
 				</Tab_0>
@@ -164,8 +177,8 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>924</left>
-					<right>1231</right>
+					<left>902</left>
+					<right>1182</right>
 					<top>67</top>
 					<bottom>687</bottom>
 				</Tab_0>

@@ -6,6 +6,7 @@
 #include "DlgConfig.h"
 #include "ModulePane.h"
 #include "WndConfigDlg.h"
+#include "DlgWndManage.h"
 
 
 #include "..\Common\XmlConfig.h"
@@ -68,6 +69,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_MESSAGE(WM_OPEN_VIEWER, OnOpenViewer)
 
 	ON_COMMAND(ID_SHOW_WND_CONFIG_DLG, &CMainFrame::OnShowWndConfigDlg)
+	ON_COMMAND(ID_WND_MANAGEMENT, &CMainFrame::OnWndManagement)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -82,6 +84,7 @@ static UINT indicators[] =
 CMainFrame::CMainFrame()
 {
 	m_pDlgConfigWnd = NULL;
+	m_pDlgManagement = NULL;
 	m_pViewLastCreated = NULL;
     m_pActiveView = NULL;
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_OFF_2007_BLUE);
@@ -93,6 +96,11 @@ CMainFrame::~CMainFrame()
 	{
 		m_pDlgConfigWnd->DestroyWindow();
 		delete m_pDlgConfigWnd;
+	}
+	if (NULL != m_pDlgManagement)
+	{
+		m_pDlgManagement->DestroyWindow();
+		delete m_pDlgManagement;
 	}
 }
 
@@ -402,6 +410,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (NULL != m_pDlgConfigWnd)
 	{
 		m_pDlgConfigWnd->Create(CWndConfigDlg::IDD, this);
+	}
+
+	m_pDlgManagement = new CDlgWndManage;
+	if (NULL != m_pDlgManagement)
+	{
+		m_pDlgManagement->Create(CDlgWndManage::IDD, this);
 	}
 
 	PostMessage(WM_INIT_MODULES);//OnInitModulePanes
@@ -1927,6 +1941,8 @@ void CMainFrame::RefreshDockLeftNodeXml()
 			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
 			{
 				CRect rcPane;
+				BOOL bVisible = pModulePane->IsVisible();
+
 				pModulePane->GetWindowRect(&rcPane);
 
 				CString strPane;
@@ -3551,4 +3567,14 @@ void CMainFrame::UpdatePanesXmlWhenClosed()
 			}
 		}
 	}
+}
+
+
+void CMainFrame::OnWndManagement()
+{
+	if (NULL != m_pDlgManagement && NULL != m_pDlgManagement->GetSafeHwnd())
+	{
+		m_pDlgManagement->ShowWindow(SW_SHOW);
+	}
+	// TODO: Add your command handler code here
 }
