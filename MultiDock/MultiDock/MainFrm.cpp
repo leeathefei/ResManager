@@ -101,7 +101,12 @@ void CMainFrame::OnClose()
 	ResetWorkspaceNode();
 	EnumTabbedView();
 	//EnumDockablePane();
-	UpdatePanesXmlWhenClosed();
+	//UpdatePanesXmlWhenClosed();
+	RefreshPanesXmlNodes(ALIGN_LEFT_GROUP);
+	RefreshPanesXmlNodes(ALIGN_RIGHT_GROUP);
+	RefreshPanesXmlNodes(ALIGN_TOP_GROUP);
+	RefreshPanesXmlNodes(ALIGN_BOTTOM_GROUP);
+	RefreshPanesXmlNodes(ALIGN_FLOAT);
 	CMDIFrameWndEx::OnClose();
 }
 
@@ -1351,7 +1356,9 @@ void CMainFrame::CreateDockpanesAndChilds()
 		if (m_FloatPaneMap.Lookup(strhist, pModulePane))
 		{
 			pModulePane->SetWindowPos(NULL, oneFloat.rcWnd.left, oneFloat.rcWnd.right, oneFloat.rcWnd.Width(), 
-				oneFloat.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);
+				oneFloat.rcWnd.Height(),SWP_SHOWWINDOW );
+			//HDWP hdp;
+			//CSize szR = pModulePane->MovePane(oneFloat.rcWnd, TRUE, hdp);
 			pModulePane->RecalcLayout();
 		}
 	}
@@ -1373,7 +1380,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 				if(m_LeftPaneMap.Lookup(strhist, pDockpane))
 				{
 					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
-						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);//MoveWindow(oneFloat.rcWnd);
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE);//MoveWindow(oneFloat.rcWnd);
 					//pDockpane->MoveWindow(oneDock.rcWnd);
 					pDockpane->RecalcLayout();
 					//GetDockingManager()->RecalcLayout();
@@ -1384,7 +1391,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 				if (m_RightPaneMap.Lookup(strhist, pDockpane))
 				{
 					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
-						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE);
 					GetDockingManager()->RecalcLayout();
 				}
 			}
@@ -1393,7 +1400,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 				if (m_TopPaneMap.Lookup(strhist, pDockpane))
 				{
 					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
-						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE);
 					pDockpane->RecalcLayout();
 				}
 			}
@@ -1402,7 +1409,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 				if (m_BottomPaneMap.Lookup(strhist, pDockpane))
 				{
 					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
-						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE|SWP_NOSIZE);
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE);
 					pDockpane->RecalcLayout();
 				}
 			}
@@ -1796,18 +1803,9 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 		m_FloatPaneMap.SetAt(strPane, pModulePane);
 	}
 
-// 	if(pDef->nEnabledAlign==ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_RIGHT||pDef->nEnabledAlign == ALIGN_VERTICAL )
-// 	{
-// 		m_VertPaneMap.SetAt(pDef->strWindowName, pModulePane);
-// 	}
-// 	if(pDef->nEnabledAlign== ALIGN_TOP||pDef->nEnabledAlign == ALIGN_BOTTON||pDef->nEnabledAlign == ALIGN_HORIZONTAL )
-// 	{
-// 		m_HoriPaneMap.SetAt(pDef->strWindowName, pModulePane);
-// 	}
-
 	if (Align == ALIGN_FLOAT)
 	{
-		pModulePane->FloatPane(CRect(100,100,200,800));
+		pModulePane->FloatPane(CRect(100,100,400,600), DM_STANDARD);
 	}
 // 	else
 // 	{
@@ -1817,7 +1815,7 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 
 	RecalcLayout();
 
-	RefreshPanesXmlNodes(Align);
+	//RefreshPanesXmlNodes(Align);
 	return 0;
 }
 
@@ -3542,7 +3540,6 @@ void CMainFrame::UpdatePanesXmlWhenClosed()
 			{
 				pModulePane->GetWindowRect(&rcWndRect);
 				BOOL bFloat = pModulePane->IsFloating();
-
 			}
 		}
 	}
