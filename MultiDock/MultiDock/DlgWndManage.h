@@ -26,6 +26,10 @@ protected:
 	afx_msg void OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnMouseClicked(NMHDR* pNMHDR, LRESULT* pResult);
 
+	afx_msg void OnBnClickedBtnShowhidewnd();
+	afx_msg void OnBnClickedBtnHideSelwnd();
+	afx_msg void OnBnClickedBtnRemovewnd();
+
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
@@ -33,4 +37,5 @@ public:
 	CListCtrl m_listAllVisibleWnds;
 	CWnd* m_pSelParentWnd;
 	int m_nParentIndex;
+
 };

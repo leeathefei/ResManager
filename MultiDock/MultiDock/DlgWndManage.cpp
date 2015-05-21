@@ -5,6 +5,7 @@
 #include "MultiDock.h"
 #include "DlgWndManage.h"
 #include "afxdialogex.h"
+#include "MainFrm.h"
 
 
 // CDlgWndManage dialog
@@ -33,6 +34,9 @@ void CDlgWndManage::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgWndManage, CDialogEx)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_ALL_CREATED_WNDS, OnParentSelectChanged)
 	ON_NOTIFY(NM_CLICK, IDC_LIST_ALL_CREATED_WNDS, OnMouseClicked)
+	ON_BN_CLICKED(IDC_BTN_SHOWHIDEWND, &CDlgWndManage::OnBnClickedBtnShowhidewnd)
+	ON_BN_CLICKED(IDC_BTN_HIDE_SELWND, &CDlgWndManage::OnBnClickedBtnHideSelwnd)
+	ON_BN_CLICKED(IDC_BTN_REMOVEWND, &CDlgWndManage::OnBnClickedBtnRemovewnd)
 END_MESSAGE_MAP()
 
 
@@ -80,7 +84,7 @@ void CDlgWndManage::RefreshCreatedWndTree()
 		{
 			stCreateWndItem& oneItem = it->second;
 
-			CString strState(_T("ÏÔ  Ê¾"));
+			CString strState(_T("ÏÔÊ¾"));
 			if (oneItem.pWnd != NULL && NULL != oneItem.pWnd->GetSafeHwnd())
 			{
 				strState = oneItem.pWnd->IsWindowVisible() ? _T("ÏÔÊ¾") : _T("Òþ²Ø");
@@ -143,4 +147,60 @@ void CDlgWndManage::OnParentSelectChanged(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 
 	*pResult = 0;
+}
+
+void CDlgWndManage::OnBnClickedBtnShowhidewnd()
+{
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	if (NULL != pFrame)
+	{
+		if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
+		{
+			CString strWndName;
+			strWndName.Format(_T("0x%08x"), m_pSelParentWnd);
+			if(pFrame->ShowHidePane(strWndName, MODULE_WINDOW_DEF::PANE_SHOW))
+			{
+				m_listAllVisibleWnds.SetItemText(m_nParentIndex, 3, _T("ÏÔÊ¾"));
+			}
+		}
+	}
+}
+
+void CDlgWndManage::OnBnClickedBtnHideSelwnd()
+{
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	if (NULL != pFrame)
+	{
+		if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
+		{
+			CString strWndName;
+			strWndName.Format(_T("0x%08x"), m_pSelParentWnd);
+			if(pFrame->ShowHidePane(strWndName, MODULE_WINDOW_DEF::PANE_HIDE))
+			{
+				m_listAllVisibleWnds.SetItemText(m_nParentIndex, 3, _T("Òþ²Ø"));
+			}
+		}
+	}
+}
+
+
+void CDlgWndManage::OnBnClickedBtnRemovewnd()
+{
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	if (NULL != pFrame)
+	{
+		if (NULL != m_pSelParentWnd && NULL != m_pSelParentWnd->GetSafeHwnd())
+		{
+			CString strWndName;
+			strWndName.Format(_T("0x%08x"), m_pSelParentWnd);
+			if(pFrame->RemovePaneAdpter(strWndName))
+			{
+				m_listAllVisibleWnds.DeleteItem(m_nParentIndex);
+
+				CWndManager::Instance()->RemoveCreatedWnd(m_pSelParentWnd);
+				m_nParentIndex = 0;
+				m_pSelParentWnd = NULL;
+			}
+		}
+	}
 }
