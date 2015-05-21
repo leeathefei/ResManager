@@ -103,6 +103,18 @@
 			<BOTTOM>
 				<WndCount>0</WndCount>
 			</BOTTOM>
+			<LEFT_GROUP>
+				<WndCount>0</WndCount>
+			</LEFT_GROUP>
+			<RIGHT_GROUP>
+				<WndCount>0</WndCount>
+			</RIGHT_GROUP>
+			<TOP_GROUP>
+				<WndCount>0</WndCount>
+			</TOP_GROUP>
+			<BOTTOM_GROUP>
+				<WndCount>0</WndCount>
+			</BOTTOM_GROUP>
 		</DOCK_GROUP>
 	</Dll_0>
 	<Dll_1>
@@ -155,6 +167,18 @@
 			<BOTTOM>
 				<WndCount>0</WndCount>
 			</BOTTOM>
+			<LEFT_GROUP>
+				<WndCount>0</WndCount>
+			</LEFT_GROUP>
+			<RIGHT_GROUP>
+				<WndCount>0</WndCount>
+			</RIGHT_GROUP>
+			<TOP_GROUP>
+				<WndCount>0</WndCount>
+			</TOP_GROUP>
+			<BOTTOM_GROUP>
+				<WndCount>0</WndCount>
+			</BOTTOM_GROUP>
 		</DOCK_GROUP>
 	</Dll_1>
 	<Workspace>

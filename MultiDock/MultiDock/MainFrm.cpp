@@ -110,6 +110,12 @@ void CMainFrame::OnClose()
 	EnumTabbedView();
 	//EnumDockablePane();
 	//UpdatePanesXmlWhenClosed();
+
+	RefreshPanesXmlNodes(ALIGN_LEFT);
+	RefreshPanesXmlNodes(ALIGN_RIGHT);
+	RefreshPanesXmlNodes(ALIGN_TOP);
+	RefreshPanesXmlNodes(ALIGN_BOTTON);
+	
 	RefreshPanesXmlNodes(ALIGN_LEFT_GROUP);
 	RefreshPanesXmlNodes(ALIGN_RIGHT_GROUP);
 	RefreshPanesXmlNodes(ALIGN_TOP_GROUP);
@@ -685,37 +691,6 @@ void CMainFrame::OnApplicationLook(UINT id)
 
 	CString strTemp;
 	CModulePane* pModulePane=NULL;
-//	POSITION pos = m_HoriPaneMap.GetStartPosition();
-// 	if( pos )
-// 	{
-// 		m_HoriPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
-// 
-// 		HWND hWndTab;
-// 		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
-// 		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
-// 		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
-// 		{
-// 			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
-// 			pTabCtrl->EnableAutoColor();
-// 			pTabCtrl->RecalcLayout();
-// 		}
-// 	}
-// 
-// 	pos = m_VertPaneMap.GetStartPosition();
-// 	if( pModulePane==NULL && pos )
-// 	{
-// 		m_VertPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
-// 
-// 		HWND hWndTab;
-// 		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
-// 		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
-// 		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
-// 		{
-// 			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
-// 			pTabCtrl->EnableAutoColor();
-// 			pTabCtrl->RecalcLayout();
-// 		}
-// 	}
 
 	POSITION pos = m_LeftPaneMap.GetStartPosition();
 	if( pModulePane==NULL && pos )
@@ -769,6 +744,68 @@ void CMainFrame::OnApplicationLook(UINT id)
 	if( pModulePane==NULL && pos )
 	{
 		m_BottomPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+
+		HWND hWndTab;
+		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
+		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
+		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
+		{
+			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
+			pTabCtrl->EnableAutoColor();
+			pTabCtrl->RecalcLayout();
+		}
+	}
+
+	//
+	pos = m_GroupLeftPaneMap.GetStartPosition();
+	if( pModulePane==NULL && pos )
+	{
+		m_GroupLeftPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+
+		HWND hWndTab;
+		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
+		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
+		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
+		{
+			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
+			pTabCtrl->EnableAutoColor();
+			pTabCtrl->RecalcLayout();
+		}
+	}
+	pos = m_GroupRightPaneMap.GetStartPosition();
+	if( pModulePane==NULL && pos )
+	{
+		m_GroupRightPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+
+		HWND hWndTab;
+		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
+		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
+		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
+		{
+			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
+			pTabCtrl->EnableAutoColor();
+			pTabCtrl->RecalcLayout();
+		}
+	}
+	pos = m_GroupTopPaneMap.GetStartPosition();
+	if( pModulePane==NULL && pos )
+	{
+		m_GroupTopPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+
+		HWND hWndTab;
+		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
+		CMFCTabCtrl* pTabCtrl = dynamic_cast<CMFCTabCtrl*>(pBaseTabCtrl);
+		if(pTabCtrl && !pTabCtrl->IsOneNoteStyle())
+		{
+			pTabCtrl->ModifyTabStyle(CMFCTabCtrl::STYLE_3D_ONENOTE);
+			pTabCtrl->EnableAutoColor();
+			pTabCtrl->RecalcLayout();
+		}
+	}
+	pos = m_GroupBottomPaneMap.GetStartPosition();
+	if( pModulePane==NULL && pos )
+	{
+		m_GroupBottomPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
 
 		HWND hWndTab;
 		CMFCBaseTabCtrl* pBaseTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
@@ -1390,7 +1427,7 @@ void CMainFrame::CreateDockpanesAndChilds()
 			CModulePane* pDockpane = NULL;
 			CString strhist;
 			strhist.Format(_T("0x%08x"), pDockDlg);
-			if (oneDock.eDockType == ALIGN_LEFT ||oneDock.eDockType == ALIGN_LEFT_GROUP)
+			if (oneDock.eDockType == ALIGN_LEFT )
 			{
 				if(m_LeftPaneMap.Lookup(strhist, pDockpane))
 				{
@@ -1401,7 +1438,16 @@ void CMainFrame::CreateDockpanesAndChilds()
 					//GetDockingManager()->RecalcLayout();
 				}
 			}
-			else if (oneDock.eDockType == ALIGN_RIGHT || oneDock.eDockType == ALIGN_RIGHT_GROUP)
+			else if (oneDock.eDockType == ALIGN_LEFT_GROUP)
+			{
+				if(m_GroupLeftPaneMap.Lookup(strhist, pDockpane))
+				{
+					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE);
+					pDockpane->RecalcLayout();
+				}
+			}
+			else if (oneDock.eDockType == ALIGN_RIGHT)
 			{
 				if (m_RightPaneMap.Lookup(strhist, pDockpane))
 				{
@@ -1410,7 +1456,16 @@ void CMainFrame::CreateDockpanesAndChilds()
 					GetDockingManager()->RecalcLayout();
 				}
 			}
-			else if (oneDock.eDockType == ALIGN_TOP || oneDock.eDockType == ALIGN_TOP_GROUP)
+			else if (oneDock.eDockType == ALIGN_RIGHT_GROUP)
+			{
+				if (m_GroupRightPaneMap.Lookup(strhist, pDockpane))
+				{
+					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE);
+					GetDockingManager()->RecalcLayout();
+				}
+			}
+			else if (oneDock.eDockType == ALIGN_TOP)
 			{
 				if (m_TopPaneMap.Lookup(strhist, pDockpane))
 				{
@@ -1419,9 +1474,27 @@ void CMainFrame::CreateDockpanesAndChilds()
 					pDockpane->RecalcLayout();
 				}
 			}
-			else if (oneDock.eDockType == ALIGN_BOTTON || oneDock.eDockType == ALIGN_BOTTOM_GROUP)
+			else if (oneDock.eDockType == ALIGN_TOP_GROUP)
+			{
+				if (m_GroupTopPaneMap.Lookup(strhist, pDockpane))
+				{
+					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE);
+					pDockpane->RecalcLayout();
+				}
+			}
+			else if (oneDock.eDockType == ALIGN_BOTTON)
 			{
 				if (m_BottomPaneMap.Lookup(strhist, pDockpane))
+				{
+					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
+						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE);
+					pDockpane->RecalcLayout();
+				}
+			}
+			else if (oneDock.eDockType == ALIGN_BOTTOM_GROUP)
+			{
+				if (m_GroupBottomPaneMap.Lookup(strhist, pDockpane))
 				{
 					pDockpane->SetWindowPos(NULL, oneDock.rcWnd.left, oneDock.rcWnd.right, 
 						oneDock.rcWnd.Width(), oneDock.rcWnd.Height(),SWP_NOMOVE);
@@ -1794,25 +1867,42 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	//AddToMap
 	CString strPane;
 	strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
-	if (pDef->nEnabledAlign == ALIGN_LEFT || pDef->nEnabledAlign == ALIGN_LEFT_GROUP)
+	if (pDef->nEnabledAlign == ALIGN_LEFT )
 	{
 		m_LeftPaneMap.SetAt(/*pDef->strWindowName*/strPane, pModulePane);
 	}
+	if (pDef->nEnabledAlign == ALIGN_LEFT_GROUP)
+	{
+		m_GroupLeftPaneMap.SetAt(strPane, pModulePane);
+	}
 
-	if (pDef->nEnabledAlign == ALIGN_RIGHT || pDef->nEnabledAlign == ALIGN_RIGHT_GROUP)
+	if (pDef->nEnabledAlign == ALIGN_RIGHT )
 	{
 		m_RightPaneMap.SetAt(/*pDef->strWindowName*/strPane, pModulePane);
 	}
+	if (pDef->nEnabledAlign == ALIGN_RIGHT_GROUP)
+	{
+		m_GroupRightPaneMap.SetAt(strPane, pModulePane);
+	}
 
-	if (pDef->nEnabledAlign == ALIGN_TOP || pDef->nEnabledAlign == ALIGN_TOP_GROUP)
+	if (pDef->nEnabledAlign == ALIGN_TOP )
 	{
 		m_TopPaneMap.SetAt(/*pDef->strWindowName*/strPane, pModulePane);
 	}
+	if (pDef->nEnabledAlign == ALIGN_TOP_GROUP)
+	{
+		m_GroupTopPaneMap.SetAt(strPane, pModulePane);
+	}
 
-	if (pDef->nEnabledAlign == ALIGN_BOTTON || pDef->nEnabledAlign == ALIGN_BOTTOM_GROUP)
+	if (pDef->nEnabledAlign == ALIGN_BOTTON )
 	{
 		m_BottomPaneMap.SetAt(/*pDef->strWindowName*/strPane, pModulePane);
 	}
+	if (pDef->nEnabledAlign == ALIGN_BOTTOM_GROUP)
+	{
+		m_GroupBottomPaneMap.SetAt(strPane, pModulePane);
+	}
+
 	if (pDef->nEnabledAlign == ALIGN_FLOAT)
 	{
 		m_FloatPaneMap.SetAt(strPane, pModulePane);
@@ -1822,11 +1912,6 @@ LRESULT CMainFrame::OnRegisterModulePane( WPARAM wp, LPARAM )
 	{
 		pModulePane->FloatPane(pDef->rcWnd, DM_STANDARD);
 	}
-// 	else
-// 	{
-// 		CRect rc(400,0,600,800);//移动dock的窗口，貌似，只关心width + Height
-// 		pModulePane->MoveWindow(rc);
-// 	}
 
 	RecalcLayout();
 
@@ -1839,28 +1924,43 @@ void CMainFrame::RefreshPanesXmlNodes(EPANE_ALIGNMENT eAlign)
 	switch(eAlign)
 	{
 	case ALIGN_LEFT:
-	case ALIGN_LEFT_GROUP:
 		{
 			RefreshDockLeftNodeXml();
 		}
 		break;
+	case ALIGN_LEFT_GROUP:
+		{
+			RefreshLeftGroupNodeXml();
+		}
+		break;
 
 	case ALIGN_RIGHT:
-	case ALIGN_RIGHT_GROUP:
 		{
 			RefreshDockRightNodeXml();
 		}
 		break;
+	case ALIGN_RIGHT_GROUP:
+		{
+			RefreshRightGroupNodeXml();
+		}
+		break;
 	case ALIGN_TOP:
-	case ALIGN_TOP_GROUP:
 		{
 			RefreshDockTopNodeXml();
 		}
 		break;
+	case ALIGN_TOP_GROUP:
+		{
+			RefreshTopGroupNodeXml();
+		}
+		break;
 	case ALIGN_BOTTON:
-	case ALIGN_BOTTOM_GROUP:
 		{
 			RefreshDockBottomNodeXml();
+		}
+	case ALIGN_BOTTOM_GROUP:
+		{
+			RefreshBottomGroupNodeXml();
 		}
 		break;
 	case ALIGN_FLOAT:
@@ -2350,6 +2450,487 @@ void CMainFrame::RefreshDockBottomNodeXml()
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+void CMainFrame::RefreshLeftGroupNodeXml()
+{
+	//[dllname,count]
+	map<CString, UINT> mapDll2PaneCount;
+	MapCreatedWnd mapCreatedWnds;
+	if(CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds))
+	{
+		POSITION pos = m_GroupLeftPaneMap.GetStartPosition();
+		while (pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			m_GroupLeftPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+				if (it2 != mapCreatedWnds.end())
+				{
+					map<CString, UINT>::iterator it3 = mapDll2PaneCount.find(it2->second.strDllname);
+					if (it3 != mapDll2PaneCount.end())
+					{
+						UINT& nValue = it3->second;
+						nValue++;
+					}
+					else
+					{
+						mapDll2PaneCount.insert(make_pair(it2->second.strDllname, 1));
+					}
+				}
+			}
+		}
+	}
+
+	//copy.
+	CModulePaneMap tempPaneMap;
+	POSITION pos = m_GroupLeftPaneMap.GetStartPosition();
+	while(pos)
+	{
+		CString strname;
+		CModulePane* pPane = NULL;
+		m_GroupLeftPaneMap.GetNextAssoc(pos, strname, pPane);
+		tempPaneMap.SetAt(strname, pPane);
+	}
+
+	for(map<CString, UINT>::iterator iterIdx = mapDll2PaneCount.begin(); 
+		iterIdx != mapDll2PaneCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nPaneCount = iterIdx->second;
+		int nDllIndex = CXmlDataProc::Instance()->GetDllIndex(strDllname);
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT_GROUP\\WndCount"), nDllIndex);
+		AppXml()->SetAttributeInt(strNode, nPaneCount);
+		AppXml()->FlushData();
+
+		//写入所有的工程名是strDllname的，写入的都擦出掉
+		POSITION pos = tempPaneMap.GetStartPosition();
+		int nWndIndex=0;
+		while(pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			tempPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CRect rcPane;
+				BOOL bVisible = pModulePane->IsVisible();
+
+				pModulePane->GetWindowRect(&rcPane);
+
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator itFind = mapCreatedWnds.find(strPane);
+				if (itFind != mapCreatedWnds.end())
+				{
+					stCreateWndItem& oneCreated = itFind->second;
+					if (strDllname.CompareNoCase(oneCreated.strDllname) != 0)
+					{
+						continue;
+					}
+
+					//write pane class name;
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT_GROUP\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+					//write pane name
+					CString strPaneName;
+					pModulePane->GetPaneName(strPaneName);
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT_GROUP\\Wnd_%d\\WndName"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, strPaneName);
+
+					//write pane rect
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT_GROUP\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.left);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT_GROUP\\Wnd_%d\\SIZE\\right"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.right);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT_GROUP\\Wnd_%d\\SIZE\\top"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.top);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\LEFT_GROUP\\Wnd_%d\\SIZE\\bottom"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.bottom);
+
+					AppXml()->FlushData();
+
+
+					tempPaneMap.RemoveKey(strWndname);
+					nWndIndex++;
+					if (nWndIndex >= nPaneCount)
+					{
+						//当前数据strDllname的pane已经写完了，写下一个dll name的xml文件。
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+void CMainFrame::RefreshRightGroupNodeXml()
+{
+	//[dllname,count]
+	map<CString, UINT> mapDll2PaneCount;
+	MapCreatedWnd mapCreatedWnds;
+	if(CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds))
+	{
+		POSITION pos = m_GroupRightPaneMap.GetStartPosition();
+		while (pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			m_GroupRightPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+				if (it2 != mapCreatedWnds.end())
+				{
+					map<CString, UINT>::iterator it3 = mapDll2PaneCount.find(it2->second.strDllname);
+					if (it3 != mapDll2PaneCount.end())
+					{
+						UINT& nValue = it3->second;
+						nValue++;
+					}
+					else
+					{
+						mapDll2PaneCount.insert(make_pair(it2->second.strDllname, 1));
+					}
+				}
+			}
+		}
+	}
+
+	//copy.
+	CModulePaneMap tempPaneMap;
+	POSITION pos = m_GroupRightPaneMap.GetStartPosition();
+	while(pos)
+	{
+		CString strname;
+		CModulePane* pPane = NULL;
+		m_GroupRightPaneMap.GetNextAssoc(pos, strname, pPane);
+		tempPaneMap.SetAt(strname, pPane);
+	}
+
+	for(map<CString, UINT>::iterator iterIdx = mapDll2PaneCount.begin(); 
+		iterIdx != mapDll2PaneCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nPaneCount = iterIdx->second;
+		int nDllIndex = CXmlDataProc::Instance()->GetDllIndex(strDllname);
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT_GROUP\\WndCount"), nDllIndex);
+		AppXml()->SetAttributeInt(strNode, nPaneCount);
+		AppXml()->FlushData();
+
+		//写入所有的工程名是strDllname的，写入的都擦出掉
+		POSITION pos = tempPaneMap.GetStartPosition();
+		int nWndIndex=0;
+		while(pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			tempPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CRect rcPane;
+				pModulePane->GetWindowRect(&rcPane);
+
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator itFind = mapCreatedWnds.find(strPane);
+				if (itFind != mapCreatedWnds.end())
+				{
+					stCreateWndItem& oneCreated = itFind->second;
+					if (strDllname.CompareNoCase(oneCreated.strDllname) != 0)
+					{
+						continue;
+					}
+
+					//write pane class name;
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT_GROUP\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+					//write pane name;
+					CString strPaneName;
+					pModulePane->GetPaneName(strPaneName);
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT_GROUP\\Wnd_%d\\WndName"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, strPaneName);
+
+
+					//write pane rect
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT_GROUP\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.left);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT_GROUP\\Wnd_%d\\SIZE\\right"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.right);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT_GROUP\\Wnd_%d\\SIZE\\top"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.top);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\RIGHT_GROUP\\Wnd_%d\\SIZE\\bottom"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.bottom);
+
+					AppXml()->FlushData();
+
+
+					tempPaneMap.RemoveKey(strWndname);
+					nWndIndex++;
+					if (nWndIndex >= nPaneCount)
+					{
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+void CMainFrame::RefreshTopGroupNodeXml()
+{
+	//[dllname,count]
+	map<CString, UINT> mapDll2PaneCount;
+	MapCreatedWnd mapCreatedWnds;
+	if(CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds))
+	{
+		POSITION pos = m_GroupTopPaneMap.GetStartPosition();
+		while (pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			m_GroupTopPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+				if (it2 != mapCreatedWnds.end())
+				{
+					map<CString, UINT>::iterator it3 = mapDll2PaneCount.find(it2->second.strDllname);
+					if (it3 != mapDll2PaneCount.end())
+					{
+						UINT& nValue = it3->second;
+						nValue++;
+					}
+					else
+					{
+						mapDll2PaneCount.insert(make_pair(it2->second.strDllname, 1));
+					}
+				}
+			}
+		}
+	}
+
+	//copy.
+	CModulePaneMap tempPaneMap;
+	POSITION pos = m_GroupTopPaneMap.GetStartPosition();
+	while(pos)
+	{
+		CString strname;
+		CModulePane* pPane = NULL;
+		m_GroupTopPaneMap.GetNextAssoc(pos, strname, pPane);
+		tempPaneMap.SetAt(strname, pPane);
+	}
+
+	for(map<CString, UINT>::iterator iterIdx = mapDll2PaneCount.begin(); 
+		iterIdx != mapDll2PaneCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nPaneCount = iterIdx->second;
+		int nDllIndex = CXmlDataProc::Instance()->GetDllIndex(strDllname);
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP_GROUP\\WndCount"), nDllIndex);
+		AppXml()->SetAttributeInt(strNode, nPaneCount);
+		AppXml()->FlushData();
+
+		//写入所有的工程名是strDllname的，写入的都擦出掉
+		POSITION pos = tempPaneMap.GetStartPosition();
+		int nWndIndex=0;
+		while(pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			tempPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CRect rcPane;
+				pModulePane->GetWindowRect(&rcPane);
+
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator itFind = mapCreatedWnds.find(strPane);
+				if (itFind != mapCreatedWnds.end())
+				{
+					stCreateWndItem& oneCreated = itFind->second;
+					if (strDllname.CompareNoCase(oneCreated.strDllname) != 0)
+					{
+						continue;
+					}
+
+					//write pane class name;
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP_GROUP\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+					//write pane name.
+					CString strPaneName;
+					pModulePane->GetPaneName(strPaneName);
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP_GROUP\\Wnd_%d\\WndName"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, strPaneName);
+
+					//write pane rect
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP_GROUP\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.left);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP_GROUP\\Wnd_%d\\SIZE\\right"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.right);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP_GROUP\\Wnd_%d\\SIZE\\top"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.top);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\TOP_GROUP\\Wnd_%d\\SIZE\\bottom"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.bottom);
+
+					AppXml()->FlushData();
+
+
+					tempPaneMap.RemoveKey(strWndname);
+					nWndIndex++;
+					if (nWndIndex >= nPaneCount)
+					{
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+void CMainFrame::RefreshBottomGroupNodeXml()
+{
+	//[dllname,count]
+	map<CString, UINT> mapDll2PaneCount;
+	MapCreatedWnd mapCreatedWnds;
+	if(CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds))
+	{
+		POSITION pos = m_GroupBottomPaneMap.GetStartPosition();
+		while (pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			m_GroupBottomPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+				if (it2 != mapCreatedWnds.end())
+				{
+					map<CString, UINT>::iterator it3 = mapDll2PaneCount.find(it2->second.strDllname);
+					if (it3 != mapDll2PaneCount.end())
+					{
+						UINT& nValue = it3->second;
+						nValue++;
+					}
+					else
+					{
+						mapDll2PaneCount.insert(make_pair(it2->second.strDllname, 1));
+					}
+				}
+			}
+		}
+	}
+
+	//copy.
+	CModulePaneMap tempPaneMap;
+	POSITION pos = m_GroupBottomPaneMap.GetStartPosition();
+	while(pos)
+	{
+		CString strname;
+		CModulePane* pPane = NULL;
+		m_GroupBottomPaneMap.GetNextAssoc(pos, strname, pPane);
+		tempPaneMap.SetAt(strname, pPane);
+	}
+
+	for(map<CString, UINT>::iterator iterIdx = mapDll2PaneCount.begin(); 
+		iterIdx != mapDll2PaneCount.end(); ++iterIdx)
+	{
+		CString strDllname = iterIdx->first;
+		UINT nPaneCount = iterIdx->second;
+		int nDllIndex = CXmlDataProc::Instance()->GetDllIndex(strDllname);
+		CString strNode;
+		strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM_GROUP\\WndCount"), nDllIndex);
+		AppXml()->SetAttributeInt(strNode, nPaneCount);
+		AppXml()->FlushData();
+
+		//写入所有的工程名是strDllname的，写入的都擦出掉
+		POSITION pos = tempPaneMap.GetStartPosition();
+		int nWndIndex=0;
+		while(pos)
+		{
+			CString strWndname;
+			CModulePane* pModulePane = NULL;
+			tempPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+			if (NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+			{
+				CRect rcPane;
+				pModulePane->GetWindowRect(&rcPane);
+
+				CString strPane;
+				strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+				MapCreatedWnd::iterator itFind = mapCreatedWnds.find(strPane);
+				if (itFind != mapCreatedWnds.end())
+				{
+					stCreateWndItem& oneCreated = itFind->second;
+					if (strDllname.CompareNoCase(oneCreated.strDllname) != 0)
+					{
+						continue;
+					}
+
+					//write pane class name;
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM_GROUP\\Wnd_%d\\Name"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, oneCreated.strClassName);
+
+
+					CString strPaneName;
+					pModulePane->GetPaneName(strPaneName);
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM_GROUP\\Wnd_%d\\WndName"), nDllIndex, nWndIndex);
+					AppXml()->SetAttribute(strNode, strPaneName);
+
+					//write pane rect
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM_GROUP\\Wnd_%d\\SIZE\\left"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.left);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM_GROUP\\Wnd_%d\\SIZE\\right"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.right);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM_GROUP\\Wnd_%d\\SIZE\\top"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.top);
+
+					strNode.Format(_T("Dll_%d\\DOCK_GROUP\\BOTTOM_GROUP\\Wnd_%d\\SIZE\\bottom"),nDllIndex, nWndIndex);
+					AppXml()->SetAttributeInt(strNode, rcPane.bottom);
+
+					AppXml()->FlushData();
+
+
+					tempPaneMap.RemoveKey(strWndname);
+					nWndIndex++;
+					if (nWndIndex >= nPaneCount)
+					{
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 void CMainFrame::RefreshFloatNodeXml()
 {
 	//[dllname,count]
@@ -2522,9 +3103,22 @@ BOOL CMainFrame::RemovePaneFromMap( CModulePane* pPane, BOOL& bVertical )
 		bVertical = TRUE;
 		return TRUE;
 	}
+	if( m_GroupLeftPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
+	{
+		m_GroupLeftPaneMap.RemoveKey(strWnd);
+		bVertical = TRUE;
+		return TRUE;
+	}
+
 	if( m_RightPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
 	{
 		m_RightPaneMap.RemoveKey(strWnd);
+		bVertical = TRUE;
+		return TRUE;
+	}
+	if( m_GroupRightPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
+	{
+		m_GroupRightPaneMap.RemoveKey(strWnd);
 		bVertical = TRUE;
 		return TRUE;
 	}
@@ -2534,9 +3128,21 @@ BOOL CMainFrame::RemovePaneFromMap( CModulePane* pPane, BOOL& bVertical )
 		bVertical = FALSE;
 		return TRUE;
 	}
+	if( m_GroupTopPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
+	{
+		m_GroupTopPaneMap.RemoveKey(strWnd);
+		bVertical = FALSE;
+		return TRUE;
+	}
 	if( m_BottomPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
 	{
 		m_BottomPaneMap.RemoveKey(strWnd);
+		bVertical = FALSE;
+		return TRUE;
+	}
+	if( m_GroupBottomPaneMap.Lookup(/*pPane->m_strWndName*/strWnd, pPane) )
+	{
+		m_GroupBottomPaneMap.RemoveKey(strWnd);
 		bVertical = FALSE;
 		return TRUE;
 	}
@@ -2596,10 +3202,33 @@ BOOL CMainFrame::FindModulePane(CString strWndname, CModulePane*& pModulePane, B
 		}
 	}
 
+	pos = m_GroupLeftPaneMap.GetStartPosition();
+	while( pos )
+	{
+		m_GroupLeftPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		if(strTemp.CompareNoCase(strWndname)==0)
+		{
+			bVertical = TRUE;
+			return TRUE;
+		}
+	}
+
+
 	pos = m_RightPaneMap.GetStartPosition();
 	while( pos )
 	{
 		m_RightPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		if(strTemp.CompareNoCase(strWndname)==0)
+		{
+			bVertical = TRUE;
+			return TRUE;
+		}
+	}
+
+	pos = m_GroupRightPaneMap.GetStartPosition();
+	while( pos )
+	{
+		m_GroupRightPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
 		if(strTemp.CompareNoCase(strWndname)==0)
 		{
 			bVertical = TRUE;
@@ -2618,10 +3247,32 @@ BOOL CMainFrame::FindModulePane(CString strWndname, CModulePane*& pModulePane, B
 		}
 	}
 
+	pos = m_GroupTopPaneMap.GetStartPosition();
+	while( pos )
+	{
+		m_GroupTopPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		if(strTemp.CompareNoCase(strWndname)==0)
+		{
+			bVertical = FALSE;
+			return TRUE;
+		}
+	}
+
 	pos = m_BottomPaneMap.GetStartPosition();
 	while( pos )
 	{
 		m_BottomPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		if(strTemp.CompareNoCase(strWndname)==0)
+		{
+			bVertical = FALSE;
+			return TRUE;
+		}
+	}
+
+	pos = m_GroupBottomPaneMap.GetStartPosition();
+	while( pos )
+	{
+		m_GroupBottomPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
 		if(strTemp.CompareNoCase(strWndname)==0)
 		{
 			bVertical = FALSE;
@@ -2649,7 +3300,7 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 	CString strWindowName;
 	CModulePane* pPrevPane= NULL;
 
-	if (dwAlignment==ALIGN_LEFT || dwAlignment == ALIGN_LEFT_GROUP)
+	if (dwAlignment==ALIGN_LEFT)
 	{
 		POSITION pos = m_LeftPaneMap.GetStartPosition();
 		while(pos)
@@ -2657,7 +3308,16 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 			m_LeftPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
 		}
 	}
-	if (dwAlignment==ALIGN_RIGHT || dwAlignment == ALIGN_RIGHT_GROUP)
+	if (dwAlignment == ALIGN_LEFT_GROUP)
+	{
+		POSITION pos = m_GroupLeftPaneMap.GetStartPosition();
+		while(pos)
+		{
+			m_GroupLeftPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+		}
+	}
+
+	if (dwAlignment==ALIGN_RIGHT )
 	{
 		POSITION pos = m_RightPaneMap.GetStartPosition();
 		while(pos)
@@ -2665,7 +3325,17 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 			m_RightPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
 		}
 	}
-	if (dwAlignment==ALIGN_TOP || dwAlignment == ALIGN_TOP_GROUP)
+	if (dwAlignment == ALIGN_RIGHT_GROUP)
+	{
+		POSITION pos = m_GroupRightPaneMap.GetStartPosition();
+		while(pos)
+		{
+			m_GroupRightPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+		}
+	}
+
+
+	if (dwAlignment==ALIGN_TOP)
 	{
 		POSITION pos = m_TopPaneMap.GetStartPosition();
 		while(pos)
@@ -2673,7 +3343,16 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 			m_TopPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
 		}
 	}
-	if (dwAlignment==ALIGN_BOTTON || dwAlignment == ALIGN_BOTTOM_GROUP)
+	if (dwAlignment == ALIGN_TOP_GROUP)
+	{
+		POSITION pos = m_GroupTopPaneMap.GetStartPosition();
+		while(pos)
+		{
+			m_GroupTopPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+		}
+	}
+
+	if (dwAlignment==ALIGN_BOTTON)
 	{
 		POSITION pos = m_BottomPaneMap.GetStartPosition();
 		while(pos)
@@ -2681,6 +3360,15 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 			m_BottomPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
 		}
 	}
+	if (dwAlignment == ALIGN_BOTTOM_GROUP)
+	{
+		POSITION pos = m_GroupBottomPaneMap.GetStartPosition();
+		while(pos)
+		{
+			m_GroupBottomPaneMap.GetNextAssoc(pos, strWindowName, pPrevPane);
+		}
+	}
+
 
 	//当前是否有Pane跟当前待靠的pane是否是一个停靠类型，有就停靠到一组。
 	if( pPrevPane && pPrevPane->GetSafeHwnd() )
@@ -3398,212 +4086,212 @@ void CMainFrame::LoadDllByName(CString& strDllname)
 //遍历当前所有的存活的panes(visible+unvisible)，5个map，对于其中的每个pane，
 //拿到name+size(目前看貌似对于dock的只关心width(left+right)和height(top+bottom)),
 //从wndManager中找到改实例对象所对应的类名。写入xml。
-void CMainFrame::UpdatePanesXmlWhenClosed()
-{
-	CModulePaneMap tempLeft, tempRight,tempTop,tempBottom,tempFloat;
-	MapCreatedWnd mapCreatedWnds;
-	CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds);
-	if (mapCreatedWnds.size()==0)
-	{
-		return;
-	}
-
-	int nType = 0;
-	//1.遍历left
-	POSITION pos = m_LeftPaneMap.GetStartPosition();
-	while (pos)
-	{
-		CString strWndname;
-		CModulePane* pModulePane = NULL;
-		CRect rcWndRect;
-		m_LeftPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
-		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
-		{
-			if (pModulePane->IsVisible())
-			{
-				pModulePane->GetWindowRect(&rcWndRect);
-				BOOL bFloat = pModulePane->IsFloating();
-
-				DWORD dwStyle = pModulePane->GetPaneStyle();
-				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
-
-				if (dwStyle & CBRS_ALIGN_LEFT)
-				{
-					nType = 1;
-				}
-				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
-				{
-					nType = 2;
-				}
-				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
-				{
-					nType = 3;
-				}
-				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
-				{
-					nType = 4;
-				}
-				if (dwStyle & CBRS_NOALIGN)
-				{
-					nType = 5;
-				}
-			}
-			
-			CString strPane;
-			strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
-			MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
-			if (it2 != mapCreatedWnds.end())
-			{
-				
-			}
-		}
-	}
-
-	//right
-	pos = m_RightPaneMap.GetStartPosition();
-	while (pos)
-	{
-		CString strWndname;
-		CModulePane* pModulePane = NULL;
-		CRect rcWndRect;
-		m_RightPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
-		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
-		{
-			if (pModulePane->IsVisible())
-			{
-				pModulePane->GetWindowRect(&rcWndRect);
-				BOOL bFloat = pModulePane->IsFloating();
-
-				DWORD dwStyle = pModulePane->GetPaneStyle();
-				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
-
-				if (dwStyle & CBRS_ALIGN_LEFT)
-				{
-					nType = 1;
-				}
-				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
-				{
-					nType = 2;
-				}
-				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
-				{
-					nType = 3;
-				}
-				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
-				{
-					nType = 4;
-				}
-				if (dwStyle & CBRS_NOALIGN)
-				{
-					nType = 5;
-				}
-			}
-		}
-	}
-
-
-	//top
-	pos = m_TopPaneMap.GetStartPosition();
-	while (pos)
-	{
-		CString strWndname;
-		CModulePane* pModulePane = NULL;
-		CRect rcWndRect;
-		m_TopPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
-		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
-		{
-			if (pModulePane->IsVisible())
-			{
-				pModulePane->GetWindowRect(&rcWndRect);
-				BOOL bFloat = pModulePane->IsFloating();
-
-				DWORD dwStyle = pModulePane->GetPaneStyle();
-				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
-
-				if (dwStyle & CBRS_ALIGN_LEFT)
-				{
-					nType = 1;
-				}
-				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
-				{
-					nType = 2;
-				}
-				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
-				{
-					nType = 3;
-				}
-				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
-				{
-					nType = 4;
-				}
-				if (dwStyle & CBRS_NOALIGN)
-				{
-					nType = 5;
-				}
-			}
-		}
-	}
-
-	//bottom
-	pos = m_BottomPaneMap.GetStartPosition();
-	while (pos)
-	{
-		CString strWndname;
-		CModulePane* pModulePane = NULL;
-		CRect rcWndRect;
-		m_BottomPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
-		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
-		{
-			if (pModulePane->IsVisible())
-			{
-				pModulePane->GetWindowRect(&rcWndRect);
-				BOOL bFloat = pModulePane->IsFloating();
-
-				DWORD dwStyle = pModulePane->GetPaneStyle();
-				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
-
-				if (dwStyle & CBRS_ALIGN_LEFT)
-				{
-					nType = 1;
-				}
-				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
-				{
-					nType = 2;
-				}
-				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
-				{
-					nType = 3;
-				}
-				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
-				{
-					nType = 4;
-				}
-				if (dwStyle & CBRS_NOALIGN)
-				{
-					nType = 5;
-				}
-			}
-		}
-	}
-
-	//float
-	pos = m_FloatPaneMap.GetStartPosition();
-	while (pos)
-	{
-		CString strWndname;
-		CModulePane* pModulePane = NULL;
-		CRect rcWndRect;
-		m_FloatPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
-		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
-		{
-			if (pModulePane->IsVisible())
-			{
-				pModulePane->GetWindowRect(&rcWndRect);
-				BOOL bFloat = pModulePane->IsFloating();
-			}
-		}
-	}
-}
+//void CMainFrame::UpdatePanesXmlWhenClosed()
+//{
+//	CModulePaneMap tempLeft, tempRight,tempTop,tempBottom,tempFloat;
+//	MapCreatedWnd mapCreatedWnds;
+//	CWndManager::Instance()->GetCreatedWnd(mapCreatedWnds);
+//	if (mapCreatedWnds.size()==0)
+//	{
+//		return;
+//	}
+//
+//	int nType = 0;
+//	//1.遍历left
+//	POSITION pos = m_LeftPaneMap.GetStartPosition();
+//	while (pos)
+//	{
+//		CString strWndname;
+//		CModulePane* pModulePane = NULL;
+//		CRect rcWndRect;
+//		m_LeftPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+//		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+//		{
+//			if (pModulePane->IsVisible())
+//			{
+//				pModulePane->GetWindowRect(&rcWndRect);
+//				BOOL bFloat = pModulePane->IsFloating();
+//
+//				DWORD dwStyle = pModulePane->GetPaneStyle();
+//				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
+//
+//				if (dwStyle & CBRS_ALIGN_LEFT)
+//				{
+//					nType = 1;
+//				}
+//				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
+//				{
+//					nType = 2;
+//				}
+//				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
+//				{
+//					nType = 3;
+//				}
+//				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
+//				{
+//					nType = 4;
+//				}
+//				if (dwStyle & CBRS_NOALIGN)
+//				{
+//					nType = 5;
+//				}
+//			}
+//			
+//			CString strPane;
+//			strPane.Format(_T("0x%08x"), pModulePane->m_pWnd);
+//			MapCreatedWnd::iterator it2 = mapCreatedWnds.find(strPane);
+//			if (it2 != mapCreatedWnds.end())
+//			{
+//				
+//			}
+//		}
+//	}
+//
+//	//right
+//	pos = m_RightPaneMap.GetStartPosition();
+//	while (pos)
+//	{
+//		CString strWndname;
+//		CModulePane* pModulePane = NULL;
+//		CRect rcWndRect;
+//		m_RightPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+//		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+//		{
+//			if (pModulePane->IsVisible())
+//			{
+//				pModulePane->GetWindowRect(&rcWndRect);
+//				BOOL bFloat = pModulePane->IsFloating();
+//
+//				DWORD dwStyle = pModulePane->GetPaneStyle();
+//				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
+//
+//				if (dwStyle & CBRS_ALIGN_LEFT)
+//				{
+//					nType = 1;
+//				}
+//				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
+//				{
+//					nType = 2;
+//				}
+//				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
+//				{
+//					nType = 3;
+//				}
+//				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
+//				{
+//					nType = 4;
+//				}
+//				if (dwStyle & CBRS_NOALIGN)
+//				{
+//					nType = 5;
+//				}
+//			}
+//		}
+//	}
+//
+//
+//	//top
+//	pos = m_TopPaneMap.GetStartPosition();
+//	while (pos)
+//	{
+//		CString strWndname;
+//		CModulePane* pModulePane = NULL;
+//		CRect rcWndRect;
+//		m_TopPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+//		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+//		{
+//			if (pModulePane->IsVisible())
+//			{
+//				pModulePane->GetWindowRect(&rcWndRect);
+//				BOOL bFloat = pModulePane->IsFloating();
+//
+//				DWORD dwStyle = pModulePane->GetPaneStyle();
+//				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
+//
+//				if (dwStyle & CBRS_ALIGN_LEFT)
+//				{
+//					nType = 1;
+//				}
+//				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
+//				{
+//					nType = 2;
+//				}
+//				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
+//				{
+//					nType = 3;
+//				}
+//				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
+//				{
+//					nType = 4;
+//				}
+//				if (dwStyle & CBRS_NOALIGN)
+//				{
+//					nType = 5;
+//				}
+//			}
+//		}
+//	}
+//
+//	//bottom
+//	pos = m_BottomPaneMap.GetStartPosition();
+//	while (pos)
+//	{
+//		CString strWndname;
+//		CModulePane* pModulePane = NULL;
+//		CRect rcWndRect;
+//		m_BottomPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+//		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+//		{
+//			if (pModulePane->IsVisible())
+//			{
+//				pModulePane->GetWindowRect(&rcWndRect);
+//				BOOL bFloat = pModulePane->IsFloating();
+//
+//				DWORD dwStyle = pModulePane->GetPaneStyle();
+//				DWORD dwBarDockStyle = pModulePane->GetEnabledAlignment();
+//
+//				if (dwStyle & CBRS_ALIGN_LEFT)
+//				{
+//					nType = 1;
+//				}
+//				if (dwStyle & CBRS_ALIGN_RIGHT/*AFX_IDW_DOCKBAR_RIGHT*/)
+//				{
+//					nType = 2;
+//				}
+//				if (dwStyle & CBRS_ALIGN_TOP/*AFX_IDW_DOCKBAR_TOP*/)
+//				{
+//					nType = 3;
+//				}
+//				if (dwStyle & CBRS_ALIGN_BOTTOM/*AFX_IDW_DOCKBAR_BOTTOM*/)
+//				{
+//					nType = 4;
+//				}
+//				if (dwStyle & CBRS_NOALIGN)
+//				{
+//					nType = 5;
+//				}
+//			}
+//		}
+//	}
+//
+//	//float
+//	pos = m_FloatPaneMap.GetStartPosition();
+//	while (pos)
+//	{
+//		CString strWndname;
+//		CModulePane* pModulePane = NULL;
+//		CRect rcWndRect;
+//		m_FloatPaneMap.GetNextAssoc(pos, strWndname, pModulePane);
+//		if(NULL != pModulePane && NULL != pModulePane->GetSafeHwnd())
+//		{
+//			if (pModulePane->IsVisible())
+//			{
+//				pModulePane->GetWindowRect(&rcWndRect);
+//				BOOL bFloat = pModulePane->IsFloating();
+//			}
+//		}
+//	}
+//}
 
 
 void CMainFrame::OnWndManagement()
