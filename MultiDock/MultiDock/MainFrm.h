@@ -77,6 +77,12 @@ public:
 
 	//Create Frame+view.
 	void LoadDllByName(CString& strDllname);
+	BOOL ShowHidePane(CString strPanename, MODULE_WINDOW_DEF::CONTROL_CODE code)
+	{
+		return ControlPane(strPanename, code);
+	}
+	BOOL RemovePaneAdpter(CString strWndname);
+	
 	
 protected:
 	void CacheMenus();
@@ -90,6 +96,7 @@ protected:
 	BOOL FindModulePane(CString strWndname, CModulePane*& pModulePane, BOOL& bVertical);
 	BOOL AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivate=TRUE, CDockablePane** pTabbedBar=NULL);
 	BOOL ControlPane(LPCTSTR lpPaneName, MODULE_WINDOW_DEF::CONTROL_CODE code);
+	BOOL CloseDockPane(CDockablePane* pDockablePane);
 
 	BOOL OpenUtility(UINT nID);
 	BOOL OpenUtilityByName(CString strUtilName);

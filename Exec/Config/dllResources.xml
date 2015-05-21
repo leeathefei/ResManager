@@ -18,9 +18,9 @@
 				<ParentWnd>
 					<ClassName>CSampleViewerView</ClassName>
 					<left>3</left>
-					<top>67</top>
-					<right>864</right>
-					<bottom>687</bottom>
+					<top>92</top>
+					<right>1019</right>
+					<bottom>969</bottom>
 				</ParentWnd>
 				<ChildWnds>
 					<ChildCount>2</ChildCount>
@@ -52,9 +52,9 @@
 				<Name>CDlgTest1InSV</Name>
 				<WndName>中文名可以吗</WndName>
 				<SIZE>
-					<left>251</left>
-					<right>851</right>
-					<top>371</top>
+					<left>253</left>
+					<right>853</right>
+					<top>367</top>
 					<bottom>687</bottom>
 				</SIZE>
 				<WndName/>
@@ -65,12 +65,12 @@
 				<WndCount>3</WndCount>
 				<Wnd_0>
 					<Name>CDlgTest1InSV</Name>
-					<WndName>左边组合一</WndName>
+					<WndName>nihao </WndName>
 					<SIZE>
 						<left>1</left>
-						<right>236</right>
-						<top>135</top>
-						<bottom>708</bottom>
+						<right>232</right>
+						<top>160</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_0>
 				<Wnd_1>
@@ -78,19 +78,19 @@
 					<WndName>左边组合二</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>234</right>
-						<top>135</top>
-						<bottom>708</bottom>
+						<right>232</right>
+						<top>160</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_1>
 				<Wnd_2>
 					<Name>CDlgTest1InSV</Name>
-					<WndName>nihao </WndName>
+					<WndName>左边组合一</WndName>
 					<SIZE>
 						<left>1</left>
-						<right>234</right>
-						<top>135</top>
-						<bottom>708</bottom>
+						<right>232</right>
+						<top>160</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_2>
 			</LEFT>
@@ -129,23 +129,23 @@
 			<RIGHT>
 				<WndCount>2</WndCount>
 				<Wnd_0>
-					<Name>CSamplePanelDialog</Name>
-					<WndName>右边组合二</WndName>
-					<SIZE>
-						<left>1190</left>
-						<right>1365</right>
-						<top>112</top>
-						<bottom>708</bottom>
-					</SIZE>
-				</Wnd_0>
-				<Wnd_1>
 					<Name>CSamplePanelDialog2</Name>
 					<WndName>右边组合一</WndName>
 					<SIZE>
-						<left>1190</left>
-						<right>1365</right>
-						<top>112</top>
-						<bottom>708</bottom>
+						<left>1508</left>
+						<right>1683</right>
+						<top>137</top>
+						<bottom>733</bottom>
+					</SIZE>
+				</Wnd_0>
+				<Wnd_1>
+					<Name>CSamplePanelDialog</Name>
+					<WndName>右边组合二</WndName>
+					<SIZE>
+						<left>1508</left>
+						<right>1679</right>
+						<top>137</top>
+						<bottom>990</bottom>
 					</SIZE>
 				</Wnd_1>
 			</RIGHT>
@@ -166,10 +166,10 @@
 				<Tab0 Name="TestProj1.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj1.dll</DllName>
-					<left>242</left>
-					<right>894</right>
-					<top>67</top>
-					<bottom>687</bottom>
+					<left>240</left>
+					<right>1050</right>
+					<top>92</top>
+					<bottom>969</bottom>
 				</Tab_0>
 			</Group0>
 			<Group1>
@@ -177,10 +177,10 @@
 				<Tab0 Name="TestProj2.dll">false</Tab0>
 				<Tab_0>
 					<DllName>TestProj2.dll</DllName>
-					<left>902</left>
-					<right>1182</right>
-					<top>67</top>
-					<bottom>687</bottom>
+					<left>1058</left>
+					<right>1500</right>
+					<top>92</top>
+					<bottom>969</bottom>
 				</Tab_0>
 			</Group1>
 		</TabbedView>

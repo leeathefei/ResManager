@@ -2547,21 +2547,6 @@ BOOL CMainFrame::RemovePaneFromMap( CModulePane* pPane, BOOL& bVertical )
 		return TRUE;
 	}
 
-
-	/*if( m_VertPaneMap.Lookup(pPane->m_strWndName, pPane) )
-	{
-	m_VertPaneMap.RemoveKey(pPane->m_strWndName);
-	bVertical = TRUE;
-	return TRUE;
-	}
-
-	if( m_HoriPaneMap.Lookup(pPane->m_strWndName, pPane) )
-	{
-	m_HoriPaneMap.RemoveKey(pPane->m_strWndName);
-	bVertical = FALSE;
-	return TRUE;
-	}*/
-
 	return FALSE;
 }
 
@@ -2604,51 +2589,56 @@ BOOL CMainFrame::FindModulePane(CString strWndname, CModulePane*& pModulePane, B
 	while( pos )
 	{
 		m_LeftPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
-		if(strTemp.Compare(strWndname)==0)
+		if(strTemp.CompareNoCase(strWndname)==0)
 		{
 			bVertical = TRUE;
 			return TRUE;
 		}
 	}
+
+	pos = m_RightPaneMap.GetStartPosition();
 	while( pos )
 	{
 		m_RightPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
-		if(strTemp.Compare(strWndname)==0)
+		if(strTemp.CompareNoCase(strWndname)==0)
 		{
 			bVertical = TRUE;
 			return TRUE;
 		}
 	}
+
+	pos = m_TopPaneMap.GetStartPosition();
 	while( pos )
 	{
 		m_TopPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
-		if(strTemp.Compare(strWndname)==0)
+		if(strTemp.CompareNoCase(strWndname)==0)
 		{
 			bVertical = FALSE;
 			return TRUE;
 		}
 	}
+
+	pos = m_BottomPaneMap.GetStartPosition();
 	while( pos )
 	{
 		m_BottomPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
-		if(strTemp.Compare(strWndname)==0)
+		if(strTemp.CompareNoCase(strWndname)==0)
 		{
 			bVertical = FALSE;
 			return TRUE;
 		}
 	}
 
-
-// 	pos = m_HoriPaneMap.GetStartPosition();
-// 	while( pos )
-// 	{
-// 		m_HoriPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
-// 		if(strTemp.Compare(strWndname)==0)
-// 		{
-// 			bVertical = FALSE;
-// 			return TRUE;
-// 		}
-// 	}
+	pos = m_FloatPaneMap.GetStartPosition();
+	while(pos)
+	{
+		m_FloatPaneMap.GetNextAssoc(pos, strTemp, pModulePane);
+		if (strTemp.CompareNoCase(strWndname) == 0)
+		{
+			bVertical = FALSE;
+			return TRUE;
+		}
+	}
 
 	pModulePane = NULL;
 	return FALSE;
@@ -2719,9 +2709,26 @@ BOOL CMainFrame::AttachPane(CModulePane* pPane, DWORD dwAlignment, BOOL bActivat
 	return FALSE;
 }
 
-LRESULT CMainFrame::OnClosePane(WPARAM, LPARAM lp)
+BOOL CMainFrame::RemovePaneAdpter(CString strWndname)
 {
-	CDockablePane* pDockablePane = (CDockablePane*)lp;
+	BOOL bVertical;
+	CModulePane* pModulePane;
+	if(! FindModulePane(strWndname, pModulePane, bVertical) )
+	{
+		return FALSE;
+	}
+
+	if (NULL != pModulePane)
+	{
+		RemovePane(pModulePane);
+	}
+
+	return TRUE;
+
+}
+
+BOOL CMainFrame::CloseDockPane(CDockablePane* pDockablePane)
+{
 	CMFCOutlookBar* pOutlookTabbedBar = dynamic_cast<CMFCOutlookBar*>(pDockablePane);
 	CMFCBaseTabCtrl* pTabCtrl=NULL;
 	if( pOutlookTabbedBar )
@@ -2740,27 +2747,6 @@ LRESULT CMainFrame::OnClosePane(WPARAM, LPARAM lp)
 		int iTab = pTabCtrl->GetActiveTab();
 		pDockablePane = dynamic_cast<CDockablePane*>(pTabCtrl->GetTabWnd(iTab));
 	}
-
-	/*UINT nTabsCount = pTabCtrl->GetTabsNum();
-	UINT nVisiCount = pTabCtrl->GetVisibleTabsNum();
-	UINT nVaiCount = pTabCtrl->GetFirstVisibleTabNum();
-	for (int i=0; i<nTabsCount; i++)
-	{
-	CString strWndName;
-	CDockablePane* pPane = dynamic_cast<CDockablePane*>(pTabCtrl->GetTabWnd(i));
-	CRect rcClient;
-	pPane->GetWindowRect(&rcClient);
-	pPane->GetWindowText(strWndName);
-	CRect rcTop,rcBottom,rcTab,rcTabs;
-	pTabCtrl->GetTabArea(rcTop, rcBottom);
-	UINT nWidth = pTabCtrl->GetTabFullWidth(i);
-	UINT nTabID = pTabCtrl->GetTabID(i);
-	int nActivieTab = pTabCtrl->GetActiveTab();
-	pTabCtrl->GetTabRect(i, rcTab);
-	pTabCtrl->GetTabsRect(rcTabs);
-	int abc=100;
-	}*/
-
 
 	CBaseTabbedPane* pTabbedBar = dynamic_cast<CBaseTabbedPane*>(pDockablePane);
 	if(pTabbedBar)
@@ -2808,12 +2794,6 @@ LRESULT CMainFrame::OnClosePane(WPARAM, LPARAM lp)
 	// Remove From DockingManager
 	pDockablePane->UndockPane();
 
-
-	/*nTabsCount = pTabCtrl->GetTabsNum();
-	nVisiCount = pTabCtrl->GetVisibleTabsNum();
-	nVaiCount = pTabCtrl->GetFirstVisibleTabNum();
-	*/
-
 	// Remove From Map
 	BOOL bVertical;
 	RemovePaneFromMap(dynamic_cast<CModulePane*>(pDockablePane), bVertical);
@@ -2824,7 +2804,14 @@ LRESULT CMainFrame::OnClosePane(WPARAM, LPARAM lp)
 
 
 	AdjustDockingLayout();
+
 	return TRUE;
+}
+
+LRESULT CMainFrame::OnClosePane(WPARAM, LPARAM lp)
+{
+	CDockablePane* pDockablePane = (CDockablePane*)lp;
+	return CloseDockPane(pDockablePane);
 }
 
 BOOL bChanging=FALSE;
@@ -2990,9 +2977,58 @@ BOOL CMainFrame::ControlPane(LPCTSTR lpPaneName, MODULE_WINDOW_DEF::CONTROL_CODE
 
 	case MODULE_WINDOW_DEF::PANE_HIDE:
 		{
-			if(!pModulePane->IsAutoHideMode() )
-				pModulePane->ToggleAutoHide();
+			/*if(!pModulePane->IsAutoHideMode() )
+			{
+			pModulePane->ToggleAutoHide();
 			return TRUE;
+			}*/
+
+			CMFCOutlookBar* pOutlookTabbedBar = dynamic_cast<CMFCOutlookBar*>(pModulePane);
+			CMFCBaseTabCtrl* pTabCtrl=NULL;
+			if( pOutlookTabbedBar )
+			{
+				pTabCtrl = pOutlookTabbedBar->GetUnderlyingWindow();
+			}
+			else
+			{ 
+				HWND hWndTab;
+				pTabCtrl = pModulePane->GetParentTabWnd(hWndTab);
+			}
+
+
+			// Get DockablePane
+			CDockablePane* pDockable = NULL;
+			if(pTabCtrl && pTabCtrl->GetTabsNum()>0 )
+			{
+				int iTab = pTabCtrl->GetActiveTab();
+				/*pModulePane*/pDockable = dynamic_cast<CDockablePane*>(pTabCtrl->GetTabWnd(iTab));
+			}
+
+			CBaseTabbedPane* pTabbedBar = dynamic_cast<CBaseTabbedPane*>(pDockable/*pModulePane*/);
+			if(pTabbedBar)
+			{
+				pTabbedBar->ShowPane(FALSE,FALSE,FALSE);
+				return TRUE;
+			}
+
+			//CModulePane* pModulePane = dynamic_cast<CModulePane*>(pModulePane);
+			if(pModulePane&&pModulePane->m_bAutoDelete)
+			{
+				if(!pModulePane->IsAutoHideMode())
+				{
+					CBaseTabbedPane* pTabbedPane = pModulePane->GetParentTabbedPane();
+					if( pTabbedPane )
+						pTabbedPane->SetAutoHideMode(TRUE, pTabbedPane->GetCurrentAlignment());
+					else
+						pModulePane->SetAutoHideMode(TRUE, pModulePane->GetCurrentAlignment());
+				}
+
+				GetDockingManager()->RecalcLayout();
+				CString strWinText;
+				pModulePane->GetWindowText(strWinText);
+				return TRUE;
+			}
+
 		}
 		break;
 
