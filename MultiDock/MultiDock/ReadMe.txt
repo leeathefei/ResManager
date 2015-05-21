@@ -122,7 +122,7 @@ todo-9：xml中cache的只是四中方向，实际上，还有leftgroup，rightgroup，topgroup，b
 		默认填写都是group类型。。请查看是否需要更改：ProcessDockType{。。。}
 todo-10：autodelete配置在界面上，当用户选择创建dock+float的时候配置。==>done
 todo-11：statusbar的加载。==>done
-todo-12：退出时候，没有enumDockpane的信息(布局信息，大小信息等)，需要重新写入都xml，以便于下次启动时候加载。
+todo-12：退出时候，没有enumDockpane的信息(布局信息，大小信息等)，需要重新写入都xml，以便于下次启动时候加载。==done
 		简单解决方法：对于float的提供修改大小的界面去更新位置和大小，对于dock的在close的时候全部查看mainframe里面的cache dock。实时查询其rect，并写入到xml一次。
 
 		manager应该存储了所有dock pane的链表，每个pane的dock信息都应该存储了，读取这些信息才是可靠的！因为你本地维护的pane style只是创建的时候的style，至于后来的重新

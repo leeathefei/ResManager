@@ -9,6 +9,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\communication">
+      <UniqueIdentifier>{a2eb43a8-84fd-4e70-943a-9a15844ce574}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -49,6 +52,15 @@
     </ClCompile>
     <ClCompile Include="..\Common\XmlDataProc.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\DataManager.cpp">
+      <Filter>Source Files\communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\DllManager.cpp">
+      <Filter>Source Files\communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\UserDataManager.cpp">
+      <Filter>Source Files\communication</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +108,18 @@
     </ClInclude>
     <ClInclude Include="..\Common\XmlDataProc.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\DataManager.h">
+      <Filter>Source Files\communication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Define_PlatStruct.h">
+      <Filter>Source Files\communication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\DllManager.h">
+      <Filter>Source Files\communication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\UserDataManager.h">
+      <Filter>Source Files\communication</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

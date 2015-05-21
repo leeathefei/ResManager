@@ -106,10 +106,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\CSVFileReader.cpp" />
+    <ClCompile Include="..\Common\DataManager.cpp" />
+    <ClCompile Include="..\Common\DllManager.cpp" />
     <ClCompile Include="..\Common\FileHelper.cpp" />
     <ClCompile Include="..\Common\ModuleManager.cpp" />
     <ClCompile Include="..\Common\MTDocTemplate.cpp" />
     <ClCompile Include="..\Common\RWLock.cpp" />
+    <ClCompile Include="..\Common\UserDataManager.cpp" />
     <ClCompile Include="..\Common\WndManager.cpp" />
     <ClCompile Include="..\Common\XmlConfig.cpp" />
     <ClCompile Include="..\Common\XmlDataProc.cpp" />
@@ -121,6 +124,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\CSVFileReader.h" />
+    <ClInclude Include="..\Common\DataManager.h" />
+    <ClInclude Include="..\Common\Define_PlatStruct.h" />
+    <ClInclude Include="..\Common\DllManager.h" />
     <ClInclude Include="..\Common\FileHelper.h" />
     <ClInclude Include="..\Common\GeneralMacroDefine.h" />
     <ClInclude Include="..\Common\ModuleDefs.h" />
@@ -128,6 +134,7 @@
     <ClInclude Include="..\Common\MTDocTemplate.h" />
     <ClInclude Include="..\Common\ResourceHandle.h" />
     <ClInclude Include="..\Common\RWLock.h" />
+    <ClInclude Include="..\Common\UserDataManager.h" />
     <ClInclude Include="..\Common\WndManager.h" />
     <ClInclude Include="..\Common\XmlConfig.h" />
     <ClInclude Include="..\Common\XmlDataProc.h" />
